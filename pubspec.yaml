@@ -29,10 +29,13 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   animate_do: ^3.3.4
+  animated_text_kit: ^4.2.2
   cupertino_icons: ^1.0.6
   flutter:
     sdk: flutter
   flutter_riverpod: ^3.0.0-dev.3
+
+  flutter_svg: any
   font_awesome_flutter: ^10.7.0
   google_fonts: ^6.2.1
   lottie: ^3.1.2
@@ -41,9 +44,7 @@ dependencies:
   riverpod_generator: ^3.0.0-dev.11
   riverpod_lint: ^3.0.0-dev.4
   supabase_flutter: ^2.6.0
-
 dev_dependencies:
-
   flutter_lints: ^4.0.0
   flutter_test:
     sdk: flutter
@@ -55,4 +56,3 @@ flutter:
     - assets/images/
     - assets/videos/
     - assets/animations/
-  
