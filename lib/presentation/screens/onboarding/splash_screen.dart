@@ -22,7 +22,7 @@ class _SplashPageState extends State<SplashPage> {
   @override
   void initState() {
     super.initState();
-    _timer = Timer.periodic(const Duration(milliseconds: 4000), (_) {
+    _timer = Timer.periodic(const Duration(milliseconds: 2200), (_) {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(

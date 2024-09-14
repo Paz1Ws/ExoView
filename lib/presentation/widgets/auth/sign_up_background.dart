@@ -1,7 +1,5 @@
-import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:myapp/config/theme/theme.dart';
-import 'package:myapp/presentation/widgets/widgets.dart';
 
 class SignUpBackground extends StatefulWidget {
   const SignUpBackground({

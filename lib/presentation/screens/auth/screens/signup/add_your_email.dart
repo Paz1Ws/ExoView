@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:myapp/config/theme/theme.dart';
 import 'package:myapp/presentation/widgets/widgets.dart';
 
 class AddYourEmail extends StatelessWidget {

@@ -10,6 +10,7 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BackgroundWithImage(
       backgroundIndex: 0,
+      withOpacity: true,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

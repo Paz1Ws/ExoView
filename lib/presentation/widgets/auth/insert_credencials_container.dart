@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:myapp/config/theme/theme.dart';
-import 'package:myapp/presentation/screens/auth/screens/forgotpassword/forgot_password.dart';
+import 'package:myapp/presentation/screens/screens.dart';
 import 'package:myapp/presentation/widgets/widgets.dart';
 
 class InsertCredencialsContainer extends StatelessWidget {
@@ -24,7 +24,7 @@ class InsertCredencialsContainer extends StatelessWidget {
             child: GestureDetector(
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => const ForgotPassword()));
+                    builder: (context) => const PasswordResetController()));
               },
               child: Text(
                 'Recover password?',
