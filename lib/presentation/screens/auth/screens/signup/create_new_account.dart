@@ -1,58 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:myapp/config/theme/theme.dart';
+import 'package:myapp/presentation/screens/screens.dart';
 import 'package:myapp/presentation/widgets/widgets.dart';
 
 class CreateNewAccount extends StatefulWidget {
-  final String title;
-
-  const CreateNewAccount({super.key, this.title = 'Create new account'});
+  const CreateNewAccount({super.key});
 
   @override
   State<CreateNewAccount> createState() => _CreateNewAccountState();
 }
 
 class _CreateNewAccountState extends State<CreateNewAccount> {
-  final astronautBackground =
-      const AssetImage('assets/images/austronaut_background.webp');
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    precacheImage(astronautBackground, context);
-  }
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        extendBodyBehindAppBar: true,
-        appBar: AppBar(
-          centerTitle: true,
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          title: Text(widget.title, style: AppFonts.spaceGrotesk18),
-          leading: IconButton(
-            icon: const Icon(
-              Icons.arrow_back_ios,
-              color: AppColors.veryLightGray,
-            ),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          ),
-        ),
-        resizeToAvoidBottomInset: false,
+    return BackgroundWithImage(
+        backgroundIndex: 1,
         body: Stack(
           children: [
-            Container(
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  colorFilter: ColorFilter.mode(
-                      Colors.black.withOpacity(0.3), BlendMode.darken),
-                  image: astronautBackground,
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Column(
@@ -69,8 +34,8 @@ class _CreateNewAccountState extends State<CreateNewAccount> {
                     text: 'Sign up with email',
                     size: MediaQuery.of(context).size.height * 0.08,
                     onTap: () {
-                      // Navigator.of(context).push(MaterialPageRoute(
-                      //     builder: (context) => const SignUpWithEmail()));
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => const SignUpController()));
                     },
                   ),
                   const Spacer(),

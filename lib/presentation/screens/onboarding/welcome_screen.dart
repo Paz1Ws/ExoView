@@ -12,8 +12,9 @@ class WelcomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    return PlanetsBackground(
-      content: Padding(
+    return BackgroundWithImage(
+      backgroundIndex: 0,
+      body: Padding(
         padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.end,

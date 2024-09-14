@@ -8,8 +8,9 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PlanetsBackground(
-      content: Center(
+    return BackgroundWithImage(
+      backgroundIndex: 0,
+      body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

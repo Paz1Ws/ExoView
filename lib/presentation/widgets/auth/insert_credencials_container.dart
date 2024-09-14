@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:myapp/config/theme/theme.dart';
+import 'package:myapp/presentation/screens/auth/screens/forgotpassword/forgot_password.dart';
 import 'package:myapp/presentation/widgets/widgets.dart';
 
 class InsertCredencialsContainer extends StatelessWidget {
@@ -20,15 +21,20 @@ class InsertCredencialsContainer extends StatelessWidget {
           const SizedBox(height: 10),
           Align(
             alignment: Alignment.centerRight,
-            child: TextButton(
-                onPressed: null,
-                child: Text(
-                  'Recover password?',
-                  style: AppFonts.spaceGrotesk16.copyWith(
-                    color: AppColors.lightGray,
-                  ),
-                )),
+            child: GestureDetector(
+              onTap: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => const ForgotPassword()));
+              },
+              child: Text(
+                'Recover password?',
+                style: AppFonts.spaceGrotesk16.copyWith(
+                  color: AppColors.lightGray,
+                ),
+              ),
+            ),
           ),
+          const SizedBox(height: 10),
           PurpleButton(
             text: 'Login',
             onTap: () {

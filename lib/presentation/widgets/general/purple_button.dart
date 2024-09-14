@@ -15,7 +15,7 @@ class PurpleButton extends StatelessWidget {
       onTap: onTap,
       child: Container(
         width: double.infinity,
-        height: size ?? MediaQuery.of(context).size.height * 0.1,
+        height: size ?? MediaQuery.of(context).size.height * 0.08,
         decoration: BoxDecoration(
           color: AppColors.brightPurple,
           borderRadius: BorderRadius.circular(6),

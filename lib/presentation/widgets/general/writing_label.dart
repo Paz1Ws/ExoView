@@ -15,7 +15,7 @@ class WritingLabel extends StatelessWidget {
     return StatefulBuilder(
       builder: (BuildContext context, StateSetter setState) {
         return TextFormField(
-          obscureText: obscureText,
+          obscureText: withVisibility ? obscureText : false,
           decoration: InputDecoration(
             filled: true,
             fillColor: AppColors.darkGray,
