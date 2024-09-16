@@ -22,7 +22,7 @@ class _SplashPageState extends State<SplashPage> {
   @override
   void initState() {
     super.initState();
-    _timer = Timer.periodic(const Duration(milliseconds: 2200), (_) {
+    _timer = Timer.periodic(const Duration(milliseconds: 4000), (_) {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
@@ -61,7 +61,7 @@ class _SplashPageState extends State<SplashPage> {
               child: FadeInUp(
                 curve: Curves.easeInOutSine,
                 from: 10,
-                duration: const Duration(milliseconds: 2000),
+                duration: const Duration(milliseconds: 4000),
                 child: AnimatedTextKit(
                   isRepeatingAnimation: false,
                   repeatForever: false,
@@ -75,7 +75,7 @@ class _SplashPageState extends State<SplashPage> {
                       ],
                       textStyle: AppFonts.spaceMono40
                           .copyWith(fontWeight: FontWeight.w800),
-                      speed: const Duration(milliseconds: 500),
+                      speed: const Duration(milliseconds: 800),
                     ),
                   ],
                 ),

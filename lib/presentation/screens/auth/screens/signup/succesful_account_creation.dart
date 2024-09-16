@@ -17,27 +17,40 @@ class _SuccesfulAccountCreationState extends State<SuccesfulAccountCreation> {
         backgroundIndex: 2,
         body: Stack(
           children: [
-            // SizedBox(
-            //   width: MediaQuery.of(context).size.width,
-            //   height: MediaQuery.of(context).size.height,
-            //   child: earthBackground,
-            // ),
             Padding(
               padding: const EdgeInsets.all(20.0),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Text('Your Account Was Succesfully Created!',
-                      style: AppFonts.spaceGrotesk18
-                          .copyWith(fontWeight: FontWeight.bold)),
-                  const SizedBox(
-                    height: 10,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Image.asset(
+                        'assets/images/successful_stars.png',
+                        width: 100,
+                        height: 100,
+                      ),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('Succesfully \nEnrolled!',
+                              maxLines: 2,
+                              style: AppFonts.spaceGrotesk40.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 30,
+                                  color: AppColors.brightTealGreen)),
+                          Text('One click away from your travel',
+                              style: AppFonts.spaceGrotesk16.copyWith(
+                                color: AppColors.lightGray,
+                                fontWeight: FontWeight.w800,
+                              ))
+                        ],
+                      )
+                    ],
                   ),
-                  Text('One click away from your travel',
-                      style: AppFonts.spaceGrotesk16.copyWith(
-                        color: AppColors.darkGray,
-                        fontWeight: FontWeight.w800,
-                      )),
                   const SizedBox(
                     height: 15,
                   ),

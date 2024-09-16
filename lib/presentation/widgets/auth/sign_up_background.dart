@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:myapp/config/theme/theme.dart';
 
-class SignUpBackground extends StatefulWidget {
+class SignUpBackground extends StatelessWidget {
   const SignUpBackground({
     super.key,
     required this.body,
@@ -10,28 +10,24 @@ class SignUpBackground extends StatefulWidget {
   final Widget body;
 
   @override
-  State<SignUpBackground> createState() => _SignUpBackgroundState();
-}
-
-class _SignUpBackgroundState extends State<SignUpBackground> {
-  final Image purpleBackground =
-      Image.asset('assets/images/purple_background.webp', fit: BoxFit.cover);
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    precacheImage(purpleBackground.image, context);
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBody: true,
       resizeToAvoidBottomInset: false,
       body: Stack(
         children: [
-          SizedBox(
+          Container(
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height,
-            child: purpleBackground,
+            decoration: const BoxDecoration(
+              gradient: RadialGradient(
+                focalRadius: 0.2,
+                radius: 1.5,
+                focal: Alignment.topCenter,
+                colors: [AppColors.brightPurple, AppColors.veryDarkPurple],
+                stops: [0.0, 0.1],
+              ),
+            ),
           ),
           Column(
             children: [
@@ -39,7 +35,7 @@ class _SignUpBackgroundState extends State<SignUpBackground> {
               Center(
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: widget.body,
+                  child: body,
                 ),
               ),
               const Spacer(),
