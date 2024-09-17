@@ -1,7 +1,7 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:myapp/config/theme/theme.dart';
-import 'package:myapp/presentation/screens/auth/screens/signUp/signup_controller.dart';
+import 'package:myapp/presentation/screens/screens.dart';
 import 'package:myapp/presentation/widgets/widgets.dart';
 
 class VerifyEmail extends StatelessWidget {
