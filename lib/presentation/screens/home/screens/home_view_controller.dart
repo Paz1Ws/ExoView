@@ -35,17 +35,9 @@ class _HomeViewControllerState extends State<HomeViewController> {
     return PurpleBackground(
       currentIndex: _selectedIndex,
       onTap: _onItemTapped,
-      padding: _pageController.hasClients
-          ? EdgeInsets.only(
-              left: 20,
-              right: 20,
-              bottom: 20,
-              top: _pageController.page == 0 ? 40 : 20,
-            )
-          : null,
       withAppBar: false,
       body: PageView(
-        allowImplicitScrolling: true,
+        physics: NeverScrollableScrollPhysics(),
         controller: _pageController,
         children: pages,
       ),

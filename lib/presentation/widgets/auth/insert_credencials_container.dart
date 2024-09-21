@@ -3,6 +3,8 @@ import 'package:myapp/config/theme/theme.dart';
 import 'package:myapp/presentation/screens/screens.dart';
 import 'package:myapp/presentation/widgets/widgets.dart';
 
+import '../../screens/home/screens/home_view_controller.dart';
+
 class InsertCredencialsContainer extends StatelessWidget {
   const InsertCredencialsContainer({super.key});
 
@@ -38,7 +40,8 @@ class InsertCredencialsContainer extends StatelessWidget {
           PurpleButton(
             text: 'Login',
             onTap: () {
-              null;
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => HomeViewController()));
             },
           ),
         ],

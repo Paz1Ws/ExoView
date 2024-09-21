@@ -22,9 +22,7 @@ class MyBottomNavigationBar extends StatelessWidget {
       selectedIconTheme: const IconThemeData(color: AppColors.brightTealGreen),
       unselectedItemColor: AppColors.veryLightGray,
       currentIndex: currentIndex,
-      onTap: (index) {
-        onTap;
-      },
+      onTap: onTap,
       unselectedIconTheme: const IconThemeData(color: AppColors.veryLightGray),
       items: const [
         BottomNavigationBarItem(

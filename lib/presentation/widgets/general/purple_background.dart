@@ -7,6 +7,7 @@ class PurpleBackground extends StatelessWidget {
   final Widget body;
   final EdgeInsets? padding;
   final bool withAppBar;
+  final bool withNavigation;
   final String appBarTitle;
   final void Function(int) onTap;
   final int currentIndex;
@@ -17,12 +18,15 @@ class PurpleBackground extends StatelessWidget {
       required this.currentIndex,
       this.padding,
       this.withAppBar = false,
+      this.withNavigation = true,
       this.appBarTitle = ''});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.veryDarkPurple,
       extendBodyBehindAppBar: true,
+      extendBody: true,
       appBar: withAppBar
           ? AppBar(
               title: Text(appBarTitle, style: AppFonts.spaceGrotesk18),
@@ -39,18 +43,14 @@ class PurpleBackground extends StatelessWidget {
               ),
             )
           : null,
-      bottomNavigationBar: MyBottomNavigationBar(
-        onTap: onTap,
-        currentIndex: currentIndex,
-      ),
-      body: Container(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
-        color: AppColors.veryDarkPurple,
-        child: Padding(
-          padding: padding ?? const EdgeInsets.symmetric(horizontal: 20),
-          child: body,
-        ),
+      bottomNavigationBar: withNavigation
+          ? MyBottomNavigationBar(
+              onTap: onTap,
+              currentIndex: currentIndex,
+            )
+          : null,
+      body: Expanded(
+        child: body,
       ),
     );
   }
