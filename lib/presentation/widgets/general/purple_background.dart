@@ -5,18 +5,52 @@ import 'package:myapp/presentation/widgets/home/my_bottom_navigator_bar.dart';
 
 class PurpleBackground extends StatelessWidget {
   final Widget body;
-  const PurpleBackground({super.key, required this.body});
+  final EdgeInsets? padding;
+  final bool withAppBar;
+  final String appBarTitle;
+  final void Function(int) onTap;
+  final int currentIndex;
+  const PurpleBackground(
+      {super.key,
+      required this.body,
+      required this.onTap,
+      required this.currentIndex,
+      this.padding,
+      this.withAppBar = false,
+      this.appBarTitle = ''});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: MyBottomNavigationBar(),
-      extendBody: true,
+      extendBodyBehindAppBar: true,
+      appBar: withAppBar
+          ? AppBar(
+              title: Text(appBarTitle, style: AppFonts.spaceGrotesk18),
+              backgroundColor: Colors.transparent,
+              elevation: 0,
+              leading: IconButton(
+                icon: const Icon(
+                  FontAwesomeIcons.arrowLeft,
+                  color: AppColors.white,
+                ),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
+            )
+          : null,
+      bottomNavigationBar: MyBottomNavigationBar(
+        onTap: onTap,
+        currentIndex: currentIndex,
+      ),
       body: Container(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
         color: AppColors.veryDarkPurple,
-        child: body,
+        child: Padding(
+          padding: padding ?? const EdgeInsets.symmetric(horizontal: 20),
+          child: body,
+        ),
       ),
     );
   }

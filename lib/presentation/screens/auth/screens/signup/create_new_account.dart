@@ -40,15 +40,15 @@ class _CreateNewAccountState extends State<CreateNewAccount> {
                   const Spacer(),
                   const SizedBox(height: 15),
                   const AuthMethodLarge(
-                    image: 'assets/images/google.webp',
+                    image: 'assets/images/auth_icons/google.webp',
                   ),
                   const SizedBox(height: 15),
                   const AuthMethodLarge(
-                    image: 'assets/images/apple.webp',
+                    image: 'assets/images/auth_icons/apple.webp',
                   ),
                   const SizedBox(height: 15),
                   const AuthMethodLarge(
-                    image: 'assets/images/facebook.webp',
+                    image: 'assets/images/auth_icons/facebook.webp',
                   ),
                   const Spacer(),
                   Text(

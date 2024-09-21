@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:myapp/config/theme/colors.dart';
 import 'package:myapp/config/theme/fonts.dart';
+import 'package:glowy_borders/glowy_borders.dart';
 
 class PurpleButton extends StatelessWidget {
   final String text;
@@ -13,15 +14,22 @@ class PurpleButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
-      child: Container(
-        width: double.infinity,
-        height: size ?? MediaQuery.of(context).size.height * 0.08,
-        decoration: BoxDecoration(
+      child: AnimatedGradientBorder(
+        animationTime: 5,
+        borderSize: 1,
+        glowSize: 0,
+        borderRadius: BorderRadius.circular(6),
+        gradientColors: [
+          AppColors.purple,
+          AppColors.lightGray,
+        ],
+        child: Container(
           color: AppColors.brightPurple,
-          borderRadius: BorderRadius.circular(6),
-        ),
-        child: Center(
-          child: Text(text, style: AppFonts.spaceGrotesk20),
+          width: double.infinity,
+          height: size ?? MediaQuery.of(context).size.height * 0.08,
+          child: Center(
+            child: Text(text, style: AppFonts.spaceGrotesk20),
+          ),
         ),
       ),
     );

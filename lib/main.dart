@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:myapp/presentation/screens/onboarding/splash_screen.dart';
+
+import 'presentation/screens/onboarding/splash_screen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();

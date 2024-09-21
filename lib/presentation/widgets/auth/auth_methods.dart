@@ -9,15 +9,15 @@ class AuthMethods extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         AuthMethodButton(
-          methodImage: 'assets/images/google.webp',
+          methodImage: 'assets/images/auth_icons/google.webp',
         ),
         SizedBox(width: 25),
         AuthMethodButton(
-          methodImage: 'assets/images/facebook.webp',
+          methodImage: 'assets/images/auth_icons/facebook.webp',
         ),
         SizedBox(width: 25),
         AuthMethodButton(
-          methodImage: 'assets/images/apple.webp',
+          methodImage: 'assets/images/auth_icons/apple.webp',
         ),
       ],
     );

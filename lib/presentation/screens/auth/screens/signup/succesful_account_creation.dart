@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:myapp/config/theme/theme.dart';
+import 'package:myapp/presentation/screens/home/screens/home_view_controller.dart';
 import 'package:myapp/presentation/screens/screens.dart';
 import 'package:myapp/presentation/widgets/widgets.dart';
 
@@ -59,7 +60,7 @@ class _SuccesfulAccountCreationState extends State<SuccesfulAccountCreation> {
                     text: 'Start Exploring',
                     onTap: () {
                       Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const HomeView()));
+                          builder: (context) => HomeViewController()));
                     },
                   )
                 ],
