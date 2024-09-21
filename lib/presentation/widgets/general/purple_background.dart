@@ -49,9 +49,7 @@ class PurpleBackground extends StatelessWidget {
               currentIndex: currentIndex,
             )
           : null,
-      body: Expanded(
-        child: body,
-      ),
+      body: body,
     );
   }
 }
