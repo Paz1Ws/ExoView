@@ -51,7 +51,6 @@ class _SplashPageState extends State<SplashPage> {
             Lottie.asset(
               'assets/animations/planet_loader_animation.json',
               height: size.height / 2,
-
               width: size.width / 2,
 
               frameRate: const FrameRate(60), // Adjust the frame rate as needed

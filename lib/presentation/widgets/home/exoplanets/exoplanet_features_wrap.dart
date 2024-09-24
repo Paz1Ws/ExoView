@@ -16,6 +16,12 @@ class ExoplanetFeaturesWrap extends StatelessWidget {
     'Planet radius',
     'Planet mass',
   ];
+  final List<String> featuresDescription = [
+    'The method used to discover the exoplanet.',
+    'The time it takes for the exoplanet to orbit its star.',
+    'The size of the exoplanet compared to Earth.',
+    'The mass of the exoplanet compared to Earth.',
+  ];
   final List<String> shipFeatures = [
     'Desing',
     'Propulsion',
@@ -44,21 +50,24 @@ class ExoplanetFeaturesWrap extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Wrap(
-      children: isShip
-          ? List.generate(
-              shipFeatures.length,
-              (index) => ExoplanetFeaturesCard(
-                    features: shipFeatures,
-                    featuresDescription: shipFeaturesDescription,
-                    featuresIcons: shipFeaturesIcons,
-                  ))
-          : List.generate(
-              features.length,
-              (index) => ExoplanetFeaturesCard(
-                    features: features,
-                    featuresIcons: featuresIcons,
-                  )),
+    return GridView.builder(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        childAspectRatio: 1.1,
+        crossAxisCount: 2,
+      ),
+      itemCount: isShip ? shipFeatures.length : features.length,
+      itemBuilder: (context, index) {
+        return ExoplanetFeaturesCard(
+          features: isShip ? shipFeatures[index] : features[index],
+          featuresDescription: isShip
+              ? shipFeaturesDescription[index]
+              : featuresDescription[index],
+          featuresIcons:
+              isShip ? shipFeaturesIcons[index] : featuresIcons[index],
+        );
+      },
     );
   }
 }

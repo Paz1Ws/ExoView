@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:myapp/config/theme/theme.dart';
+import 'package:glowy_borders/glowy_borders.dart';
 
 class ExoplanetFeaturesCard extends StatelessWidget {
-  final List<IconData> featuresIcons;
-  final List<String> features;
-  final List<String>? featuresDescription;
+  final IconData featuresIcons;
+  final String features;
+  final String? featuresDescription;
   // final Exoplanet exoplanet;
-  ExoplanetFeaturesCard({
+  const ExoplanetFeaturesCard({
     required this.features,
     required this.featuresIcons,
     this.featuresDescription,
@@ -17,45 +18,57 @@ class ExoplanetFeaturesCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: MediaQuery.of(context).size.width / 3,
-      height: MediaQuery.of(context).size.height / 5,
-      padding: EdgeInsets.all(5),
-      decoration: BoxDecoration(
-        color: AppColors.veryDarkPurple,
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Column(
-        children: List.generate(
-          features.length,
-          (index) => Column(
-            children: [
-              Row(
-                children: [
-                  Text(
-                    features[index],
-                    style: AppFonts.spaceGrotesk12.copyWith(
-                      color: AppColors.darkGray,
+    return AnimatedGradientBorder(
+      borderSize: 1,
+      stretchAlongAxis: true,
+      animationTime: 3,
+      animationProgress: 5,
+      borderRadius: BorderRadius.circular(18),
+      gradientColors: const [
+        AppColors.dark,
+        AppColors.veryLightGray,
+      ],
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          return Container(
+            padding: const EdgeInsets.all(10),
+            decoration: BoxDecoration(
+              color: AppColors.veryDarkPurple,
+              borderRadius: BorderRadius.circular(18),
+            ),
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Flexible(
+                      child: Text(
+                        features,
+                        maxLines: 2,
+                        style: AppFonts.spaceGrotesk18.copyWith(
+                          color: AppColors.grey,
+                        ),
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     ),
-                  ),
-                  const Spacer(),
-                  Icon(
-                    featuresIcons[index],
-                    color: AppColors.darkGray,
-                    size: 18,
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 5,
-              ),
-              Text(
-                featuresDescription?[index] ?? 'FEATURE DESCRIPTION',
-                style: AppFonts.spaceGrotesk16,
-              ),
-            ],
-          ),
-        ),
+                    Icon(
+                      featuresIcons,
+                      color: AppColors.grey,
+                      size: 18,
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 5,
+                ),
+                Text(
+                  featuresDescription ?? 'FEATURE DESCRIPTION',
+                  style: AppFonts.spaceGrotesk16,
+                ),
+              ],
+            ),
+          );
+        },
       ),
     );
   }

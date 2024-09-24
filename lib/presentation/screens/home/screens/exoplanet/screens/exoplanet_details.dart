@@ -30,113 +30,145 @@ class ExoplanetDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.sizeOf(context);
     return SingleChildScrollView(
-      child: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
-        Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                model3D != null
-                    ? Exoplanet3DContainer(
-                        withTranslation: true,
-                        model: model3D!,
-                      )
-                    : Expanded(
-                        flex: 1,
-                        child: Transform(
-                          transform: Matrix4.identity()
-                            ..translate(-MediaQuery.sizeOf(context).width / 5,
-                                0.0, 0.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              model3D != null
+                  ? Exoplanet3DContainer(
+                      withTranslation: true,
+                      model: model3D!,
+                    )
+                  : Expanded(
+                      flex: 2,
+                      child: Transform(
+                        transform: Matrix4.identity()
+                          ..translate(-size.width / 5, 0.0, 0.0),
+                        child: FittedBox(
                           child: Image.asset(
                             (defaultPlanets..shuffle()).first,
-                            width: MediaQuery.sizeOf(context).width / 1.5,
-                            height: MediaQuery.sizeOf(context).height / 1.5,
+                            width: size.width / 3,
+                            height: size.height / 3.5,
+                            fit: BoxFit.fitWidth,
                             color: AppColors.lightGray,
                           ),
                         ),
                       ),
-                Expanded(
-                  flex: 1,
-                  child: Column(
-                    children: [
-                      Stack(
-                        alignment: Alignment.center,
-                        children: [
-                          Text(
-                            'Temperature',
+                    ),
+              Expanded(
+                flex: 1,
+                child: Padding(
+                  padding: EdgeInsets.only(right: size.width / 6),
+                  child: FittedBox(
+                    fit: BoxFit.none,
+                    child: Column(
+                      children: [
+                        Stack(
+                          alignment: Alignment.center,
+                          children: [
+                            Text(
+                              '90°',
+                              style: AppFonts.spaceGrotesk16,
+                            ),
+                            SfCircularChart(series: <CircularSeries>[
+                              // Renders doughnut chart
+                              DoughnutSeries<ChartData, String>(
+                                  dataSource: chartData,
+                                  startAngle: 360,
+                                  endAngle: -360,
+                                  innerRadius: '60%',
+                                  radius: '50%',
+                                  pointColorMapper: (ChartData data, _) =>
+                                      data.color,
+                                  xValueMapper: (ChartData data, _) =>
+                                      data.y.toString(),
+                                  yValueMapper: (ChartData data, _) => data.y)
+                            ]),
+                          ],
+                        ),
+                        Transform(
+                          transform: Matrix4.identity()
+                            ..translate(0.0, -size.height / 15, 0.0),
+                          child: Text(
+                            'Average Temperature.\n 3x More than Earth',
                             style: AppFonts.spaceGrotesk16,
                           ),
-                          Expanded(
-                            child: FittedBox(
-                              child: SfCircularChart(series: <CircularSeries>[
-                                // Renders doughnut chart
-                                DoughnutSeries<ChartData, String>(
-                                    dataSource: chartData,
-                                    startAngle: 360,
-                                    endAngle: -360,
-                                    innerRadius: '60%',
-                                    radius: '100%',
-                                    pointColorMapper: (ChartData data, _) =>
-                                        data.color,
-                                    xValueMapper: (ChartData data, _) =>
-                                        data.y.toString(),
-                                    yValueMapper: (ChartData data, _) => data.y)
-                              ]),
-                            ),
-                          ),
-                        ],
-                      ),
-                      Text(
-                        'Average Temperature.\n 3x More than Earth',
-                        style: AppFonts.spaceGrotesk16,
-                      ),
-                    ],
+                        ),
+                      ],
+                    ),
                   ),
-                )
-              ],
-            )
-          ],
-        ),
-        // Row(
-        //   children: [
-        //     Text(
-        //       'Exoplanet',
-        //       style: AppFonts.spaceGrotesk18,
-        //     ),
-        //     WhiteBorderContainer(
-        //       widget: Text(
-        //         '1234',
-        //         textAlign: TextAlign.center,
-        //         style: AppFonts.spaceGrotesk18,
-        //       ),
-        //     )
-        //   ],
-        // ),
-        // ExoplanetFeaturesWrap(
-        //     // exoplanet: exoplanet,
-        //     ),
-        // Row(
-        //   children: [
-        //     WhiteBorderContainer(
-        //         widget: IconButton(
-        //       icon: const Icon(
-        //         Icons.favorite_border,
-        //         color: Colors.red,
-        //       ),
-        //       onPressed: () {},
-        //     )),
-        //     PurpleButton(text: 'Start Exploring', onTap: () {}),
-        //     WhiteBorderContainer(
-        //         widget: IconButton(
-        //       icon: const Icon(FontAwesomeIcons.arrowRight),
-        //       onPressed: () {},
-        //     ))
-        //   ],
-        // ),
-      ]),
+                ),
+              )
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                'Flash Tunder Exoplanet',
+                style: AppFonts.spaceGrotesk18,
+              ),
+              const SizedBox(
+                width: 10,
+              ),
+              WhiteBorderContainer(
+                widget: Text(
+                  '2025',
+                  textAlign: TextAlign.center,
+                  style: AppFonts.spaceGrotesk18,
+                ),
+              )
+            ],
+          ),
+          ExoplanetFeaturesWrap(
+              // exoplanet: exoplanet,
+              ),
+          Row(
+            children: [
+              Expanded(
+                child: WhiteBorderContainer(
+                    withAnimation: false,
+                    widget: IconButton(
+                      icon: const Icon(
+                        Icons.favorite_border,
+                        color: Colors.red,
+                      ),
+                      onPressed: () {},
+                    )),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              Expanded(
+                  flex: 2,
+                  child: PurpleButton(text: 'Book A Travel', onTap: () {})),
+              const SizedBox(
+                height: 10,
+              ),
+              Expanded(
+                child: WhiteBorderContainer(
+                    withAnimation: false,
+                    widget: IconButton(
+                      icon: const Icon(
+                        Icons.arrow_right,
+                        size: 25,
+                        color: AppColors.lightGray,
+                      ),
+                      onPressed: () {},
+                    )),
+              )
+            ],
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+        ],
+      ),
     );
   }
 }

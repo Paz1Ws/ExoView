@@ -19,9 +19,9 @@ class PurpleButton extends StatelessWidget {
         borderSize: 1,
         glowSize: 0,
         borderRadius: BorderRadius.circular(6),
-        gradientColors: [
+        gradientColors: const [
           AppColors.purple,
-          AppColors.lightGray,
+          AppColors.softPurple,
         ],
         child: Container(
           color: AppColors.brightPurple,

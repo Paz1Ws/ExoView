@@ -23,7 +23,22 @@ class PurpleBackground extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: AppColors.veryDarkPurple,
+        backgroundColor: null,
+        body: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                Color.fromARGB(255, 25, 15, 34), // Star,<<t color
+                AppColors.veryDarkPurple,
+
+                Color.fromARGB(255, 44, 32, 56), // Start color
+              ],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+          ),
+          child: body,
+        ),
         extendBodyBehindAppBar: true,
         appBar: withAppBar
             ? AppBar(
@@ -47,7 +62,6 @@ class PurpleBackground extends StatelessWidget {
                 currentIndex: currentIndex,
               )
             : null,
-        body: body,
       ),
     );
   }
