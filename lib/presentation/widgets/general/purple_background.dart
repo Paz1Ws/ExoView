@@ -5,7 +5,6 @@ import 'package:myapp/presentation/widgets/home/my_bottom_navigator_bar.dart';
 
 class PurpleBackground extends StatelessWidget {
   final Widget body;
-  final EdgeInsets? padding;
   final bool withAppBar;
   final bool withNavigation;
   final String appBarTitle;
@@ -16,39 +15,40 @@ class PurpleBackground extends StatelessWidget {
       required this.body,
       required this.onTap,
       required this.currentIndex,
-      this.padding,
       this.withAppBar = false,
       this.withNavigation = true,
       this.appBarTitle = ''});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.veryDarkPurple,
-      extendBodyBehindAppBar: true,
-      appBar: withAppBar
-          ? AppBar(
-              title: Text(appBarTitle, style: AppFonts.spaceGrotesk18),
-              backgroundColor: Colors.transparent,
-              elevation: 0,
-              leading: IconButton(
-                icon: const Icon(
-                  FontAwesomeIcons.arrowLeft,
-                  color: AppColors.white,
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: AppColors.veryDarkPurple,
+        extendBodyBehindAppBar: true,
+        appBar: withAppBar
+            ? AppBar(
+                title: Text(appBarTitle, style: AppFonts.spaceGrotesk18),
+                backgroundColor: Colors.transparent,
+                elevation: 0,
+                leading: IconButton(
+                  icon: const Icon(
+                    FontAwesomeIcons.arrowLeft,
+                    color: AppColors.white,
+                  ),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
                 ),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-              ),
-            )
-          : null,
-      bottomNavigationBar: withNavigation
-          ? MyBottomNavigationBar(
-              onTap: onTap,
-              currentIndex: currentIndex,
-            )
-          : null,
-      body: body,
+              )
+            : null,
+        bottomNavigationBar: withNavigation
+            ? MyBottomNavigationBar(
+                onTap: onTap,
+                currentIndex: currentIndex,
+              )
+            : null,
+        body: body,
+      ),
     );
   }
 }

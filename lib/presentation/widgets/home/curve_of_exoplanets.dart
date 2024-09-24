@@ -5,13 +5,12 @@ import 'package:myapp/presentation/widgets/widgets.dart';
 
 class CurveOfExoplanets extends StatelessWidget {
   final List<String> images = [
-    'assets/animations/exoplanets/55_cancri.glb',
-    'assets/animations/exoplanets/fire_Exoplanet.glb',
-    'assets/animations/exoplanets/kepler_186f.glb',
-    'assets/animations/exoplanets/kepler_22_b.glb',
-    'assets/animations/exoplanets/lunar_exoplanet.glb',
-    'assets/animations/exoplanets/wasp_12_b.glb',
     'assets/animations/exoplanets/proxima_b.glb',
+    'assets/animations/exoplanets/fire_Exoplanet.glb',
+    'assets/animations/exoplanets/kepler_22_b.glb',
+    'assets/animations/exoplanets/wasp_12_b.glb',
+    'assets/animations/exoplanets/55_cancri.glb',
+    'assets/animations/exoplanets/lunar_exoplanet.glb',
     'assets/animations/exoplanets/k1_18_b.glb',
   ];
 
@@ -25,13 +24,13 @@ class CurveOfExoplanets extends StatelessWidget {
     return Stack(
       children: List.generate(images.length, (index) {
         // Calculate the angle for the current index
-        double angle = (index / (images.length - 1)) * 2 * pi;
+        double angle = (index / (images.length - 1)) * 1.5 * pi;
 
         // Adjust angle to match the desired curve shape (half-circle)
         angle = (angle - pi / 2) * 2 / 4;
 
         // Calculate the x and y positions based on the angle and curve radius
-        double x = size.width / 3 + curveRadius * cos(angle);
+        double x = size.width / 2.5 + curveRadius * cos(angle);
         double y = size.height / 3 - curveRadius * sin(angle);
 
         return Positioned(

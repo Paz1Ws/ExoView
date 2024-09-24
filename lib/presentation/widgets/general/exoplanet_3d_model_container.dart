@@ -19,11 +19,12 @@ class Exoplanet3DContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Transform(
       transform: Matrix4.identity()
-        ..translate(-MediaQuery.sizeOf(context).width / 2.5, 0.0, 0.0),
+        ..translate(-MediaQuery.sizeOf(context).width / 3, 0.0, 0.0),
       child: Center(
-        child: SizedBox(
+        child: Container(
           height: height ?? MediaQuery.sizeOf(context).height / 2,
           width: width ?? MediaQuery.sizeOf(context).width / 1.2,
+          color: Colors.transparent,
           child: ModelViewer(
             backgroundColor: Colors.transparent,
             src: model,
@@ -31,8 +32,8 @@ class Exoplanet3DContainer extends StatelessWidget {
             autoRotate: true, // Deshabilitar auto-rotate
             autoPlay: true, // Deshabilitar auto-play
             withCredentials: false,
-            rotationPerSecond: '0.1rad', // Ajustar la velocidad de rotación
-            cameraControls: false, // Habilitar controles de cámara
+            rotationPerSecond: '0.05rad', // Ajustar la velocidad de rotación
+            cameraControls: true, // Habilitar controles de cámara
             disableZoom: false,
             debugLogging: true, // Habilitar logging para depuración
           ),
