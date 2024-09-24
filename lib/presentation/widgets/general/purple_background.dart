@@ -26,7 +26,6 @@ class PurpleBackground extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColors.veryDarkPurple,
       extendBodyBehindAppBar: true,
-      extendBody: true,
       appBar: withAppBar
           ? AppBar(
               title: Text(appBarTitle, style: AppFonts.spaceGrotesk18),

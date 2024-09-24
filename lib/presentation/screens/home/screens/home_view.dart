@@ -7,63 +7,67 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Padding(
-        padding: const EdgeInsets.only(top: 20),
-        child: Column(
-          children: [
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'GSD.2163.08.15.01.40',
-                    style: AppFonts.spaceGrotesk16,
-                  ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  Text(
-                    'List of the 8 most famous exoplanets',
-                    style: AppFonts.spaceGrotesk12,
-                  ),
-                ],
-              ),
+    return Padding(
+      padding: const EdgeInsets.only(top: 20),
+      child: Column(
+        children: [
+          Align(
+            alignment: Alignment.topLeft,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'GSD.2163.08.15.01.40',
+                  style: AppFonts.spaceGrotesk16,
+                ),
+                const SizedBox(
+                  height: 5,
+                ),
+                Text(
+                  'List of the 8 most famous exoplanets',
+                  style: AppFonts.spaceGrotesk12,
+                ),
+              ],
             ),
-            Expanded(
-              child: Stack(
-                alignment: Alignment.center,
-                children: [
-                  Exoplanet3DContainer(
-                    withTranslation: true,
-                    model: 'assets/animations/exoplanets/sun.glb',
-                  ),
-                  CurveOfExoplanets(),
-                ],
-              ),
+          ),
+          Expanded(
+            child: Stack(
+              fit: StackFit.loose,
+              alignment: Alignment.center,
+              children: [
+                const Exoplanet3DContainer(
+                  withTranslation: true,
+                  model: 'assets/animations/exoplanets/sun.glb',
+                ),
+                Transform.translate(
+                  offset: const Offset(20, 0),
+                  child: CurveOfExoplanets(),
+                ),
+              ],
             ),
-            Expanded(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Text(
-                    'Where do you want to go?',
-                    style: AppFonts.spaceGrotesk18,
+          ),
+          Align(
+            alignment: Alignment.bottomRight,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Text(
+                  'Where do you want to go?',
+                  style: AppFonts.spaceGrotesk18,
+                ),
+                const SizedBox(
+                  height: 5,
+                ),
+                Text(
+                  'Choose your cosmic journey',
+                  style: AppFonts.spaceGrotesk12.copyWith(
+                    color: AppColors.grey,
                   ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  Text(
-                    'Choose your cosmic journey',
-                    style: AppFonts.spaceGrotesk12.copyWith(
-                      color: AppColors.grey,
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

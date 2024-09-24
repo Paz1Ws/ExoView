@@ -4,7 +4,7 @@ import 'package:myapp/presentation/screens/screens.dart';
 import 'package:myapp/presentation/widgets/widgets.dart';
 
 class HomeViewController extends StatefulWidget {
-  HomeViewController({super.key});
+  const HomeViewController({super.key});
 
   @override
   State<HomeViewController> createState() => _HomeViewControllerState();
@@ -14,7 +14,7 @@ class _HomeViewControllerState extends State<HomeViewController> {
   final PageController _pageController = PageController();
   int _selectedIndex = 0;
   final List<Widget> pages = [
-    HomeView(),
+    const HomeView(),
     ExoplanetDetails(),
     SpaceShipView(),
   ];
@@ -25,7 +25,7 @@ class _HomeViewControllerState extends State<HomeViewController> {
     });
     _pageController.animateToPage(
       index,
-      duration: Duration(milliseconds: 300),
+      duration: const Duration(milliseconds: 300),
       curve: Curves.easeInOut,
     );
   }
@@ -37,7 +37,7 @@ class _HomeViewControllerState extends State<HomeViewController> {
       onTap: _onItemTapped,
       withAppBar: false,
       body: PageView(
-        physics: NeverScrollableScrollPhysics(),
+        physics: const NeverScrollableScrollPhysics(),
         controller: _pageController,
         children: pages,
       ),
