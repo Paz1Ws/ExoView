@@ -20,7 +20,7 @@ class _SuccesfulAccountCreationState extends State<SuccesfulAccountCreation> {
         body: Stack(
           children: [
             Padding(
-              padding: const EdgeInsets.all(20.0),
+              padding: const EdgeInsets.all(15.0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
@@ -60,7 +60,7 @@ class _SuccesfulAccountCreationState extends State<SuccesfulAccountCreation> {
                     text: 'Start Exploring',
                     onTap: () {
                       Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => HomeViewController()));
+                          builder: (context) => const HomeViewController()));
                     },
                   )
                 ],

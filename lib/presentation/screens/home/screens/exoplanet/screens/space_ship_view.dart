@@ -6,7 +6,7 @@ import 'package:myapp/presentation/widgets/widgets.dart';
 
 class SpaceShipView extends StatelessWidget {
   final String? model3D;
-  const SpaceShipView({
+  SpaceShipView({
     super.key,
     this.model3D,
   });

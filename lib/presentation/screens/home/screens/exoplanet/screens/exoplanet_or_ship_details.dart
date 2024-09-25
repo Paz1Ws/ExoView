@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:myapp/config/theme/theme.dart';
 import 'package:myapp/presentation/widgets/widgets.dart';
-
 import 'package:syncfusion_flutter_charts/charts.dart';
 
-class ExoplanetDetails extends StatelessWidget {
+class ExoplanetOrShipDetails extends StatelessWidget {
   final String? model3D;
-  //final Exoplanet exoplanet;
+  final bool isShip;
   final List<String> defaultPlanets = [
     'assets/images/planet_icons/planet_icon_1.png',
     'assets/images/planet_icons/planet_icon_2.png',
@@ -20,10 +19,11 @@ class ExoplanetDetails extends StatelessWidget {
     ChartData(25, AppColors.brightPurple),
     ChartData(55, const Color.fromARGB(255, 55, 29, 76))
   ];
-  ExoplanetDetails({
+
+  ExoplanetOrShipDetails({
     super.key,
-    //  required this.exoplanet,
     this.model3D,
+    this.isShip = false,
   });
 
   @override
@@ -81,7 +81,6 @@ class ExoplanetDetails extends StatelessWidget {
                               child: SfCircularChart(
                                   margin: EdgeInsets.zero,
                                   series: <CircularSeries>[
-                                    // Renders doughnut chart
                                     DoughnutSeries<ChartData, String>(
                                         dataSource: chartData,
                                         startAngle: 360,
@@ -102,7 +101,9 @@ class ExoplanetDetails extends StatelessWidget {
                           height: 10,
                         ),
                         Text(
-                          'Average Temperature.\n 3x More than Earth',
+                          isShip
+                              ? 'Max. Velocity'
+                              : 'Average Temperature.\n 3x More than Earth',
                           style: AppFonts.spaceGrotesk16,
                         ),
                       ],
@@ -119,7 +120,7 @@ class ExoplanetDetails extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                'Flash Tunder Exoplanet',
+                isShip ? 'Nebula Voyager' : 'Flash Thunder Exoplanet',
                 style: AppFonts.spaceGrotesk18,
               ),
               const SizedBox(
@@ -142,8 +143,8 @@ class ExoplanetDetails extends StatelessWidget {
             child: Column(
               children: [
                 ExoplanetFeaturesWrap(
-                    // exoplanet: exoplanet,
-                    ),
+                  isShip: isShip,
+                ),
                 const SizedBox(
                   height: 20,
                 ),
@@ -167,8 +168,9 @@ class ExoplanetDetails extends StatelessWidget {
                     ),
                     Expanded(
                         flex: 2,
-                        child:
-                            PurpleButton(text: 'Book A Travel', onTap: () {})),
+                        child: PurpleButton(
+                            text: isShip ? 'Book' : 'Book A Travel',
+                            onTap: () {})),
                     const SizedBox(
                       width: 10,
                     ),

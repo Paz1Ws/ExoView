@@ -14,10 +14,16 @@ class _HomeViewControllerState extends State<HomeViewController> {
   final PageController _pageController = PageController();
   int _selectedIndex = 0;
   final List<Widget> pages = [
-    //const HomeView(),
-    //ExoplanetDetails(),
-    //ExExoplanetShow(),
-    const SpaceShipView(),
+    // const HomeView(),
+    ExoplanetOrShipDetails(),
+    ExoplanetShow(
+      nickName: 'Lava Planet',
+      name: '55 Cancri e',
+    ),
+    ExoplanetOrShipDetails(
+      isShip: true,
+      model3D: 'assets/animations/voyager.glb',
+    )
   ];
 
   void _onItemTapped(int index) {
