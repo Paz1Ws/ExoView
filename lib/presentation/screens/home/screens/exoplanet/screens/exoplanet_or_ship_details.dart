@@ -32,89 +32,18 @@ class ExoplanetOrShipDetails extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(
         children: [
-          const SizedBox(
-            height: 20,
+          SizedBox(
+            height: size.height * 0.3,
+            width: size.width,
+            child: PlanetAndChart(
+                model3D: model3D,
+                size: size,
+                defaultPlanets: defaultPlanets,
+                chartData: chartData,
+                isShip: isShip),
           ),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              model3D != null
-                  ? Exoplanet3DContainer(
-                      withTranslation: true,
-                      model: model3D!,
-                    )
-                  : Expanded(
-                      flex: 2,
-                      child: Transform(
-                        transform: Matrix4.identity()
-                          ..translate(-size.width / 5, 0.0, 0.0),
-                        child: FittedBox(
-                          child: Image.asset(
-                            (defaultPlanets..shuffle()).first,
-                            width: size.width / 2,
-                            height: size.height / 4,
-                            fit: BoxFit.cover,
-                            color: AppColors.lightGray,
-                          ),
-                        ),
-                      ),
-                    ),
-              Expanded(
-                flex: 1,
-                child: Padding(
-                  padding: EdgeInsets.only(
-                      right: size.width / 6, top: size.height / 12),
-                  child: FittedBox(
-                    fit: BoxFit.none,
-                    child: Column(
-                      children: [
-                        Stack(
-                          alignment: Alignment.center,
-                          children: [
-                            Text(
-                              '90°',
-                              style: AppFonts.spaceGrotesk16,
-                            ),
-                            SizedBox(
-                              width: size.width / 2.5,
-                              height: size.width / 2.5,
-                              child: SfCircularChart(
-                                  margin: EdgeInsets.zero,
-                                  series: <CircularSeries>[
-                                    DoughnutSeries<ChartData, String>(
-                                        dataSource: chartData,
-                                        startAngle: 360,
-                                        endAngle: -360,
-                                        innerRadius: '60%',
-                                        radius: '100%',
-                                        pointColorMapper: (ChartData data, _) =>
-                                            data.color,
-                                        xValueMapper: (ChartData data, _) =>
-                                            data.y.toString(),
-                                        yValueMapper: (ChartData data, _) =>
-                                            data.y)
-                                  ]),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Text(
-                          isShip
-                              ? 'Max. Velocity'
-                              : 'Average Temperature.\n 3x More than Earth',
-                          style: AppFonts.spaceGrotesk16,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              )
-            ],
-          ),
-          const SizedBox(
-            height: 20,
+          SizedBox(
+            height: size.height * 0.05,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -126,8 +55,17 @@ class ExoplanetOrShipDetails extends StatelessWidget {
               const SizedBox(
                 width: 10,
               ),
-              WhiteBorderContainer(
-                widget: Text(
+              Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                decoration: BoxDecoration(
+                  color: Colors.transparent,
+                  borderRadius: BorderRadius.circular(10),
+                  border: Border.all(
+                    color: AppColors.lightGray,
+                  ),
+                ),
+                child: Text(
                   '2025',
                   textAlign: TextAlign.center,
                   style: AppFonts.spaceGrotesk18,
@@ -136,7 +74,7 @@ class ExoplanetOrShipDetails extends StatelessWidget {
             ],
           ),
           const SizedBox(
-            height: 20,
+            height: 10,
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -200,11 +138,4 @@ class ExoplanetOrShipDetails extends StatelessWidget {
       ),
     );
   }
-}
-
-class ChartData {
-  ChartData(this.y, this.color);
-
-  final double y;
-  final Color color;
 }

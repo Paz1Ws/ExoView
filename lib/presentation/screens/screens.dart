@@ -14,5 +14,4 @@ export 'home/screens/home_view.dart';
 // AUTH
 // EXOPLANETS
 export 'home/screens/exoplanet/screens/exoplanet_or_ship_details.dart';
-export 'home/screens/exoplanet/screens/space_ship_view.dart';
 export 'home/screens/exoplanet/screens/exoplanet_show.dart';

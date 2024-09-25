@@ -14,7 +14,7 @@ export 'auth/sign_up_background.dart';
 export 'auth/verify_email_container.dart';
 // HOME
 export 'home/my_bottom_navigator_bar.dart';
-
+export 'home/exoplanets/planet_and_chart.dart';
 export 'home/curve_of_exoplanets.dart';
 export 'home/exoplanets/exoplanet_features_card.dart';
 export 'home/exoplanets/exoplanet_features_wrap.dart';
