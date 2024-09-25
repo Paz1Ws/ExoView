@@ -54,7 +54,6 @@ class ExoplanetFeaturesWrap extends StatelessWidget {
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        childAspectRatio: 1.1,
         crossAxisCount: 2,
       ),
       itemCount: isShip ? shipFeatures.length : features.length,

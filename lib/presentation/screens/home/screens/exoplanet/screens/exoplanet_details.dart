@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:myapp/config/theme/theme.dart';
-import 'package:myapp/data/data.dart';
 import 'package:myapp/presentation/widgets/widgets.dart';
 
 import 'package:syncfusion_flutter_charts/charts.dart';
@@ -33,9 +31,10 @@ class ExoplanetDetails extends StatelessWidget {
     final size = MediaQuery.sizeOf(context);
     return SingleChildScrollView(
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
+          const SizedBox(
+            height: 20,
+          ),
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -52,9 +51,9 @@ class ExoplanetDetails extends StatelessWidget {
                         child: FittedBox(
                           child: Image.asset(
                             (defaultPlanets..shuffle()).first,
-                            width: size.width / 3,
-                            height: size.height / 3.5,
-                            fit: BoxFit.fitWidth,
+                            width: size.width / 2,
+                            height: size.height / 4,
+                            fit: BoxFit.cover,
                             color: AppColors.lightGray,
                           ),
                         ),
@@ -63,7 +62,8 @@ class ExoplanetDetails extends StatelessWidget {
               Expanded(
                 flex: 1,
                 child: Padding(
-                  padding: EdgeInsets.only(right: size.width / 6),
+                  padding: EdgeInsets.only(
+                      right: size.width / 6, top: size.height / 12),
                   child: FittedBox(
                     fit: BoxFit.none,
                     child: Column(
@@ -75,29 +75,35 @@ class ExoplanetDetails extends StatelessWidget {
                               '90°',
                               style: AppFonts.spaceGrotesk16,
                             ),
-                            SfCircularChart(series: <CircularSeries>[
-                              // Renders doughnut chart
-                              DoughnutSeries<ChartData, String>(
-                                  dataSource: chartData,
-                                  startAngle: 360,
-                                  endAngle: -360,
-                                  innerRadius: '60%',
-                                  radius: '50%',
-                                  pointColorMapper: (ChartData data, _) =>
-                                      data.color,
-                                  xValueMapper: (ChartData data, _) =>
-                                      data.y.toString(),
-                                  yValueMapper: (ChartData data, _) => data.y)
-                            ]),
+                            SizedBox(
+                              width: size.width / 2.5,
+                              height: size.width / 2.5,
+                              child: SfCircularChart(
+                                  margin: EdgeInsets.zero,
+                                  series: <CircularSeries>[
+                                    // Renders doughnut chart
+                                    DoughnutSeries<ChartData, String>(
+                                        dataSource: chartData,
+                                        startAngle: 360,
+                                        endAngle: -360,
+                                        innerRadius: '60%',
+                                        radius: '100%',
+                                        pointColorMapper: (ChartData data, _) =>
+                                            data.color,
+                                        xValueMapper: (ChartData data, _) =>
+                                            data.y.toString(),
+                                        yValueMapper: (ChartData data, _) =>
+                                            data.y)
+                                  ]),
+                            ),
                           ],
                         ),
-                        Transform(
-                          transform: Matrix4.identity()
-                            ..translate(0.0, -size.height / 15, 0.0),
-                          child: Text(
-                            'Average Temperature.\n 3x More than Earth',
-                            style: AppFonts.spaceGrotesk16,
-                          ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Text(
+                          'Average Temperature.\n 3x More than Earth',
+                          style: AppFonts.spaceGrotesk16,
                         ),
                       ],
                     ),
@@ -105,6 +111,9 @@ class ExoplanetDetails extends StatelessWidget {
                 ),
               )
             ],
+          ),
+          const SizedBox(
+            height: 20,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -125,44 +134,62 @@ class ExoplanetDetails extends StatelessWidget {
               )
             ],
           ),
-          ExoplanetFeaturesWrap(
-              // exoplanet: exoplanet,
-              ),
-          Row(
-            children: [
-              Expanded(
-                child: WhiteBorderContainer(
-                    withAnimation: false,
-                    widget: IconButton(
-                      icon: const Icon(
-                        Icons.favorite_border,
-                        color: Colors.red,
-                      ),
-                      onPressed: () {},
-                    )),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              Expanded(
-                  flex: 2,
-                  child: PurpleButton(text: 'Book A Travel', onTap: () {})),
-              const SizedBox(
-                height: 10,
-              ),
-              Expanded(
-                child: WhiteBorderContainer(
-                    withAnimation: false,
-                    widget: IconButton(
-                      icon: const Icon(
-                        Icons.arrow_right,
-                        size: 25,
-                        color: AppColors.lightGray,
-                      ),
-                      onPressed: () {},
-                    )),
-              )
-            ],
+          const SizedBox(
+            height: 20,
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Column(
+              children: [
+                ExoplanetFeaturesWrap(
+                    // exoplanet: exoplanet,
+                    ),
+                const SizedBox(
+                  height: 20,
+                ),
+                Row(
+                  children: [
+                    Expanded(
+                      child: WhiteBorderContainer(
+                          withAnimation: false,
+                          width: 50,
+                          height: 50,
+                          widget: IconButton(
+                            icon: const Icon(
+                              Icons.favorite_border,
+                              color: Colors.red,
+                            ),
+                            onPressed: () {},
+                          )),
+                    ),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    Expanded(
+                        flex: 2,
+                        child:
+                            PurpleButton(text: 'Book A Travel', onTap: () {})),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    Expanded(
+                      child: WhiteBorderContainer(
+                          withAnimation: false,
+                          width: 50,
+                          height: 50,
+                          widget: IconButton(
+                            icon: const Icon(
+                              Icons.arrow_right,
+                              size: 25,
+                              color: AppColors.lightGray,
+                            ),
+                            onPressed: () {},
+                          )),
+                    )
+                  ],
+                ),
+              ],
+            ),
           ),
           const SizedBox(
             height: 20,

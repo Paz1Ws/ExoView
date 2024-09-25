@@ -20,6 +20,7 @@ class ExoplanetFeaturesCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return AnimatedGradientBorder(
       borderSize: 1,
+      glowSize: 1,
       stretchAlongAxis: true,
       animationTime: 3,
       animationProgress: 5,
@@ -28,47 +29,45 @@ class ExoplanetFeaturesCard extends StatelessWidget {
         AppColors.dark,
         AppColors.veryLightGray,
       ],
-      child: LayoutBuilder(
-        builder: (context, constraints) {
-          return Container(
-            padding: const EdgeInsets.all(10),
-            decoration: BoxDecoration(
-              color: AppColors.veryDarkPurple,
-              borderRadius: BorderRadius.circular(18),
-            ),
-            child: Column(
+      child: Container(
+        padding: const EdgeInsets.all(10),
+        decoration: BoxDecoration(
+          color: AppColors.veryDarkPurple,
+          borderRadius: BorderRadius.circular(18),
+        ),
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Flexible(
-                      child: Text(
-                        features,
-                        maxLines: 2,
-                        style: AppFonts.spaceGrotesk18.copyWith(
-                          color: AppColors.grey,
-                        ),
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ),
-                    Icon(
-                      featuresIcons,
+                Flexible(
+                  child: Text(
+                    features,
+                    maxLines: 2,
+                    style: AppFonts.spaceGrotesk18.copyWith(
                       color: AppColors.grey,
-                      size: 18,
                     ),
-                  ],
+                    overflow: TextOverflow.ellipsis,
+                  ),
                 ),
-                const SizedBox(
-                  height: 5,
-                ),
-                Text(
-                  featuresDescription ?? 'FEATURE DESCRIPTION',
-                  style: AppFonts.spaceGrotesk16,
+                Icon(
+                  featuresIcons,
+                  color: AppColors.grey,
+                  size: 18,
                 ),
               ],
             ),
-          );
-        },
+            const SizedBox(
+              height: 5,
+            ),
+            Text(
+              featuresDescription ?? 'FEATURE DESCRIPTION',
+              overflow: TextOverflow.ellipsis,
+              maxLines: 2,
+              style: AppFonts.spaceGrotesk16,
+            ),
+          ],
+        ),
       ),
     );
   }
