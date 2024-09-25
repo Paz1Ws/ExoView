@@ -29,13 +29,14 @@ class ExoplanetShow extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Center(
-          child: Image.asset(
-            (defaultPlanets..shuffle()).first,
-            width: size.width / 1.5,
-            height: size.height / 1.5,
-            fit: BoxFit.contain,
-            color: AppColors.lightGray,
+        Expanded(
+          child: Center(
+            child: Image.asset(
+              (defaultPlanets..shuffle()).first,
+              width: size.width / 1.5,
+              height: size.height / 1.5,
+              color: AppColors.lightGray,
+            ),
           ),
         ),
         Padding(

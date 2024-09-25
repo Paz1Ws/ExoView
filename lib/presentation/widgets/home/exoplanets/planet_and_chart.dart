@@ -83,6 +83,8 @@ class PlanetAndChart extends StatelessWidget {
                 isShip
                     ? 'Max. Velocity'
                     : 'Average Temperature.\n 3x More than Earth',
+              overflow: TextOverflow.fade,
+              maxLines: 2,
                 style: AppFonts.spaceGrotesk12,
               ),
             ],

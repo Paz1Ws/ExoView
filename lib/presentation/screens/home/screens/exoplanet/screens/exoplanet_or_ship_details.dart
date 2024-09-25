@@ -33,7 +33,7 @@ class ExoplanetOrShipDetails extends StatelessWidget {
       child: Column(
         children: [
           SizedBox(
-            height: size.height * 0.3,
+            height: size.height * 0.4,
             width: size.width,
             child: PlanetAndChart(
                 model3D: model3D,
@@ -41,9 +41,6 @@ class ExoplanetOrShipDetails extends StatelessWidget {
                 defaultPlanets: defaultPlanets,
                 chartData: chartData,
                 isShip: isShip),
-          ),
-          SizedBox(
-            height: size.height * 0.05,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -112,20 +109,22 @@ class ExoplanetOrShipDetails extends StatelessWidget {
                     const SizedBox(
                       width: 10,
                     ),
-                    Expanded(
-                      child: WhiteBorderContainer(
-                          withAnimation: false,
-                          width: 50,
-                          height: 50,
-                          widget: IconButton(
-                            icon: const Icon(
-                              Icons.arrow_right,
-                              size: 25,
-                              color: AppColors.lightGray,
-                            ),
-                            onPressed: () {},
-                          )),
-                    )
+                    isShip
+                        ? const SizedBox.shrink()
+                        : Expanded(
+                            child: WhiteBorderContainer(
+                                withAnimation: false,
+                                width: 50,
+                                height: 50,
+                                widget: IconButton(
+                                  icon: const Icon(
+                                    Icons.arrow_right,
+                                    size: 25,
+                                    color: AppColors.lightGray,
+                                  ),
+                                  onPressed: () {},
+                                )),
+                          )
                   ],
                 ),
               ],

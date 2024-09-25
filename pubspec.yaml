@@ -36,9 +36,7 @@ flutter:
   uses-material-design: true
   assets:
     - assets/images/
-
     - assets/images/auth_icons/
-
     - assets/images/backgrounds/
     - assets/images/planet_icons/
     - assets/videos/
