@@ -25,18 +25,20 @@ class Exoplanet3DContainer extends StatelessWidget {
           height: height ?? MediaQuery.sizeOf(context).height / 2,
           width: width ?? MediaQuery.sizeOf(context).width / 1.2,
           color: Colors.transparent,
-          child: ModelViewer(
-            backgroundColor: Colors.transparent,
+          child: ClipOval(
+            child: ModelViewer(
+              backgroundColor: Colors.transparent,
 
-            src: model,
-            ar: false,
-            autoRotate: true, // Deshabilitar auto-rotate
-            autoPlay: true, // Deshabilitar auto-play
-            withCredentials: false,
-            rotationPerSecond: '0.05rad', // Ajustar la velocidad de rotación
-            cameraControls: true, // Habilitar controles de cámara
-            disableZoom: false,
-            debugLogging: true, // Habilitar logging para depuración
+              src: model,
+              ar: false,
+              autoRotate: true, // Deshabilitar auto-rotate
+              autoPlay: true, // Deshabilitar auto-play
+              withCredentials: false,
+              rotationPerSecond: '0.05rad', // Ajustar la velocidad de rotación
+              cameraControls: true, // Habilitar controles de cámara
+              disableZoom: false,
+              debugLogging: true, // Habilitar logging para depuración
+            ),
           ),
         ),
       ),

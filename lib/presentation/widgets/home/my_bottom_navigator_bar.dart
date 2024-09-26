@@ -30,7 +30,7 @@ class MyBottomNavigationBar extends StatelessWidget {
         ),
         BottomNavigationBarItem(
           icon: Icon(FontAwesomeIcons.wpexplorer),
-          label: 'Search',
+          label: 'Explore',
         ),
         BottomNavigationBarItem(
           icon: Icon(FontAwesomeIcons.bookmark),

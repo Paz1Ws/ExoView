@@ -24,10 +24,10 @@ class CurveOfExoplanets extends StatelessWidget {
     return Stack(
       children: List.generate(images.length, (index) {
         // Calculate the angle for the current index
-        double angle = (index / (images.length - 1)) * 1.5 * pi;
+        double angle = (index / (images.length - 1)) * 1.52 * pi;
 
         // Adjust angle to match the desired curve shape (half-circle)
-        angle = (angle - pi / 2) * 2 / 4;
+        angle = (angle - pi / 2) / 2;
 
         // Calculate the x and y positions based on the angle and curve radius
         double x = size.width / 2.5 + curveRadius * cos(angle);
@@ -39,6 +39,7 @@ class CurveOfExoplanets extends StatelessWidget {
           child: Exoplanet3DContainer(
             height: size.height / 5,
             width: size.width / 5,
+            translation: Matrix4.identity(),
             model: images[index],
           ),
         );
