@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:myapp/config/theme/colors.dart';
-import 'package:myapp/presentation/screens/screens.dart';
 
 class MyBottomNavigationBar extends StatelessWidget {
   final void Function(int)? onTap;

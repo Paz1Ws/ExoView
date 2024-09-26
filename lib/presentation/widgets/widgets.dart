@@ -18,3 +18,7 @@ export 'home/exoplanets/planet_and_chart.dart';
 export 'home/curve_of_exoplanets.dart';
 export 'home/exoplanets/exoplanet_features_card.dart';
 export 'home/exoplanets/exoplanet_features_wrap.dart';
+//EXPLORE
+export 'explore/search_tab.dart';
+export 'explore/planet_category_card.dart';
+

@@ -1,45 +1,65 @@
 import 'package:flutter/material.dart';
 import 'package:myapp/config/theme/colors.dart';
 import 'package:myapp/config/theme/fonts.dart';
-import 'package:glowy_borders/glowy_borders.dart';
+import 'package:myapp/presentation/widgets/widgets.dart';
 
 class SearchTab extends StatelessWidget {
-  final String text;
-  final double? size;
-  final GestureTapCallback onTap;
-  const SearchTab(
-      {super.key, required this.text, required this.onTap, this.size});
+  const SearchTab({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: AnimatedGradientBorder(
-          animationTime: 5,
-          borderSize: 1,
-          glowSize: 0,
-          borderRadius: BorderRadius.circular(6),
-          gradientColors: [
-            AppColors.dark,
-            AppColors.lightGray,
-          ],
-          child: Container(
-            color: Colors.transparent,
-            width: double.infinity,
-            height: MediaQuery.of(context).size.height * 0.1,
-            child: TextField(
-              decoration: InputDecoration(
-                prefixIcon: Icon(Icons.mic),
-                suffixIcon: Icon(Icons.filter_alt),
-                icon: Icon(Icons.search),
-                hintText: 'Search...',
-                hintStyle: AppFonts.spaceGrotesk16,
-                border: InputBorder.none,
-                contentPadding: EdgeInsets.symmetric(horizontal: 10),
-              ),
-              style: AppFonts.spaceGrotesk16,
+    return WhiteBorderContainer(
+        border: 6,
+        width: double.infinity,
+        widget: Container(
+            decoration: BoxDecoration(
+              color: AppColors.veryDarkPurple,
+              borderRadius: BorderRadius.circular(6),
             ),
-          )),
-    );
+            height: 50,
+            width: double.infinity,
+            child: Row(
+              children: [
+                Expanded(
+                  flex: 3,
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 20),
+                    child: TextField(
+                      decoration: InputDecoration(
+                        icon: const Icon(Icons.search),
+                        hintText: 'Search...',
+                        hintStyle: AppFonts.spaceGrotesk16,
+                        border: InputBorder.none,
+                      ),
+                      style: AppFonts.spaceGrotesk16,
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: IconButton(
+                    icon: const Icon(Icons.tune),
+                    onPressed: () {},
+                  ),
+                ),
+                Expanded(
+                  child: Container(
+                    decoration: const BoxDecoration(
+                      color: AppColors.brightTealGreen,
+                      borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(20),
+                        bottomRight: Radius.circular(6),
+                        topRight: Radius.circular(6),
+                      ),
+                    ),
+                    child: IconButton(
+                      icon: const Icon(Icons.mic),
+                      onPressed: () {},
+                    ),
+                  ),
+                ),
+              ],
+            )));
   }
 }

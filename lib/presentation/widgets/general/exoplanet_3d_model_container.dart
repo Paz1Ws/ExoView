@@ -3,12 +3,11 @@ import 'package:myapp/config/theme/theme.dart';
 import 'package:model_viewer_plus/model_viewer_plus.dart';
 
 class Exoplanet3DContainer extends StatelessWidget {
-  final bool withTranslation;
+  
   final String model;
   final double? height;
   final double? width;
   const Exoplanet3DContainer({
-    required this.withTranslation,
     required this.model,
     this.height,
     this.width,

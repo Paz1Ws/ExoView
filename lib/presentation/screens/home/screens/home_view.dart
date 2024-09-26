@@ -22,7 +22,7 @@ class HomeView extends StatelessWidget {
                     'GSD.2163.08.15.01.40',
                     style: AppFonts.spaceGrotesk16,
                   ),
-                  const SizedBox(
+              const SizedBox(
                     height: 5,
                   ),
                   Text(
@@ -47,7 +47,6 @@ class HomeView extends StatelessWidget {
               children: [
                 CurveOfExoplanets(),
                 const Exoplanet3DContainer(
-                  withTranslation: true,
                   model: 'assets/animations/exoplanets/sun.glb',
                 ),
               ],

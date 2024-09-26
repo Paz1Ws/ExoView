@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:myapp/config/theme/theme.dart';
 import 'package:myapp/presentation/widgets/widgets.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
 
 class ExoplanetOrShipDetails extends StatelessWidget {
   final String? model3D;
@@ -87,6 +86,7 @@ class ExoplanetOrShipDetails extends StatelessWidget {
                   children: [
                     Expanded(
                       child: WhiteBorderContainer(
+                        border: 2,
                           withAnimation: false,
                           width: 50,
                           height: 50,
@@ -113,6 +113,7 @@ class ExoplanetOrShipDetails extends StatelessWidget {
                         ? const SizedBox.shrink()
                         : Expanded(
                             child: WhiteBorderContainer(
+                                border: 2,
                                 withAnimation: false,
                                 width: 50,
                                 height: 50,

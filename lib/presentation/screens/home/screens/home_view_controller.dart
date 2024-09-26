@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:myapp/config/theme/theme.dart';
 import 'package:myapp/presentation/screens/screens.dart';
 import 'package:myapp/presentation/widgets/widgets.dart';
 
@@ -14,16 +13,13 @@ class _HomeViewControllerState extends State<HomeViewController> {
   final PageController _pageController = PageController();
   int _selectedIndex = 0;
   final List<Widget> pages = [
-    // const HomeView(),
+    const HomeView(),
     ExoplanetOrShipDetails(),
     ExoplanetShow(
       nickName: 'Lava Planet',
       name: '55 Cancri e',
     ),
-    ExoplanetOrShipDetails(
-      isShip: true,
-      model3D: 'assets/animations/voyager.glb',
-    )
+     ExploreView(),
   ];
 
   void _onItemTapped(int index) {

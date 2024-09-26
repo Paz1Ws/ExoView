@@ -37,7 +37,6 @@ class CurveOfExoplanets extends StatelessWidget {
           left: x,
           top: y,
           child: Exoplanet3DContainer(
-            withTranslation: false,
             height: size.height / 5,
             width: size.width / 5,
             model: images[index],

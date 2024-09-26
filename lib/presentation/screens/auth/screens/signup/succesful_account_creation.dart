@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:myapp/config/theme/theme.dart';
 import 'package:myapp/presentation/screens/home/screens/home_view_controller.dart';
-import 'package:myapp/presentation/screens/screens.dart';
 import 'package:myapp/presentation/widgets/widgets.dart';
 
 class SuccesfulAccountCreation extends StatefulWidget {

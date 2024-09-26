@@ -23,13 +23,14 @@ dependencies:
   riverpod_generator: ^3.0.0-dev.11
   riverpod_lint: ^3.0.0-dev.4
   supabase_flutter: ^2.6.0
+  glowy_borders: any
+  model_viewer_plus: any
+  syncfusion_flutter_charts: any
 dev_dependencies:
   flutter_lints: ^4.0.0
   flutter_test:
     sdk: flutter
-  glowy_borders: ^1.0.2
-  model_viewer_plus: ^1.9.0
-  syncfusion_flutter_charts: ^27.1.48
+  
 
 flutter:
 

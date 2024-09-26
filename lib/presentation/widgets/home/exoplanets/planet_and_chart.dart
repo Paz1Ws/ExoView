@@ -29,7 +29,6 @@ class PlanetAndChart extends StatelessWidget {
           left: -size.width / 5,
           child: model3D != null
               ? Exoplanet3DContainer(
-                  withTranslation: true,
                   model: model3D!,
                 )
               : FittedBox(

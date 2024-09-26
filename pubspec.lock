@@ -345,7 +345,7 @@ packages:
     source: hosted
     version: "2.1.2"
   glowy_borders:
-    dependency: "direct dev"
+    dependency: "direct main"
     description:
       name: glowy_borders
       sha256: a0ace5b193047deab00ed2646065b0ef91bf1efef5b3579851bcc6bc7e0748b4
@@ -513,7 +513,7 @@ packages:
     source: hosted
     version: "1.0.6"
   model_viewer_plus:
-    dependency: "direct dev"
+    dependency: "direct main"
     description:
       name: model_viewer_plus
       sha256: dd69c3551ec16c9d90277a482206ee6bccc1c1a063d76c1b01314e87b4946eca
@@ -870,7 +870,7 @@ packages:
     source: hosted
     version: "2.6.0"
   syncfusion_flutter_charts:
-    dependency: "direct dev"
+    dependency: "direct main"
     description:
       name: syncfusion_flutter_charts
       sha256: cdc207291ad0caf34cb9e20caa8938ff65f67a413b3a86a14d3a7b341a772100
