@@ -14,12 +14,14 @@ class _HomeViewControllerState extends State<HomeViewController> {
   int _selectedIndex = 0;
   final List<Widget> pages = [
     const HomeView(),
+    ExploreView(),
     ExoplanetOrShipDetails(),
     ExoplanetShow(
       nickName: 'Lava Planet',
       name: '55 Cancri e',
     ),
-    ExploreView(),
+    // const FavoritesView(),
+    // const ProfileView(),
   ];
 
   void _onItemTapped(int index) {

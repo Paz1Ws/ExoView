@@ -46,9 +46,6 @@ class TouchableExoplanetCard extends StatelessWidget {
                 color: AppColors.veryDarkPurple,
               ),
             ),
-            const SizedBox(
-              width: 10,
-            ),
             FittedBox(
               fit: BoxFit.scaleDown,
               child: Column(
@@ -101,6 +98,9 @@ class TouchableExoplanetCard extends StatelessWidget {
                   )
                 ],
               ),
+            ),
+            const SizedBox(
+              height: 10,
             ),
           ]),
         ));

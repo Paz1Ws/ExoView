@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:myapp/config/theme/fonts.dart';
 import 'package:myapp/config/theme/theme.dart';
+import 'package:myapp/presentation/screens/screens.dart';
 import 'package:myapp/presentation/widgets/widgets.dart';
 
 class ExploreSectionDetails extends StatelessWidget {
@@ -65,7 +66,8 @@ class ExploreSectionDetails extends StatelessWidget {
                   return TouchableExoplanetCard(
                       exoplanetCategory: exoplanetCategories[index],
                       onTap: () {
-                        print('$index');
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => ExoplanetOrShipDetails()));
                       });
                 },
               ),
