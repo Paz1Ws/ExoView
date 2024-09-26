@@ -8,13 +8,13 @@ class PurpleBackground extends StatelessWidget {
   final bool withAppBar;
   final bool withNavigation;
   final String appBarTitle;
-  final void Function(int) onTap;
-  final int currentIndex;
+  final void Function(int)? onTap;
+  final int? currentIndex;
   const PurpleBackground(
       {super.key,
       required this.body,
-      required this.onTap,
-      required this.currentIndex,
+      this.onTap,
+      this.currentIndex,
       this.withAppBar = false,
       this.withNavigation = true,
       this.appBarTitle = ''});
@@ -28,10 +28,9 @@ class PurpleBackground extends StatelessWidget {
           decoration: const BoxDecoration(
             gradient: LinearGradient(
               colors: [
-                Color.fromARGB(255, 25, 15, 34), // Star,<<t color
+                Color.fromARGB(255, 25, 15, 34),
                 AppColors.veryDarkPurple,
-
-                Color.fromARGB(255, 44, 32, 56), // Start color
+                Color.fromARGB(255, 44, 32, 56),
               ],
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
@@ -59,7 +58,7 @@ class PurpleBackground extends StatelessWidget {
         bottomNavigationBar: withNavigation
             ? MyBottomNavigationBar(
                 onTap: onTap,
-                currentIndex: currentIndex,
+                currentIndex: currentIndex!,
               )
             : null,
       ),

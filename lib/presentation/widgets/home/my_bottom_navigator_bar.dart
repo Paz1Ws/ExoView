@@ -33,7 +33,7 @@ class MyBottomNavigationBar extends StatelessWidget {
           label: 'Search',
         ),
         BottomNavigationBarItem(
-          icon: Icon(FontAwesomeIcons.star),
+          icon: Icon(FontAwesomeIcons.bookmark),
           label: 'Favorites',
         ),
         BottomNavigationBarItem(

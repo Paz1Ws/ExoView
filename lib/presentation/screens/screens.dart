@@ -17,3 +17,4 @@ export 'home/screens/exoplanet/screens/exoplanet_or_ship_details.dart';
 export 'home/screens/exoplanet/screens/exoplanet_show.dart';
 // EXPLORE
 export 'home/screens/explore/explore_view.dart';
+export 'home/screens/explore/explore_section_details.dart';

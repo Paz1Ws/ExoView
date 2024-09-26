@@ -3,12 +3,13 @@ import 'package:myapp/config/theme/theme.dart';
 import 'package:model_viewer_plus/model_viewer_plus.dart';
 
 class Exoplanet3DContainer extends StatelessWidget {
-  
   final String model;
   final double? height;
   final double? width;
+  final Matrix4? translation;
   const Exoplanet3DContainer({
     required this.model,
+    this.translation,
     this.height,
     this.width,
     super.key,
@@ -17,7 +18,7 @@ class Exoplanet3DContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Transform(
-      transform: Matrix4.identity()
+      transform: translation ?? Matrix4.identity()
         ..translate(-MediaQuery.sizeOf(context).width / 3, 0.0, 0.0),
       child: Center(
         child: Container(
@@ -26,6 +27,7 @@ class Exoplanet3DContainer extends StatelessWidget {
           color: Colors.transparent,
           child: ModelViewer(
             backgroundColor: Colors.transparent,
+
             src: model,
             ar: false,
             autoRotate: true, // Deshabilitar auto-rotate
