@@ -15,13 +15,8 @@ class _HomeViewControllerState extends State<HomeViewController> {
   final List<Widget> pages = [
     const HomeView(),
     ExploreView(),
-    ExoplanetOrShipDetails(),
-    ExoplanetShow(
-      nickName: 'Lava Planet',
-      name: '55 Cancri e',
-    ),
-    // const FavoritesView(),
-    // const ProfileView(),
+    const FavoritesView(),
+    const ProfileView(),
   ];
 
   void _onItemTapped(int index) {

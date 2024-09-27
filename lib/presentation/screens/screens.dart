@@ -18,3 +18,7 @@ export 'home/screens/exoplanet/screens/exoplanet_show.dart';
 // EXPLORE
 export 'home/screens/explore/explore_view.dart';
 export 'home/screens/explore/explore_section_details.dart';
+// FAVORITES
+export 'home/screens/favorites/favorites_view.dart';
+// PROFILE
+export 'home/screens/profile/profile_view.dart';

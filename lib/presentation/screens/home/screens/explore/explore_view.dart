@@ -24,6 +24,9 @@ class ExploreView extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            const SizedBox(
+              height: 20,
+            ),
             const SearchTab(),
             const SizedBox(
               height: 20,
@@ -43,6 +46,7 @@ class ExploreView extends StatelessWidget {
             ),
             GridView.builder(
               shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
               itemCount: 6,
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,

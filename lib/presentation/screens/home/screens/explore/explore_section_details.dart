@@ -65,10 +65,7 @@ class ExploreSectionDetails extends StatelessWidget {
                 itemBuilder: (context, index) {
                   return TouchableExoplanetCard(
                       exoplanetCategory: exoplanetCategories[index],
-                      onTap: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => ExoplanetOrShipDetails()));
-                      });
+                      onTap: () {});
                 },
               ),
             ),

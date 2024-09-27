@@ -57,26 +57,28 @@ class _SplashPageState extends State<SplashPage> {
             ),
             Transform(
               transform: Matrix4.translationValues(-30, 0, 0),
-              child: FadeInUp(
-                curve: Curves.easeInOutSine,
-                from: 10,
-                duration: const Duration(milliseconds: 4000),
-                child: AnimatedTextKit(
-                  isRepeatingAnimation: false,
-                  repeatForever: false,
-                  animatedTexts: [
-                    ColorizeAnimatedText(
-                      'ExoView',
-                      colors: [
-                        AppColors.white,
-                        AppColors.brightPurple,
-                        AppColors.brightTealGreen
-                      ],
-                      textStyle: AppFonts.spaceMono40
-                          .copyWith(fontWeight: FontWeight.w800),
-                      speed: const Duration(milliseconds: 800),
-                    ),
-                  ],
+              child: Flexible(
+                child: FadeInUp(
+                  curve: Curves.easeInOutSine,
+                  from: 10,
+                  duration: const Duration(milliseconds: 4000),
+                  child: AnimatedTextKit(
+                    isRepeatingAnimation: false,
+                    repeatForever: false,
+                    animatedTexts: [
+                      ColorizeAnimatedText(
+                        'ExoView',
+                        colors: [
+                          AppColors.white,
+                          AppColors.brightPurple,
+                          AppColors.brightTealGreen
+                        ],
+                        textStyle: AppFonts.spaceMono40
+                            .copyWith(fontWeight: FontWeight.w800),
+                        speed: const Duration(milliseconds: 800),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             )

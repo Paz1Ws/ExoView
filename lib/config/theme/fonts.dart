@@ -18,6 +18,10 @@ class AppFonts {
     fontSize: 20,
     color: AppColors.veryLightGray,
   );
+  static final spaceGrotesk30 = GoogleFonts.spaceGrotesk(
+    fontSize: 30,
+    color: AppColors.veryLightGray,
+  );
   static final spaceGrotesk40 = GoogleFonts.spaceGrotesk(
     fontSize: 40,
     color: AppColors.veryLightGray,

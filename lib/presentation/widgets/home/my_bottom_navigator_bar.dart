@@ -37,8 +37,8 @@ class MyBottomNavigationBar extends StatelessWidget {
           label: 'Favorites',
         ),
         BottomNavigationBarItem(
-          icon: Icon(FontAwesomeIcons.userAstronaut),
-          label: 'Profile',
+          icon: Icon(FontAwesomeIcons.screwdriverWrench),
+          label: 'Settings',
         ),
       ],
     );
