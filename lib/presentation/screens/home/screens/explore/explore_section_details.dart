@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:myapp/config/theme/fonts.dart';
 import 'package:myapp/config/theme/theme.dart';
-import 'package:myapp/presentation/screens/screens.dart';
 import 'package:myapp/presentation/widgets/widgets.dart';
 
 class ExploreSectionDetails extends StatelessWidget {

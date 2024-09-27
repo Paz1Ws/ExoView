@@ -16,7 +16,7 @@ class _HomeViewControllerState extends State<HomeViewController> {
     const HomeView(),
     ExploreView(),
     const FavoritesView(),
-    const ProfileView(),
+    const SettingsView(),
   ];
 
   void _onItemTapped(int index) {

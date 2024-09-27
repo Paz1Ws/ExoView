@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:myapp/config/theme/theme.dart';
 import 'package:model_viewer_plus/model_viewer_plus.dart';
 
 class Exoplanet3DContainer extends StatelessWidget {

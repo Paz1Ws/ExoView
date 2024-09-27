@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:myapp/config/theme/colors.dart';
 import 'package:myapp/config/theme/theme.dart';
-import 'package:myapp/presentation/widgets/widgets.dart';
 
 class PlanetCategoryCard extends StatelessWidget {
   // final String? model3D;

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:myapp/config/theme/fonts.dart';
 import 'package:myapp/config/theme/theme.dart';
 import 'package:myapp/presentation/screens/screens.dart';
 import 'package:myapp/presentation/widgets/widgets.dart';
@@ -9,6 +8,14 @@ class FavoritesView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    List<String> exoplanetCategories = [
+      'Super Earths',
+      'Water Worlds',
+      'Neptunian Planets',
+      'Rocky Planets',
+      'Gas Giants',
+      'Ice Giants',
+    ];
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -34,27 +41,28 @@ class FavoritesView extends StatelessWidget {
               ),
             ),
           ),
-          // Padding(
-          //   padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
-          //   child: GridView.builder(
-          //     shrinkWrap: true,
-          //     physics: const NeverScrollableScrollPhysics(),
-          //     itemCount: 6,
-          //     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          //       crossAxisCount: 2,
-          //       mainAxisSpacing: 20,
-          //       crossAxisSpacing: 20,
-          //     ),
-          //     itemBuilder: (context, index) {
-          //       return TouchableExoplanetCard(
-          //           exoplanetCategory: exoplanetCategories[index],
-          //           onTap: () {
-          //             Navigator.of(context).push(MaterialPageRoute(
-          //                 builder: (context) => ExoplanetOrShipDetails()));
-          //           });
-          //     },
-          //   ),
-          // ),
+          Padding(
+            padding:
+                const EdgeInsets.only(left: 20, right: 20, bottom: 20, top: 20),
+            child: GridView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: 6,
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                mainAxisSpacing: 20,
+                crossAxisSpacing: 20,
+              ),
+              itemBuilder: (context, index) {
+                return TouchableExoplanetCard(
+                    exoplanetCategory: exoplanetCategories[index],
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => ExoplanetOrShipDetails()));
+                    });
+              },
+            ),
+          ),
         ],
       ),
     );
