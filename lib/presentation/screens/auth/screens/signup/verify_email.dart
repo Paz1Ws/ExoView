@@ -1,18 +1,20 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myapp/config/theme/theme.dart';
+import 'package:myapp/core/domain/usecases/verify_email.dart';
+import 'package:myapp/presentation/screens/auth/providers/sign_up_providers.dart';
 import 'package:myapp/presentation/screens/screens.dart';
 import 'package:myapp/presentation/widgets/widgets.dart';
 
-class VerifyEmail extends StatelessWidget {
+class VerifyEmail extends ConsumerWidget {
   const VerifyEmail({super.key});
-
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, ref) {
     final List<TextEditingController> controllers =
-        List.generate(5, (_) => TextEditingController());
-    final List<FocusNode> focusNodes = List.generate(5, (_) => FocusNode());
-
+        List.generate(6, (_) => TextEditingController());
+    final List<FocusNode> focusNodes = List.generate(6, (_) => FocusNode());
+    final email = ref.watch(emailControllerProvider).text;
     return SignUpBackground(
         body: Column(
       children: [
@@ -26,11 +28,11 @@ class VerifyEmail extends StatelessWidget {
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: List.generate(5, (index) {
+          children: List.generate(6, (index) {
             return VerifyEmailContainer(
               controller: controllers[index],
               focusNode: focusNodes[index],
-              nextFocusNode: index < 4 ? focusNodes[index + 1] : null,
+              nextFocusNode: index < 5 ? focusNodes[index + 1] : null,
               previousFocusNode: index > 0 ? focusNodes[index - 1] : null,
             );
           }),

@@ -4,9 +4,14 @@ import 'package:myapp/config/theme/fonts.dart';
 
 class WritingLabel extends StatelessWidget {
   final String labelText;
+
+  final TextEditingController? controller;
   final bool withVisibility;
   const WritingLabel(
-      {super.key, required this.labelText, this.withVisibility = false});
+      {super.key,
+      required this.labelText,
+      this.controller,
+      this.withVisibility = false});
 
   @override
   Widget build(BuildContext context) {
@@ -15,6 +20,7 @@ class WritingLabel extends StatelessWidget {
     return StatefulBuilder(
       builder: (BuildContext context, StateSetter setState) {
         return TextFormField(
+          controller: controller,
           obscureText: withVisibility ? obscureText : false,
           decoration: InputDecoration(
             filled: true,

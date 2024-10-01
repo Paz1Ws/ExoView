@@ -16,10 +16,10 @@ class PasswordResetController extends StatefulWidget {
 class _PasswordResetControllerState extends State<PasswordResetController> {
   List<Widget> pages = [
     const ForgotPassword(),
-    const VerifyEmail(),
-    const CreateYourPassword(
-      recoverPassword: true,
-    ),
+    //const VerifyEmail(),
+    //  CreateYourPassword(
+    //   recoverPassword: true,
+    // ),
   ];
 
   List<String> titles = [

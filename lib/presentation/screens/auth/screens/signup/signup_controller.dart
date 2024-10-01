@@ -14,20 +14,46 @@ class SignUpController extends StatefulWidget {
 }
 
 class _SignUpControllerState extends State<SignUpController> {
-  List<Widget> pages = [
-    const AddYourEmail(),
-    const VerifyEmail(),
-    const CreateYourPassword(),
-  ];
+  final PageController _pageController = PageController();
+  void _onItemTapped(int index) {
+    setState(() {
+      title = titles[index];
+    });
+    dotIndex = index;
+    _pageController.animateToPage(
+      index,
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeInOut,
+    );
+  }
 
   List<String> titles = [
     'Add your email 1/3',
-    'Verify email 2/3',
-    'Create your password 3/3',
+    'Create your password 2/3',
+    'Verify email 4/3',
   ];
 
   String title = 'Add your email 1/3';
   int dotIndex = 0;
+  List<Widget> pages = [];
+
+  @override
+  void initState() {
+    super.initState();
+    pages = [
+      AddYourEmail(
+        onItemTapped: () {
+          _onItemTapped(1);
+        },
+      ),
+      CreateYourPassword(
+        onItemTapped: () {
+          _onItemTapped(2);
+        },
+      ),
+      const VerifyEmail(),
+    ];
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -66,13 +92,8 @@ class _SignUpControllerState extends State<SignUpController> {
         ),
       ),
       body: PageView(
+        controller: _pageController,
         children: pages,
-        onPageChanged: (int index) {
-          setState(() {
-            title = titles[index];
-          });
-          dotIndex = index;
-        },
       ),
     );
   }
