@@ -28,9 +28,9 @@ class _SignUpControllerState extends State<SignUpController> {
   }
 
   List<String> titles = [
-    'Add your email 1/3',
-    'Create your password 2/3',
-    'Verify email 4/3',
+    'Add your email 1/2',
+    'Create your password 2/2',
+    'Welcome traveler',
   ];
 
   String title = 'Add your email 1/3';
@@ -51,7 +51,8 @@ class _SignUpControllerState extends State<SignUpController> {
           _onItemTapped(2);
         },
       ),
-      const VerifyEmail(),
+      // const VerifyEmail(),
+      const SuccesfulAccountCreation()
     ];
   }
 

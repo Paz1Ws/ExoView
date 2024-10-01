@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myapp/config/theme/theme.dart';
 import 'package:myapp/core/domain/usecases/sign_up.dart';
-import 'package:myapp/presentation/screens/auth/providers/sign_up_providers.dart';
+import 'package:myapp/presentation/screens/auth/providers/auth_providers.dart';
 import 'package:myapp/presentation/widgets/widgets.dart';
 
 class CreateYourPassword extends ConsumerWidget {
@@ -18,11 +18,54 @@ class CreateYourPassword extends ConsumerWidget {
   @override
   Widget build(BuildContext context, ref) {
     final signUpUseCase = ref.watch(signUpUseCaseProvider);
+    final passwordController = ref.watch(passwordControllerProvider);
+    final verifyPasswordController =
+        ref.watch(verifyPasswordControllerProvider);
+
+    void showPasswordMismatchAlert(BuildContext context) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20),
+            ),
+            backgroundColor: AppColors.white,
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const SizedBox(height: 10),
+                Text(
+                  'Passwords do not match!',
+                  style: AppFonts.spaceGrotesk20.copyWith(
+                      color: AppColors.veryDarkPurple,
+                      fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  'Please make sure both passwords are the same.',
+                  textAlign: TextAlign.center,
+                  style: AppFonts.spaceGrotesk16
+                      .copyWith(color: AppColors.darkGray),
+                ),
+              ],
+            ),
+          );
+        },
+      );
+    }
+
+    bool arePasswordsMatching() {
+      return passwordController.text == verifyPasswordController.text;
+    }
+
     return SignUpBackground(
         body: Column(
       children: [
         WritingLabel(
-          controller: ref.watch(passwordControllerProvider),
+          controller: passwordController,
           labelText: 'Create your password',
           withVisibility: true,
         ),
@@ -30,7 +73,7 @@ class CreateYourPassword extends ConsumerWidget {
           height: 10,
         ),
         WritingLabel(
-          controller: ref.watch(passwordControllerProvider),
+          controller: verifyPasswordController,
           labelText:
               recoverPassword! ? 'Recover your password' : 'Confirm password',
           withVisibility: true,
@@ -76,35 +119,21 @@ class CreateYourPassword extends ConsumerWidget {
                 },
               );
             } else {
-              _onItemTapped();
+              if (!arePasswordsMatching()) {
+                showPasswordMismatchAlert(context);
+                return;
+              }
+
               final email = ref.read(emailControllerProvider).text;
               final password = ref.read(passwordControllerProvider).text;
               final name = ref.read(nameControllerProvider).text;
 
-              final result = await signUpUseCase(SignUpParams(
+              await signUpUseCase(SignUpParams(
                 email: email,
                 password: password,
                 name: name,
               ));
-
-              result.fold(
-                (failure) {
-                  // Handle error
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text(failure.message)),
-                  );
-                },
-                (userId) {
-                  // Handle success
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('User signed up: $userId')),
-                  );
-                },
-              );
-              // Navigator.push(
-              //     context,
-              //     MaterialPageRoute(
-              //         builder: (context) => const HomeViewController()));
+              _onItemTapped();
             }
           },
         )

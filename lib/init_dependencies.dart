@@ -1,11 +1,13 @@
 import 'package:get_it/get_it.dart';
 import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
+import 'package:myapp/config/network/connection_checker.dart';
 import 'package:myapp/config/secrets/app_secrets.dart';
 import 'package:myapp/core/data/data.dart';
 import 'package:myapp/core/domain/domain.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 final serviceLocator = GetIt.instance;
+
 Future<void> initDependencies() async {
   _initAuth();
   final supabase = await Supabase.initialize(
@@ -15,6 +17,11 @@ Future<void> initDependencies() async {
   serviceLocator.registerLazySingleton(() => supabase.client);
 
   serviceLocator.registerFactory(() => InternetConnection());
+  serviceLocator.registerFactory<ConnectionChecker>(
+    () => ConnectionCheckerImpl(
+      serviceLocator(),
+    ),
+  );
 }
 
 void _initAuth() {
@@ -38,23 +45,4 @@ void _initAuth() {
         serviceLocator(),
       ),
     );
-  // ..registerFactory(
-  //   () => UserLogin(
-  //     serviceLocator(),
-  //   ),
-  // )
-  // ..registerFactory(
-  //   () => CurrentUser(
-  //     serviceLocator(),
-  //   ),
-  // )
-  // Bloc
-  // ..registerLazySingleton(
-  //   () => AuthBloc(
-  //     userSignUp: serviceLocator(),
-  //     userLogin: serviceLocator(),
-  //     currentUser: serviceLocator(),
-  //     appUserCubit: serviceLocator(),
-  //   ),
-  // );
 }

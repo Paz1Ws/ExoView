@@ -7,11 +7,8 @@ import 'presentation/screens/onboarding/splash_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  initDependencies();
-  await Supabase.initialize(
-    url: AppSecrets.supabaseUrl,
-    anonKey: AppSecrets.supabaseKey,
-  );
+
+  await initDependencies();
   runApp(const ProviderScope(child: MyApp()));
 }
 
