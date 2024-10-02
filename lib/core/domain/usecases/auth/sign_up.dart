@@ -3,7 +3,6 @@ import 'package:myapp/config/entities/user.dart';
 import 'package:myapp/config/failures/failures.dart';
 import 'package:myapp/config/usecase/usecase.dart';
 import 'package:myapp/core/data/data.dart';
-import 'package:myapp/core/domain/repositories/auth_repository.dart';
 
 class SignUp implements UseCase<UserEntity, SignUpParams> {
   final AuthRepositoryImpl authRepository;

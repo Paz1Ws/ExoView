@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myapp/config/theme/theme.dart';
-import 'package:myapp/core/domain/domain.dart';
 import 'package:myapp/presentation/screens/screens.dart';
 import 'package:myapp/presentation/widgets/widgets.dart';
 import '../../screens/auth/providers/auth_providers.dart';
-import '../../screens/home/screens/home_view_controller.dart';
 
 class InsertCredencialsContainer extends ConsumerWidget {
   const InsertCredencialsContainer({super.key});

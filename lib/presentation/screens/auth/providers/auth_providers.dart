@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myapp/config/secrets/app_secrets.dart';
 import 'package:myapp/core/data/data.dart';
 import 'package:myapp/core/domain/domain.dart';
 import 'package:myapp/init_dependencies.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:myapp/core/domain/usecases/auth/sign_up.dart';
 part 'auth_providers.g.dart';
 
 // LOGIC PROVIDERS

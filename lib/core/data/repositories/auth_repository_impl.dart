@@ -1,5 +1,3 @@
-import 'package:gotrue/src/types/auth_response.dart';
-import 'package:gotrue/src/types/user.dart';
 import 'package:myapp/config/entities/user.dart';
 import 'package:myapp/config/failures/exceptions.dart';
 import 'package:myapp/config/failures/failures.dart';

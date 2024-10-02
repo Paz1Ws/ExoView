@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myapp/config/secrets/app_secrets.dart';
 import 'package:myapp/init_dependencies.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 import 'presentation/screens/onboarding/splash_screen.dart';
 
 Future<void> main() async {
