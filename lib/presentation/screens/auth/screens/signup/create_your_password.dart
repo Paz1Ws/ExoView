@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myapp/config/theme/theme.dart';
-import 'package:myapp/core/domain/usecases/sign_up.dart';
+import 'package:myapp/core/domain/usecases/auth/sign_up.dart';
 import 'package:myapp/presentation/screens/auth/providers/auth_providers.dart';
 import 'package:myapp/presentation/widgets/widgets.dart';
 

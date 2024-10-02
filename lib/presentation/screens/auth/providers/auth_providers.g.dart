@@ -68,6 +68,21 @@ final signUpUseCaseProvider = AutoDisposeProvider<SignUp>.internal(
 );
 
 typedef SignUpUseCaseRef = AutoDisposeProviderRef<SignUp>;
+String _$signInUseCaseHash() => r'3153cfda332750f1cf4da03d05c43a7b0e7fef66';
+
+/// See also [signInUseCase].
+@ProviderFor(signInUseCase)
+final signInUseCaseProvider = AutoDisposeProvider<SignIn>.internal(
+  signInUseCase,
+  name: r'signInUseCaseProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$signInUseCaseHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef SignInUseCaseRef = AutoDisposeProviderRef<SignIn>;
 String _$nameControllerHash() => r'239267bb64e385c6451f45ae34b3eca42a216a1a';
 
 /// See also [nameController].

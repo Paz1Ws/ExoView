@@ -1,6 +1,6 @@
 import 'package:gotrue/src/types/auth_response.dart';
 import 'package:gotrue/src/types/user.dart';
-import 'package:myapp/config/entitties/user.dart';
+import 'package:myapp/config/entities/user.dart';
 import 'package:myapp/config/failures/exceptions.dart';
 import 'package:myapp/config/failures/failures.dart';
 import 'package:myapp/config/network/connection_checker.dart';

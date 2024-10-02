@@ -1,43 +1,62 @@
-class Exoplanet {
-  final String planetName;
-  final int discoveryYear;
-  final String discoveryMethod;
-  final double orbitalPeriod;
-  final double planetRadius;
-  final double planetMass;
-  final double equilibriumTemperature;
+import 'package:myapp/config/entities/exoplanet.dart';
 
-  Exoplanet({
-    required this.planetName,
-    required this.discoveryYear,
-    required this.discoveryMethod,
-    required this.orbitalPeriod,
-    required this.planetRadius,
-    required this.planetMass,
-    required this.equilibriumTemperature,
+class ExoplanetModel extends ExoplanetEntity {
+  ExoplanetModel({
+    required super.planetName,
+    required super.isControversial,
+    required super.discoveryYear,
+    required super.discoveryMethod,
+    required super.orbitalPeriodDays,
+    required super.radiusEarthRadius,
+    required super.massEarthMass,
+    required super.equilibriumTemperature,
+    required super.density,
+    required super.transitDurationHours,
+    required super.insolationFlux,
   });
 
-  factory Exoplanet.fromJson(Map<String, dynamic> json) {
-    return Exoplanet(
-      planetName: json['planetName'],
-      discoveryYear: json['discoveryYear'],
-      discoveryMethod: json['discoveryMethod'],
-      orbitalPeriod: json['orbitalPeriod'],
-      planetRadius: json['planetRadius'],
-      planetMass: json['planetMass'],
-      equilibriumTemperature: json['equilibriumTemperature'],
+  factory ExoplanetModel.fromJson(Map<String, dynamic> map) {
+    return ExoplanetModel(
+      planetName: map['pl_name'] ?? '',
+      isControversial: map['pl_controv_flag'] == 1,
+      discoveryYear: map['disc_year']?.toInt() ?? 0,
+      discoveryMethod: map['discoverymethod'] ?? '',
+      orbitalPeriodDays: map['pl_orbper']?.toDouble() ?? 0.0,
+      radiusEarthRadius: map['pl_rade']?.toDouble() ?? 0.0,
+      massEarthMass: map['pl_bmasse']?.toDouble() ?? 0.0,
+      equilibriumTemperature: map['pl_eqt']?.toDouble() ?? 0.0,
+      density: map['pl_dens']?.toDouble() ?? 0.0,
+      transitDurationHours: map['pl_trandur']?.toDouble() ?? 0.0,
+      insolationFlux: map['pl_insol']?.toDouble() ?? 0.0,
     );
   }
 
-  Map<String, dynamic> toJson() {
-    return {
-      'planetName': planetName,
-      'discoveryYear': discoveryYear,
-      'discoveryMethod': discoveryMethod,
-      'orbitalPeriod': orbitalPeriod,
-      'planetRadius': planetRadius,
-      'planetMass': planetMass,
-      'equilibriumTemperature': equilibriumTemperature,
-    };
+  ExoplanetModel copyWith({
+    String? planetName,
+    bool? isControversial,
+    int? discoveryYear,
+    String? discoveryMethod,
+    double? orbitalPeriodDays,
+    double? radiusEarthRadius,
+    double? massEarthMass,
+    double? equilibriumTemperature,
+    double? density,
+    double? transitDurationHours,
+    double? insolationFlux,
+  }) {
+    return ExoplanetModel(
+      planetName: planetName ?? this.planetName,
+      isControversial: isControversial ?? this.isControversial,
+      discoveryYear: discoveryYear ?? this.discoveryYear,
+      discoveryMethod: discoveryMethod ?? this.discoveryMethod,
+      orbitalPeriodDays: orbitalPeriodDays ?? this.orbitalPeriodDays,
+      radiusEarthRadius: radiusEarthRadius ?? this.radiusEarthRadius,
+      massEarthMass: massEarthMass ?? this.massEarthMass,
+      equilibriumTemperature:
+          equilibriumTemperature ?? this.equilibriumTemperature,
+      density: density ?? this.density,
+      transitDurationHours: transitDurationHours ?? this.transitDurationHours,
+      insolationFlux: insolationFlux ?? this.insolationFlux,
+    );
   }
 }

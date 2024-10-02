@@ -1,5 +1,5 @@
 import 'package:fpdart/fpdart.dart';
-import 'package:myapp/config/entitties/user.dart';
+import 'package:myapp/config/entities/user.dart';
 import 'package:myapp/config/failures/failures.dart';
 
 abstract interface class AuthRepository {

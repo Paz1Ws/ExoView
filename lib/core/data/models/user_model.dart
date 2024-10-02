@@ -1,4 +1,4 @@
-import 'package:myapp/config/entitties/user.dart';
+import 'package:myapp/config/entities/user.dart';
 
 class UserModel extends UserEntity {
   UserModel({
