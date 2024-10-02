@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myapp/config/theme/theme.dart';
-import 'package:myapp/presentation/screens/home/providers/exoplanet_providers.dart';
 import 'package:myapp/presentation/widgets/widgets.dart';
 
 class HomeView extends StatelessWidget {
@@ -92,7 +91,7 @@ class HomeView extends StatelessWidget {
 
 //   @override
 //   Widget build(BuildContext context, WidgetRef ref) {
-//     final exoplanetsAsyncValue =  ref.watch(exoplanetsProvider);
+//     final exoplanetsAsyncValue = ref.watch(exoplanetsProvider);
 
 //     return exoplanetsAsyncValue.when(
 //       data: (exoplanets) {

@@ -9,7 +9,6 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 final serviceLocator = GetIt.instance;
 
 Future<void> initDependencies() async {
- 
   final supabase = await Supabase.initialize(
     url: AppSecrets.supabaseUrl,
     anonKey: AppSecrets.supabaseKey,
@@ -22,7 +21,7 @@ Future<void> initDependencies() async {
       serviceLocator(),
     ),
   );
-   _initAuth();
+  _initAuth();
 }
 
 void _initAuth() {
@@ -40,15 +39,28 @@ void _initAuth() {
         serviceLocator(),
       ),
     )
-   
-  // Usecases
-  ..registerFactory(
-    () => SignUp(
-      serviceLocator(),
-    ),
-  ) ..registerFactory(
-    () => SignIn(
-      serviceLocator(),
-    ),
-  );
+    ..registerFactory<ExoplanetRemoteDataSource>(
+      () => ExoplanetRemoteDataSourceImpl(),
+    )
+    ..registerFactory<ExoplanetRepository>(
+      () => ExoplanetRepositoryImpl(
+        serviceLocator(),
+        serviceLocator(),
+      ),
+    )
+
+    // Usecases
+    ..registerFactory(
+      () => SignUp(
+        serviceLocator(),
+      ),
+    )
+    ..registerFactory(
+      () => SignIn(
+        serviceLocator(),
+      ),
+    )
+    ..registerFactory(() => GetExoplanets(
+          serviceLocator(),
+        ));
 }
