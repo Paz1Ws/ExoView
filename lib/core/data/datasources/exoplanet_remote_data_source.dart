@@ -7,7 +7,7 @@ import 'package:myapp/config/failures/exceptions.dart';
 import 'package:myapp/core/data/data.dart';
 
 abstract interface class ExoplanetRemoteDataSource {
-  Future<Either<Failure, List<ExoplanetEntity>>> getExoplanets();
+  Future<Either<Failure, List<Exoplanet>>> getExoplanets();
   Future<Either<Failure, List<ExoplanetEntity?>>> getExoplanetByDate(
       DateTime exoDate);
   Future<Either<Failure, List<ExoplanetEntity?>>> getExoplanetByDensity(
@@ -32,16 +32,15 @@ abstract interface class ExoplanetRemoteDataSource {
 
 class ExoplanetRemoteDataSourceImpl implements ExoplanetRemoteDataSource {
   @override
-  Future<Either<Failure, List<ExoplanetEntity>>> getExoplanets() async {
+  Future<Either<Failure, List<Exoplanet>>> getExoplanets() async {
     try {
       var response = await http.get(AppSecrets.baseExoplanetUrl);
       print('Response status: ${response.statusCode}');
       if (response.statusCode == 200) {
         print(response.body);
-        final List<ExoplanetEntity> exoplanets =
-            (jsonDecode(response.body) as List)
-                .map((data) => ExoplanetModel.fromJson(data))
-                .toList();
+        final List<Exoplanet> exoplanets = (jsonDecode(response.body) as List)
+            .map((data) => Exoplanet.fromJson(data))
+            .toList();
         return Right(exoplanets);
       } else {
         return Left(

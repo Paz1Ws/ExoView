@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:myapp/core/data/data.dart';
 import 'package:myapp/presentation/widgets/home/exoplanets/exoplanet_features_card.dart';
 
 class ExoplanetFeaturesWrap extends StatelessWidget {
+  final Exoplanet? exoplanet;
   final List<IconData> featuresIcons = [
     FontAwesomeIcons.magnifyingGlass,
     FontAwesomeIcons.clock,
@@ -43,6 +45,7 @@ class ExoplanetFeaturesWrap extends StatelessWidget {
   final bool isShip;
   // final Exoplanet exoplanet;
   ExoplanetFeaturesWrap({
+    this.exoplanet,
     this.isShip = false,
     super.key,
     // required this.exoplanet,
@@ -59,6 +62,7 @@ class ExoplanetFeaturesWrap extends StatelessWidget {
       itemCount: isShip ? shipFeatures.length : features.length,
       itemBuilder: (context, index) {
         return ExoplanetFeaturesCard(
+          exoplanet: exoplanet,
           features: isShip ? shipFeatures[index] : features[index],
           featuresDescription: isShip
               ? shipFeaturesDescription[index]

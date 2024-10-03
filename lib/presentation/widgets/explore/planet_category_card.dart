@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myapp/config/theme/theme.dart';
 
-class PlanetCategoryCard extends StatelessWidget {
+class PlanetCategoryCard extends ConsumerWidget {
+  
+   
   // final String? model3D;
   final List<String> defaultPlanets = [
     'assets/images/planet_icons/planet_icon_1.png',
@@ -20,7 +23,7 @@ class PlanetCategoryCard extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context,ref) {
     final size = MediaQuery.sizeOf(context);
     return GestureDetector(
       onTap: onTap,
@@ -52,14 +55,17 @@ class PlanetCategoryCard extends StatelessWidget {
               width: 10,
             ),
             Expanded(
-              child: Text(
-                exoplanetCategory,
-                textAlign: TextAlign.center,
-                style: AppFonts.spaceGrotesk18.copyWith(
-                  fontWeight: FontWeight.bold,
-                  fontSize: size.width * 0.05,
+              child: FittedBox(
+                fit: BoxFit.scaleDown,
+                child: Text(
+                  exoplanetCategory,
+                  textAlign: TextAlign.center,
+                  style: AppFonts.spaceGrotesk18.copyWith(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                  ),
+                  maxLines: 2,
                 ),
-                maxLines: 3,
               ),
             ),
             const SizedBox(

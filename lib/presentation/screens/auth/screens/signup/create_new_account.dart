@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:fpdart/src/either.dart';
-import 'package:myapp/config/entities/exoplanet.dart';
-import 'package:myapp/config/failures/failures.dart';
 import 'package:myapp/config/theme/theme.dart';
 import 'package:myapp/core/data/data.dart';
 import 'package:myapp/presentation/screens/screens.dart';

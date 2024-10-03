@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myapp/config/theme/theme.dart';
-import 'package:myapp/presentation/screens/home/providers/exoplanet_providers.dart';
 import 'package:myapp/presentation/widgets/widgets.dart';
 
 class HomeView extends StatelessWidget {
@@ -44,7 +42,7 @@ class HomeView extends StatelessWidget {
           ),
           Expanded(
             child: Stack(
-              fit: StackFit.loose,
+              fit: StackFit.expand,
               alignment: Alignment.center,
               children: [
                 CurveOfExoplanets(),
@@ -86,29 +84,3 @@ class HomeView extends StatelessWidget {
     );
   }
 }
-
-// class ExoplanetsViewer extends ConsumerWidget {
-//   const ExoplanetsViewer({super.key});
-
-//   @override
-//   Widget build(BuildContext context, WidgetRef ref) {
-//     final exoplanetsAsyncValue =  ref.watch(exoplanetsProvider);
-
-//     return exoplanetsAsyncValue.when(
-//       data: (exoplanets) {
-//         return ListView.builder(
-//           itemCount: exoplanets.length,
-//           itemBuilder: (context, index) {
-//             final exoplanet = exoplanets[index];
-//             return ListTile(
-//               title: Text(exoplanet.name),
-//               subtitle: Text(exoplanet.description),
-//             );
-//           },
-//         );
-//       },
-//       loading: () => const Center(child: CircularProgressIndicator()),
-//       error: (error, stack) => Center(child: Text('Error: $error')),
-//     );
-//   }
-// }

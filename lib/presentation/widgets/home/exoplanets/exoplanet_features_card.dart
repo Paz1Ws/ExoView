@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:myapp/config/theme/theme.dart';
 import 'package:glowy_borders/glowy_borders.dart';
+import 'package:myapp/core/data/data.dart';
 
 class ExoplanetFeaturesCard extends StatelessWidget {
   final IconData featuresIcons;
   final String features;
   final String? featuresDescription;
-  // final Exoplanet exoplanet;
+  final Exoplanet? exoplanet;
   const ExoplanetFeaturesCard({
     required this.features,
     required this.featuresIcons,
     this.featuresDescription,
-    // required this.exoplanet,
+    required this.exoplanet,
     super.key,
   });
 

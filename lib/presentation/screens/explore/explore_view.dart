@@ -7,12 +7,12 @@ import 'package:myapp/presentation/widgets/widgets.dart';
 
 class ExploreView extends StatelessWidget {
   List<String> exoplanetCategories = [
+    'All Exoplanets',
     'Super Earths',
     'Water Worlds',
-    'Neptunian Planets',
     'Rocky Planets',
     'Gas Giants',
-    'Ice Giants',
+    'Neptunians',
   ];
   ExploreView({super.key});
 

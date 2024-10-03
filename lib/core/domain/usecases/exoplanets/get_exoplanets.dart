@@ -1,13 +1,10 @@
 import 'package:fpdart/fpdart.dart';
 import 'package:myapp/config/config.dart';
-import 'package:myapp/config/entities/user.dart';
-import 'package:myapp/config/failures/failures.dart';
 import 'package:myapp/config/usecase/usecase.dart';
-import 'package:myapp/core/domain/domain.dart';
-import 'package:myapp/core/domain/repositories/auth_repository.dart';
+import 'package:myapp/core/data/data.dart';
 
 class GetExoplanets implements UseCase<List<ExoplanetEntity>, NoParams> {
-  final ExoplanetRepository exoplanetRepository;
+  final ExoplanetRepositoryImpl exoplanetRepository;
   GetExoplanets(this.exoplanetRepository);
 
   @override

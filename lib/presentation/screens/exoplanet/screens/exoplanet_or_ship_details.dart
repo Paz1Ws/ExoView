@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:myapp/config/theme/theme.dart';
+import 'package:myapp/core/data/data.dart';
 import 'package:myapp/presentation/widgets/widgets.dart';
 
 class ExoplanetOrShipDetails extends StatelessWidget {
+  final Exoplanet? exoplanet;
+
   final String? model3D;
   final bool isShip;
   final List<String> defaultPlanets = [
@@ -21,6 +24,7 @@ class ExoplanetOrShipDetails extends StatelessWidget {
 
   ExoplanetOrShipDetails({
     super.key,
+    this.exoplanet,
     this.model3D,
     this.isShip = false,
   });
@@ -70,7 +74,7 @@ class ExoplanetOrShipDetails extends StatelessWidget {
                           ),
                         ),
                         child: Text(
-                          '2025',
+                          exoplanet!.discoveryYear.toString(),
                           textAlign: TextAlign.center,
                           style: AppFonts.spaceGrotesk18,
                         ),
@@ -85,6 +89,7 @@ class ExoplanetOrShipDetails extends StatelessWidget {
                     child: Column(
                       children: [
                         ExoplanetFeaturesWrap(
+                          exoplanet: exoplanet,
                           isShip: isShip,
                         ),
                         const SizedBox(

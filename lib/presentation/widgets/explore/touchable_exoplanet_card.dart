@@ -3,8 +3,11 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:myapp/config/theme/theme.dart';
 import 'dart:math';
 
+import 'package:myapp/core/data/data.dart';
+import 'package:myapp/presentation/screens/exoplanet/screens/exoplanet_or_ship_details.dart';
+
 class TouchableExoplanetCard extends StatelessWidget {
-  // final String? model3D;
+  final Exoplanet? exoplanet;
   final List<String> defaultPlanets = [
     'assets/images/planet_icons/planet_icon_1.png',
     'assets/images/planet_icons/planet_icon_2.png',
@@ -12,12 +15,9 @@ class TouchableExoplanetCard extends StatelessWidget {
     'assets/images/planet_icons/planet_icon_4.png',
     'assets/images/planet_icons/planet_icon_5.png',
   ];
-  final String exoplanetCategory;
-  final void Function()? onTap;
 
   TouchableExoplanetCard({
-    required this.exoplanetCategory,
-    required this.onTap,
+    required this.exoplanet,
     super.key,
     //this.model3D
   });
@@ -28,7 +28,14 @@ class TouchableExoplanetCard extends StatelessWidget {
     int maxFilledStars = random.nextInt(5) + 1;
     final size = MediaQuery.sizeOf(context);
     return GestureDetector(
-        onTap: onTap,
+        onTap: () {
+          Navigator.push(context, MaterialPageRoute(builder: (context) {
+            return ExoplanetOrShipDetails(
+              exoplanet: exoplanet,
+              isShip: false,
+            );
+          }));
+        },
         child: Container(
           height: size.height,
           width: double.infinity,
@@ -63,7 +70,7 @@ class TouchableExoplanetCard extends StatelessWidget {
                     }),
                   ),
                   Text(
-                    exoplanetCategory,
+                    exoplanet!.planetName,
                     textAlign: TextAlign.center,
                     style: AppFonts.spaceGrotesk16,
                     softWrap: true,

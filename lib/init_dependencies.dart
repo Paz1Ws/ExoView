@@ -25,24 +25,33 @@ Future<void> initDependencies() async {
 }
 
 void _initAuth() {
-  // Datasource
+  // Datasources
   serviceLocator
     ..registerFactory<AuthRemoteDataSource>(
       () => AuthRemoteDataSourceImpl(
         serviceLocator(),
       ),
+    )..registerFactory<ExoplanetRemoteDataSource>(
+      () => ExoplanetRemoteDataSourceImpl(),
     )
-    // Repository
+    // Repositories
     ..registerFactory<AuthRepository>(
       () => AuthRepositoryImpl(
         serviceLocator(),
         serviceLocator(),
       ),
-    )
-    ..registerFactory<ExoplanetRemoteDataSource>(
-      () => ExoplanetRemoteDataSourceImpl(),
+    )..registerFactory<AuthRepositoryImpl>(
+      () => AuthRepositoryImpl(
+        serviceLocator(),
+        serviceLocator(),
+      ),
     )
     ..registerFactory<ExoplanetRepository>(
+      () => ExoplanetRepositoryImpl(
+        serviceLocator(),
+        serviceLocator(),
+      ),
+    )..registerFactory<ExoplanetRepositoryImpl>(
       () => ExoplanetRepositoryImpl(
         serviceLocator(),
         serviceLocator(),

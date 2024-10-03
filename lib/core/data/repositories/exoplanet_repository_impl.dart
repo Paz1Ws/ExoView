@@ -15,9 +15,9 @@ class ExoplanetRepositoryImpl implements ExoplanetRepository {
   );
 
   @override
-  Future<Either<Failure, List<ExoplanetEntity>>> getExoplanets() async {
+  Future<Either<Failure, List<Exoplanet>>> getExoplanets() async {
     try {
-      if (!await (connectionChecker.isConnected)) {
+      if (await (connectionChecker.isConnected)) {
         return await remoteDataSource.getExoplanets();
       }
       return left(Failure('An error ocurred trying to fetch exoplanets'));

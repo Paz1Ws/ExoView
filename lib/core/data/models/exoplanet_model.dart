@@ -1,7 +1,7 @@
 import 'package:myapp/config/entities/exoplanet.dart';
 
-class ExoplanetModel extends ExoplanetEntity {
-  ExoplanetModel({
+class Exoplanet extends ExoplanetEntity {
+  Exoplanet({
     required super.planetName,
     required super.isControversial,
     required super.discoveryYear,
@@ -15,8 +15,8 @@ class ExoplanetModel extends ExoplanetEntity {
     required super.insolationFlux,
   });
 
-  factory ExoplanetModel.fromJson(Map<String, dynamic> map) {
-    return ExoplanetModel(
+  factory Exoplanet.fromJson(Map<String, dynamic> map) {
+    return Exoplanet(
       planetName: map['pl_name'] ?? '',
       isControversial: map['pl_controv_flag'] == 1,
       discoveryYear: map['disc_year']?.toInt() ?? 0,
@@ -31,7 +31,7 @@ class ExoplanetModel extends ExoplanetEntity {
     );
   }
 
-  ExoplanetModel copyWith({
+  Exoplanet copyWith({
     String? planetName,
     bool? isControversial,
     int? discoveryYear,
@@ -44,7 +44,7 @@ class ExoplanetModel extends ExoplanetEntity {
     double? transitDurationHours,
     double? insolationFlux,
   }) {
-    return ExoplanetModel(
+    return Exoplanet(
       planetName: planetName ?? this.planetName,
       isControversial: isControversial ?? this.isControversial,
       discoveryYear: discoveryYear ?? this.discoveryYear,
