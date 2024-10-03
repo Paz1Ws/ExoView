@@ -2,12 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:myapp/config/theme/theme.dart';
 import 'dart:math';
-
 import 'package:myapp/core/data/data.dart';
 import 'package:myapp/presentation/screens/exoplanet/screens/exoplanet_or_ship_details.dart';
 
 class TouchableExoplanetCard extends StatelessWidget {
-  final Exoplanet? exoplanet;
+  final Exoplanet exoplanet;
   final List<String> defaultPlanets = [
     'assets/images/planet_icons/planet_icon_1.png',
     'assets/images/planet_icons/planet_icon_2.png',
@@ -70,7 +69,7 @@ class TouchableExoplanetCard extends StatelessWidget {
                     }),
                   ),
                   Text(
-                    exoplanet!.planetName,
+                    exoplanet.planetName,
                     textAlign: TextAlign.center,
                     style: AppFonts.spaceGrotesk16,
                     softWrap: true,

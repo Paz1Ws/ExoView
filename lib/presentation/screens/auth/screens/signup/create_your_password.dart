@@ -19,6 +19,8 @@ class CreateYourPassword extends ConsumerWidget {
   Widget build(BuildContext context, ref) {
     final signUpUseCase = ref.watch(signUpUseCaseProvider);
     final passwordController = ref.watch(passwordControllerProvider);
+    final email = ref.watch(emailControllerProvider).text;
+    final name = ref.watch(nameControllerProvider).text;
     final verifyPasswordController =
         ref.watch(verifyPasswordControllerProvider);
 
@@ -124,13 +126,9 @@ class CreateYourPassword extends ConsumerWidget {
                 return;
               }
 
-              final email = ref.read(emailControllerProvider).text;
-              final password = ref.read(passwordControllerProvider).text;
-              final name = ref.read(nameControllerProvider).text;
-
               await signUpUseCase(SignUpParams(
                 email: email,
-                password: password,
+                password: passwordController.text,
                 name: name,
               ));
               _onItemTapped();

@@ -57,7 +57,8 @@ class _SplashPageState extends State<SplashPage> {
             ),
             Transform(
               transform: Matrix4.translationValues(-30, 0, 0),
-              child: Flexible(
+              child: FittedBox(
+                fit: BoxFit.scaleDown,
                 child: FadeInUp(
                   curve: Curves.easeInOutSine,
                   from: 10,

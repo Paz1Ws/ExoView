@@ -34,7 +34,7 @@ class ExoplanetOrShipDetails extends StatelessWidget {
     final size = MediaQuery.sizeOf(context);
     return PurpleBackground(
       withNavigation: false,
-      withAppBar: isShip ? true : false,
+      withAppBar: true,
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -48,16 +48,15 @@ class ExoplanetOrShipDetails extends StatelessWidget {
                   chartData: chartData,
                   isShip: isShip),
             ),
-            Transform(
-              transform: Matrix4.identity()
-                ..translate(0.0, -size.height * 0.05, 0.0),
-              child: Column(
-                children: [
-                  Row(
+            Column(
+              children: [
+                Container(
+                  color: AppColors.brightPurple,
+                  child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        isShip ? 'Nebula Voyager' : 'Flash Thunder Exoplanet',
+                        isShip ? 'Nebula Voyager' : exoplanet!.planetName,
                         style: AppFonts.spaceGrotesk18,
                       ),
                       const SizedBox(
@@ -81,80 +80,77 @@ class ExoplanetOrShipDetails extends StatelessWidget {
                       )
                     ],
                   ),
-                  const SizedBox(
-                    height: 10,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  child: Column(
+                    children: [
+                      ExoplanetFeaturesWrap(
+                        exoplanet: exoplanet,
+                        isShip: isShip,
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: WhiteBorderContainer(
+                                border: 2,
+                                withAnimation: false,
+                                width: 50,
+                                height: 50,
+                                widget: IconButton(
+                                  icon: const Icon(
+                                    Icons.favorite_border,
+                                    color: Colors.red,
+                                  ),
+                                  onPressed: () {},
+                                )),
+                          ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          Expanded(
+                              flex: 2,
+                              child: PurpleButton(
+                                  text: isShip ? 'Book' : 'Book A Travel',
+                                  onTap: () {
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                ExoplanetOrShipDetails(
+                                                  isShip: true,
+                                                  model3D:
+                                                      'assets/animations/voyager.glb',
+                                                )));
+                                  })),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          isShip
+                              ? const SizedBox.shrink()
+                              : Expanded(
+                                  child: WhiteBorderContainer(
+                                      border: 2,
+                                      withAnimation: false,
+                                      width: 50,
+                                      height: 50,
+                                      widget: IconButton(
+                                        icon: const Icon(
+                                          Icons.arrow_right,
+                                          size: 25,
+                                          color: AppColors.lightGray,
+                                        ),
+                                        onPressed: () {},
+                                      )),
+                                )
+                        ],
+                      ),
+                    ],
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: Column(
-                      children: [
-                        ExoplanetFeaturesWrap(
-                          exoplanet: exoplanet,
-                          isShip: isShip,
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        Row(
-                          children: [
-                            Expanded(
-                              child: WhiteBorderContainer(
-                                  border: 2,
-                                  withAnimation: false,
-                                  width: 50,
-                                  height: 50,
-                                  widget: IconButton(
-                                    icon: const Icon(
-                                      Icons.favorite_border,
-                                      color: Colors.red,
-                                    ),
-                                    onPressed: () {},
-                                  )),
-                            ),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            Expanded(
-                                flex: 2,
-                                child: PurpleButton(
-                                    text: isShip ? 'Book' : 'Book A Travel',
-                                    onTap: () {
-                                      Navigator.of(context).push(
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  ExoplanetOrShipDetails(
-                                                    isShip: true,
-                                                    model3D:
-                                                        'assets/animations/voyager.glb',
-                                                  )));
-                                    })),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            isShip
-                                ? const SizedBox.shrink()
-                                : Expanded(
-                                    child: WhiteBorderContainer(
-                                        border: 2,
-                                        withAnimation: false,
-                                        width: 50,
-                                        height: 50,
-                                        widget: IconButton(
-                                          icon: const Icon(
-                                            Icons.arrow_right,
-                                            size: 25,
-                                            color: AppColors.lightGray,
-                                          ),
-                                          onPressed: () {},
-                                        )),
-                                  )
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
           ],
         ),

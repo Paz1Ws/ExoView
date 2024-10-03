@@ -17,10 +17,11 @@ class ExoplanetRepositoryImpl implements ExoplanetRepository {
   @override
   Future<Either<Failure, List<Exoplanet>>> getExoplanets() async {
     try {
-      if (await (connectionChecker.isConnected)) {
-        return await remoteDataSource.getExoplanets();
-      }
-      return left(Failure('An error ocurred trying to fetch exoplanets'));
+      return await remoteDataSource.getExoplanets();
+      // if (await (connectionChecker.isConnected)) {
+
+      // }
+      // return left(Failure('An error ocurred trying to fetch exoplanets'));
     } on ServerException catch (e) {
       return left(Failure(e.message));
     }

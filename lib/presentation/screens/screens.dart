@@ -21,4 +21,4 @@ export 'explore/explore_section_details.dart';
 // FAVORITES
 export 'favorites/favorites_view.dart';
 // PROFILE
-export '../settings/settings_view.dart';
+export 'settings/settings_view.dart';

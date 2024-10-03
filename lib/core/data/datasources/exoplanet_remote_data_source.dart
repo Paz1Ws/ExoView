@@ -35,9 +35,8 @@ class ExoplanetRemoteDataSourceImpl implements ExoplanetRemoteDataSource {
   Future<Either<Failure, List<Exoplanet>>> getExoplanets() async {
     try {
       var response = await http.get(AppSecrets.baseExoplanetUrl);
-      print('Response status: ${response.statusCode}');
+
       if (response.statusCode == 200) {
-        print(response.body);
         final List<Exoplanet> exoplanets = (jsonDecode(response.body) as List)
             .map((data) => Exoplanet.fromJson(data))
             .toList();

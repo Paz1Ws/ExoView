@@ -6,7 +6,7 @@ import 'package:myapp/presentation/screens/screens.dart';
 import 'package:myapp/presentation/widgets/widgets.dart';
 
 class ExploreView extends StatelessWidget {
-  List<String> exoplanetCategories = [
+  final List<String> exoplanetCategories = [
     'All Exoplanets',
     'Super Earths',
     'Water Worlds',

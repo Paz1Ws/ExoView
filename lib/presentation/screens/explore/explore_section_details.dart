@@ -1,11 +1,3 @@
-// Suggested code may be subject to a license. Learn more: ~LicenseLog:2823283911.
-// Suggested code may be subject to a license. Learn more: ~LicenseLog:1963190590.
-// Suggested code may be subject to a license. Learn more: ~LicenseLog:4216398412.
-// Suggested code may be subject to a license. Learn more: ~LicenseLog:2382415872.
-// Suggested code may be subject to a license. Learn more: ~LicenseLog:3719101777.
-// Suggested code may be subject to a license. Learn more: ~LicenseLog:540051175.
-// Suggested code may be subject to a license. Learn more: ~LicenseLog:3535339102.
-import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fpdart/fpdart.dart';
@@ -70,20 +62,19 @@ class ExploreSectionDetails extends ConsumerWidget {
                     return exoplanets.fold(
                       (failure) => Center(child: Text('Error: $failure')),
                       (exoplanets) => GridView.builder(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
                         itemCount: exoplanets.length,
                         gridDelegate:
                             const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  mainAxisSpacing: 20,
-                  crossAxisSpacing: 20,
-                ),
-                itemBuilder: (context, index) {
+                          crossAxisCount: 2,
+                          mainAxisSpacing: 20,
+                          crossAxisSpacing: 20,
+                        ),
+                        itemBuilder: (context, index) {
                           final exoplanet = exoplanets[index];
-                  return TouchableExoplanetCard(
-                    exoplanet: exoplanet,
-                         
+                          return TouchableExoplanetCard(
+                            exoplanet: exoplanet,
                           );
                         },
                       ),
@@ -103,4 +94,3 @@ class ExploreSectionDetails extends ConsumerWidget {
     );
   }
 }
-

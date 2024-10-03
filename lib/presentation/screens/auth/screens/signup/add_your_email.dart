@@ -9,17 +9,19 @@ class AddYourEmail extends ConsumerWidget {
       : _onItemTapped = onItemTapped;
 
   @override
-  Widget build(BuildContext context, ref) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    // Utiliza ref.watch para obtener los controladores
+    final nameController = ref.watch(nameControllerProvider);
+    final emailController = ref.watch(emailControllerProvider);
+
     return SignUpBackground(
         body: Column(
       children: [
-        WritingLabel(
-            controller: ref.watch(nameControllerProvider), labelText: 'Name'),
+        WritingLabel(controller: nameController, labelText: 'Name'),
         const SizedBox(
           height: 10,
         ),
-        WritingLabel(
-            controller: ref.watch(emailControllerProvider), labelText: 'Email'),
+        WritingLabel(controller: emailController, labelText: 'Email'),
         const SizedBox(
           height: 10,
         ),
