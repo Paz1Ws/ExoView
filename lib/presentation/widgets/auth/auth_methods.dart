@@ -5,21 +5,23 @@ class AuthMethods extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        AuthMethodButton(
-          methodImage: 'assets/images/auth_icons/google.webp',
-        ),
-        SizedBox(width: 25),
-        AuthMethodButton(
-          methodImage: 'assets/images/auth_icons/facebook.webp',
-        ),
-        SizedBox(width: 25),
-        AuthMethodButton(
-          methodImage: 'assets/images/auth_icons/apple.webp',
-        ),
-      ],
+    return FittedBox(
+      child: const Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          AuthMethodButton(
+            methodImage: 'assets/images/auth_icons/google.webp',
+          ),
+          SizedBox(width: 25),
+          AuthMethodButton(
+            methodImage: 'assets/images/auth_icons/facebook.webp',
+          ),
+          SizedBox(width: 25),
+          AuthMethodButton(
+            methodImage: 'assets/images/auth_icons/apple.webp',
+          ),
+        ],
+      ),
     );
   }
 }

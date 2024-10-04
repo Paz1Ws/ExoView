@@ -4,10 +4,12 @@ import 'package:glowy_borders/glowy_borders.dart';
 
 class ExoplanetFeaturesCard extends StatelessWidget {
   final IconData featuresIcons;
+  final bool? isShip;
   final String features;
   final String featuresDescription;
   final String exoplanetFeaturesData;
   ExoplanetFeaturesCard({
+    this.isShip,
     required this.features,
     required this.featuresIcons,
     required this.featuresDescription,
@@ -63,7 +65,9 @@ class ExoplanetFeaturesCard extends StatelessWidget {
             fit: FlexFit.loose,
             child: LayoutBuilder(
               builder: (context, constraints) {
-                final text = featuresDescription + '\n' + exoplanetFeaturesData;
+                final text = isShip!
+                    ? featuresDescription
+                    : featuresDescription + '\n' + exoplanetFeaturesData;
                 final textStyle = AppFonts.spaceGrotesk16;
 
                 // Function to calculate the appropriate text scale factor

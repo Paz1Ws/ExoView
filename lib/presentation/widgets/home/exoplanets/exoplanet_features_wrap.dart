@@ -38,6 +38,7 @@ class ExoplanetFeaturesWrap extends StatelessWidget {
           : exoplanetFeatureData.features!.length,
       itemBuilder: (context, index) {
         return ExoplanetFeaturesCard(
+          isShip: isShip,
           exoplanetFeaturesData: exoplanetFeaturesData[index],
           features: isShip == true
               ? shipFeatureData.features![index]

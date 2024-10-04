@@ -18,7 +18,7 @@ dependencies:
   font_awesome_flutter: ^10.7.0
   glowy_borders: any
   google_fonts: ^6.2.1
-  http: ^1.2.2
+  http: ^0.13.4
   lottie: ^3.1.2
   model_viewer_plus: any
   rive: ^0.13.13
@@ -30,8 +30,13 @@ dependencies:
   gotrue: any
   internet_connection_checker_plus: ^2.5.2
   get_it: ^8.0.0
+  three_dart: ^0.0.16
   flutter_test:
     sdk: flutter
+  three_dart_jsm: ^0.0.10
+
+dependency_overrides:
+  http: ^0.13.4
 dev_dependencies:
   riverpod_generator: ^2.4.3
   build_runner: ^2.4.13

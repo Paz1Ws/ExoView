@@ -45,26 +45,29 @@ class LoginScreen extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: 20),
-            const AuthMethods(),
-            const SizedBox(height: 30),
-            Wrap(
-              alignment: WrapAlignment.center,
-              children: [
-                Text('If you don\'t have an account, you can',
-                    style: AppFonts.spaceGrotesk16
-                        .copyWith(color: AppColors.lightGray)),
-                TextButton(
-                    onPressed: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const CreateNewAccount()));
-                    },
-                    child: Text(
-                      'register here',
+            Padding(
+              padding: const EdgeInsets.all(18.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const AuthMethods(),
+                  const SizedBox(height: 20),
+                  Text('If you don\'t have an account, you can',
+                      textAlign: TextAlign.center,
                       style: AppFonts.spaceGrotesk16
-                          .copyWith(color: AppColors.brightTealGreen),
-                    )),
-              ],
+                          .copyWith(color: AppColors.lightGray)),
+                  TextButton(
+                      onPressed: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => const CreateNewAccount()));
+                      },
+                      child: Text(
+                        'register here',
+                        style: AppFonts.spaceGrotesk16
+                            .copyWith(color: AppColors.brightTealGreen),
+                      )),
+                ],
+              ),
             )
           ],
         ),

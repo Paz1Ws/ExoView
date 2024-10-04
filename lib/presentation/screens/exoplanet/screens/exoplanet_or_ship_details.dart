@@ -73,7 +73,7 @@ class ExoplanetOrShipDetails extends StatelessWidget {
                           ),
                         ),
                         child: Text(
-                          exoplanet!.discoveryYear.toString(),
+                          isShip ? '2020' : exoplanet!.discoveryYear.toString(),
                           textAlign: TextAlign.center,
                           style: AppFonts.spaceGrotesk18,
                         ),
@@ -116,14 +116,22 @@ class ExoplanetOrShipDetails extends StatelessWidget {
                               child: PurpleButton(
                                   text: isShip ? 'Book' : 'Book A Travel',
                                   onTap: () {
-                                    Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                ExoplanetOrShipDetails(
-                                                  isShip: true,
-                                                  model3D:
-                                                      'assets/animations/voyager.glb',
-                                                )));
+                                    isShip
+                                        ? ScaffoldMessenger.of(context)
+                                            .showSnackBar(
+                                            const SnackBar(
+                                              content: Text('Booked'),
+                                            ),
+                                          )
+                                        : Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    ExoplanetOrShipDetails(
+                                                      isShip: true,
+                                                      exoplanet: exoplanet,
+                                                      model3D:
+                                                          'assets/animations/voyager.glb',
+                                                    )));
                                   })),
                           const SizedBox(
                             width: 10,

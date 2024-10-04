@@ -29,6 +29,17 @@ class PlanetAndChart extends StatelessWidget {
           left: -size.width / 5,
           child: model3D != null
               ? Exoplanet3DContainer(
+                  translation: () {
+                    final matrix = Matrix4.identity();
+                    if (isShip) {
+                      matrix.translate(
+                          -MediaQuery.sizeOf(context).width / 1.5, 0.0, 0.0);
+                    } else {
+                      matrix.translate(
+                          -MediaQuery.sizeOf(context).width / 3, 0.0, 0.0);
+                    }
+                    return matrix;
+                  }(),
                   model: model3D!,
                 )
               : FittedBox(
@@ -82,8 +93,8 @@ class PlanetAndChart extends StatelessWidget {
                 isShip
                     ? 'Max. Velocity'
                     : 'Average Temperature.\n 3x More than Earth',
-              overflow: TextOverflow.fade,
-              maxLines: 2,
+                overflow: TextOverflow.fade,
+                maxLines: 2,
                 style: AppFonts.spaceGrotesk12,
               ),
             ],

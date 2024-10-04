@@ -36,6 +36,7 @@ class TouchableExoplanetCard extends StatelessWidget {
           }));
         },
         child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 10),
           height: size.height,
           width: double.infinity,
           decoration: const BoxDecoration(
