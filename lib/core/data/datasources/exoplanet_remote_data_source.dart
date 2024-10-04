@@ -8,24 +8,21 @@ import 'package:myapp/core/data/data.dart';
 
 abstract interface class ExoplanetRemoteDataSource {
   Future<Either<Failure, List<Exoplanet>>> getExoplanets();
-  Future<Either<Failure, List<ExoplanetEntity?>>> getExoplanetByDate(
+  Future<Either<Failure, List<Exoplanet?>>> getExoplanetByDate(
       DateTime exoDate);
-  Future<Either<Failure, List<ExoplanetEntity?>>> getExoplanetByDensity(
-      String exoDensity);
-  Future<Either<Failure, List<ExoplanetEntity?>>> getExoplanetByDiscoveryMethod(
+  Future<Either<Failure, List<Exoplanet?>>> getExoplanetByDensity(
+      double minDensity, double maxDensity);
+  Future<Either<Failure, List<Exoplanet?>>> getExoplanetByDiscoveryMethod(
       String exoDiscoveryMethod);
-  Future<Either<Failure, List<ExoplanetEntity?>>> getExoplanetByDiscoveryYear(
-      String exoDiscoveryYear);
-  Future<Either<Failure, List<ExoplanetEntity?>>> getExoplanetByDistance(
-      String exoDistance);
-  Future<Either<Failure, List<ExoplanetEntity?>>> getExoplanetByMass(
-      String exoMass);
-  Future<Either<Failure, List<ExoplanetEntity?>>> getExoplanetByName(
-      String exoName);
-  Future<Either<Failure, List<ExoplanetEntity?>>> getExoplanetByTemperature(
-      String exoTemperature);
-  Future<Either<Failure, List<ExoplanetEntity?>>> getExoplanetByType(
-      String exoType);
+  Future<Either<Failure, List<Exoplanet?>>> getExoplanetByDiscoveryYear(
+      double minYear, double maxYear);
+  Future<Either<Failure, List<Exoplanet?>>> getExoplanetByDistance(
+      double minDist, double maxDist);
+  Future<Either<Failure, List<Exoplanet?>>> getExoplanetByMass(double exoMass);
+  Future<Either<Failure, List<Exoplanet?>>> getExoplanetByName(String exoName);
+  Future<Either<Failure, List<Exoplanet?>>> getExoplanetByTemperature(
+      double minTemperature, double maxTemperature);
+  Future<Either<Failure, List<Exoplanet?>>> getExoplanetByType(String exoType);
   Future<Either<Failure, void>> addExoplanetToFavorites();
   Future<Either<Failure, void>> removeExoplanetFromFavorites(String id);
 }
@@ -58,66 +55,217 @@ class ExoplanetRemoteDataSourceImpl implements ExoplanetRemoteDataSource {
   }
 
   @override
-  Future<Either<Failure, List<ExoplanetEntity?>>> getExoplanetByDate(
-      DateTime exoDate) {
-    // TODO: implement getExoplanetByDate
-    throw UnimplementedError();
+  Future<Either<Failure, List<Exoplanet?>>> getExoplanetByDate(
+      DateTime exoDate) async {
+    final year = exoDate.year;
+    final url = Uri.parse(
+        'https://exoplanetarchive.ipac.caltech.edu/TAP/sync?query=select+pl_name,pl_controv_flag,disc_year,discoverymethod,pl_orbper,pl_rade,pl_bmasse,pl_eqt,pl_dens,pl_trandur,pl_insol,hostname,st_spectype,st_teff,st_rad,st_mass,st_age,st_vsin,sy_dist,sy_snum,sy_mnum,sy_pnum+from+ps+where+disc_year=$year&format=json');
+
+    try {
+      final response = await http.get(url);
+
+      if (response.statusCode == 200) {
+        final List<dynamic> data = json.decode(response.body);
+        final List<Exoplanet?> exoplanets =
+            data.map((json) => Exoplanet.fromJson(json)).toList();
+        return Right(exoplanets);
+      } else {
+        return Left(
+            Failure('Error fetching exoplanets: ${response.statusCode}'));
+      }
+    } catch (e) {
+      return Left(Failure('Unexpected error: $e'));
+    }
   }
 
   @override
-  Future<Either<Failure, List<ExoplanetEntity?>>> getExoplanetByDensity(
-      String exoDensity) {
-    // TODO: implement getExoplanetByDensity
-    throw UnimplementedError();
+  Future<Either<Failure, List<Exoplanet?>>> getExoplanetByDensity(
+      double minDensity, double maxDensity) async {
+    final url = Uri.parse(
+        'https://exoplanetarchive.ipac.caltech.edu/TAP/sync?query=select+pl_name,pl_controv_flag,disc_year,discoverymethod,pl_orbper,pl_rade,pl_bmasse,pl_eqt,pl_dens,pl_trandur,pl_insol,hostname,st_spectype,st_teff,st_rad,st_mass,st_age,st_vsin,sy_dist,sy_snum,sy_mnum,sy_pnum+from+ps+where+pl_dens>=$minDensity+and+pl_dens<=$maxDensity&format=json');
+
+    try {
+      final response = await http.get(url);
+
+      if (response.statusCode == 200) {
+        final List<dynamic> data = json.decode(response.body);
+        final List<Exoplanet?> exoplanets =
+            data.map((json) => Exoplanet.fromJson(json)).toList();
+        return Right(exoplanets);
+      } else {
+        return Left(
+            Failure('Error fetching exoplanets: ${response.statusCode}'));
+      }
+    } catch (e) {
+      return Left(Failure('Unexpected error: $e'));
+    }
   }
 
   @override
-  Future<Either<Failure, List<ExoplanetEntity?>>> getExoplanetByDiscoveryMethod(
-      String exoDiscoveryMethod) {
-    // TODO: implement getExoplanetByDiscoveryMethod
-    throw UnimplementedError();
+  Future<Either<Failure, List<Exoplanet?>>> getExoplanetByDiscoveryMethod(
+      String exoDiscoveryMethod) async {
+    final url = Uri.parse(
+        'https://exoplanetarchive.ipac.caltech.edu/TAP/sync?query=select+pl_name,pl_controv_flag,disc_year,discoverymethod,pl_orbper,pl_rade,pl_bmasse,pl_eqt,pl_dens,pl_trandur,pl_insol,hostname,st_spectype,st_teff,st_rad,st_mass,st_age,st_vsin,sy_dist,sy_snum,sy_mnum,sy_pnum+from+ps+where+discovermethod=$exoDiscoveryMethod&format=json');
+
+    try {
+      final response = await http.get(url);
+
+      if (response.statusCode == 200) {
+        final List<dynamic> data = json.decode(response.body);
+        final List<Exoplanet?> exoplanets =
+            data.map((json) => Exoplanet.fromJson(json)).toList();
+        return Right(exoplanets);
+      } else {
+        return Left(
+            Failure('Error fetching exoplanets: ${response.statusCode}'));
+      }
+    } catch (e) {
+      return Left(Failure('Unexpected error: $e'));
+    }
   }
 
   @override
-  Future<Either<Failure, List<ExoplanetEntity?>>> getExoplanetByDiscoveryYear(
-      String exoDiscoveryYear) {
-    // TODO: implement getExoplanetByDiscoveryYear
-    throw UnimplementedError();
+  Future<Either<Failure, List<Exoplanet?>>> getExoplanetByDiscoveryYear(
+      double minYear, double maxYear) async {
+    final url = Uri.parse(
+        'https://exoplanetarchive.ipac.caltech.edu/TAP/sync?query=select+pl_name,pl_controv_flag,disc_year,discoverymethod,pl_orbper,pl_rade,pl_bmasse,pl_eqt,pl_dens,pl_trandur,pl_insol,hostname,st_spectype,st_teff,st_rad,st_mass,st_age,st_vsin,sy_dist,sy_snum,sy_mnum,sy_pnum+from+ps+where+disc_year>=$minYear+and+pl_dens<=$maxYear&format=json');
+
+    try {
+      final response = await http.get(url);
+
+      if (response.statusCode == 200) {
+        final List<dynamic> data = json.decode(response.body);
+        final List<Exoplanet?> exoplanets =
+            data.map((json) => Exoplanet.fromJson(json)).toList();
+        return Right(exoplanets);
+      } else {
+        return Left(
+            Failure('Error fetching exoplanets: ${response.statusCode}'));
+      }
+    } catch (e) {
+      return Left(Failure('Unexpected error: $e'));
+    }
   }
 
   @override
-  Future<Either<Failure, List<ExoplanetEntity?>>> getExoplanetByDistance(
-      String exoDistance) {
-    // TODO: implement getExoplanetByDistance
-    throw UnimplementedError();
+  Future<Either<Failure, List<Exoplanet?>>> getExoplanetByDistance(
+      double minDist, double maxDist) async {
+    final url = Uri.parse(
+        'https://exoplanetarchive.ipac.caltech.edu/TAP/sync?query=select+pl_name,pl_controv_flag,disc_year,discoverymethod,pl_orbper,pl_rade,pl_bmasse,pl_eqt,pl_dens,pl_trandur,pl_insol,hostname,st_spectype,st_teff,st_rad,st_mass,st_age,st_vsin,sy_dist,sy_snum,sy_mnum,sy_pnum+from+ps+where+sy_dist>=$minDist&<=$maxDist&format=json');
+
+    try {
+      final response = await http.get(url);
+
+      if (response.statusCode == 200) {
+        final List<dynamic> data = json.decode(response.body);
+        final List<Exoplanet?> exoplanets =
+            data.map((json) => Exoplanet.fromJson(json)).toList();
+        return Right(exoplanets);
+      } else {
+        return Left(
+            Failure('Error fetching exoplanets: ${response.statusCode}'));
+      }
+    } catch (e) {
+      return Left(Failure('Unexpected error: $e'));
+    }
   }
 
   @override
-  Future<Either<Failure, List<ExoplanetEntity?>>> getExoplanetByMass(
-      String exoMass) {
-    // TODO: implement getExoplanetByMass
-    throw UnimplementedError();
+  Future<Either<Failure, List<Exoplanet?>>> getExoplanetByMass(
+      double exoMass) async {
+    final url = Uri.parse(
+        'https://exoplanetarchive.ipac.caltech.edu/TAP/sync?query=select+pl_name,pl_controv_flag,disc_year,discoverymethod,pl_orbper,pl_rade,pl_bmasse,pl_eqt,pl_dens,pl_trandur,pl_insol,hostname,st_spectype,st_teff,st_rad,st_mass,st_age,st_vsin,sy_dist,sy_snum,sy_mnum,sy_pnum+from+ps+where+pl_bmasse=$exoMass&format=json');
+
+    try {
+      final response = await http.get(url);
+
+      if (response.statusCode == 200) {
+        final List<dynamic> data = json.decode(response.body);
+        final List<Exoplanet?> exoplanets =
+            data.map((json) => Exoplanet.fromJson(json)).toList();
+        return Right(exoplanets);
+      } else {
+        return Left(
+            Failure('Error fetching exoplanets: ${response.statusCode}'));
+      }
+    } catch (e) {
+      return Left(Failure('Unexpected error: $e'));
+    }
+  }
+
+  Future<Either<Failure, List<Exoplanet?>>> getExoplanetByName(
+      String exoName) async {
+    final url = Uri.parse(
+        'https://exoplanetarchive.ipac.caltech.edu/TAP/sync?query=select+pl_name,pl_controv_flag,disc_year,discoverymethod,pl_orbper,pl_rade,pl_bmasse,pl_eqt,pl_dens,pl_trandur,pl_insol,hostname,st_spectype,st_teff,st_rad,st_mass,st_age,st_vsin,sy_dist,sy_snum,sy_mnum,sy_pnum+from+ps+where+pl_name=$exoName&format=json');
+
+    try {
+      final response = await http.get(url);
+
+      if (response.statusCode == 200) {
+        final List<dynamic> data = json.decode(response.body);
+        final List<Exoplanet?> exoplanets =
+            data.map((json) => Exoplanet.fromJson(json)).toList();
+        return Right(exoplanets);
+      } else {
+        return Left(
+            Failure('Error fetching exoplanets: ${response.statusCode}'));
+      }
+    } catch (e) {
+      return Left(Failure('Unexpected error: $e'));
+    }
   }
 
   @override
-  Future<Either<Failure, List<ExoplanetEntity?>>> getExoplanetByName(
-      String exoName) {
-    // TODO: implement getExoplanetByName
-    throw UnimplementedError();
+  Future<Either<Failure, List<Exoplanet?>>> getExoplanetByTemperature(
+      double minTemperature, double maxTemperature) async {
+    final url = Uri.parse(
+        'https://exoplanetarchive.ipac.caltech.edu/TAP/sync?query=select+pl_name,pl_controv_flag,disc_year,discoverymethod,pl_orbper,pl_rade,pl_bmasse,pl_eqt,pl_dens,pl_trandur,pl_insol,hostname,st_spectype,st_teff,st_rad,st_mass,st_age,st_vsin,sy_dist,sy_snum,sy_mnum,sy_pnum+from+ps+where+disc_year>=$minTemperature+and+pl_dens<=$maxTemperature&format=json');
+
+    try {
+      final response = await http.get(url);
+
+      if (response.statusCode == 200) {
+        final List<dynamic> data = json.decode(response.body);
+        final List<Exoplanet?> exoplanets =
+            data.map((json) => Exoplanet.fromJson(json)).toList();
+        return Right(exoplanets);
+      } else {
+        return Left(
+            Failure('Error fetching exoplanets: ${response.statusCode}'));
+      }
+    } catch (e) {
+      return Left(Failure('Unexpected error: $e'));
+    }
   }
 
   @override
-  Future<Either<Failure, List<ExoplanetEntity?>>> getExoplanetByTemperature(
-      String exoTemperature) {
-    // TODO: implement getExoplanetByTemperature
-    throw UnimplementedError();
-  }
+  Future<Either<Failure, List<Exoplanet?>>> getExoplanetByType(
+      String exoType) async {
+    final url = Uri.parse(
+        'https://exoplanetarchive.ipac.caltech.edu/TAP/sync?query=select+pl_name,pl_controv_flag,disc_year,discoverymethod,pl_orbper,pl_rade,pl_bmasse,pl_eqt,pl_dens,pl_trandur,pl_insol,hostname,st_spectype,st_teff,st_rad,st_mass,st_age,st_vsin,sy_dist,sy_snum,sy_mnum,sy_pnum+from+ps&format=json');
 
-  @override
-  Future<Either<Failure, List<ExoplanetEntity?>>> getExoplanetByType(
-      String exoType) {
-    // TODO: implement getExoplanetByType
-    throw UnimplementedError();
+    try {
+      final response = await http.get(url);
+
+      if (response.statusCode == 200) {
+        final List<dynamic> data = json.decode(response.body);
+        final List<Exoplanet?> exoplanets = data
+            .map((json) {
+              final exoplanet = Exoplanet.fromJson(json);
+              final type = classifyExoplanet(
+                  exoplanet.massEarthMass, exoplanet.radiusEarthRadius);
+              return type == exoType ? exoplanet : null;
+            })
+            .where((exoplanet) => exoplanet != null)
+            .toList();
+        return Right(exoplanets);
+      } else {
+        return Left(
+            Failure('Error fetching exoplanets: ${response.statusCode}'));
+      }
+    } catch (e) {
+      return Left(Failure('Unexpected error: $e'));
+    }
   }
 
   @override
@@ -130,5 +278,21 @@ class ExoplanetRemoteDataSourceImpl implements ExoplanetRemoteDataSource {
   Future<Either<Failure, void>> removeExoplanetFromFavorites(String id) {
     // TODO: implement removeExoplanetFromFavorites
     throw UnimplementedError();
+  }
+}
+
+String classifyExoplanet(double mass, double radius) {
+  if (mass >= 2 && mass <= 5) {
+    return 'Water World';
+  } else if (mass >= 0.5 && mass < 2 && radius < 1.25) {
+    return 'Rocky Planet';
+  } else if (mass >= 2 && radius >= 1.25 && radius <= 1.5) {
+    return 'Super Earth';
+  } else if (radius >= 6) {
+    return 'Gas Giant';
+  } else if (mass >= 10 && mass <= 50 && radius >= 2 && radius <= 6) {
+    return 'Neptunian';
+  } else {
+    return 'Unknown';
   }
 }

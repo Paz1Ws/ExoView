@@ -3,7 +3,7 @@
 //hostname,st_spectype,st_teff,st_rad,st_mass,st_age,st_vsin,
 //sy_dist,sy_snum,sy_mnum,sy_pnum+from+ps+where+disc_year>=2020+and+disc_year<=2024&format=json
 
-class ExoplanetEntity {
+class ExoPlanetEntity {
   // Nombre del planeta (usualmente asignado por los descubridores)
   final String planetName;
 
@@ -37,7 +37,7 @@ class ExoplanetEntity {
   // Flujo de insolación del planeta (flujos terrestres)
   final double insolationFlux;
 
-  ExoplanetEntity({
+  ExoPlanetEntity({
     required this.planetName,
     required this.isControversial,
     required this.discoveryYear,

@@ -34,64 +34,61 @@ class ExoplanetRepositoryImpl implements ExoplanetRepository {
   }
 
   @override
-  Future<Either<Failure, List<ExoplanetEntity?>>> getExoplanetByDate(
+  Future<Either<Failure, List<Exoplanet?>>> getExoplanetByDate(
       DateTime exoDate) {
     // TODO: implement getExoplanetByDate
     throw UnimplementedError();
   }
 
   @override
-  Future<Either<Failure, List<ExoplanetEntity?>>> getExoplanetByDensity(
+  Future<Either<Failure, List<Exoplanet?>>> getExoplanetByDensity(
       String exoDensity) {
     // TODO: implement getExoplanetByDensity
     throw UnimplementedError();
   }
 
   @override
-  Future<Either<Failure, List<ExoplanetEntity?>>> getExoplanetByDiscoveryMethod(
+  Future<Either<Failure, List<Exoplanet?>>> getExoplanetByDiscoveryMethod(
       String exoDiscoveryMethod) {
     // TODO: implement getExoplanetByDiscoveryMethod
     throw UnimplementedError();
   }
 
   @override
-  Future<Either<Failure, List<ExoplanetEntity?>>> getExoplanetByDiscoveryYear(
+  Future<Either<Failure, List<Exoplanet?>>> getExoplanetByDiscoveryYear(
       String exoDiscoveryYear) {
     // TODO: implement getExoplanetByDiscoveryYear
     throw UnimplementedError();
   }
 
   @override
-  Future<Either<Failure, List<ExoplanetEntity?>>> getExoplanetByDistance(
+  Future<Either<Failure, List<Exoplanet?>>> getExoplanetByDistance(
       String exoDistance) {
     // TODO: implement getExoplanetByDistance
     throw UnimplementedError();
   }
 
   @override
-  Future<Either<Failure, List<ExoplanetEntity?>>> getExoplanetByMass(
-      String exoMass) {
+  Future<Either<Failure, List<Exoplanet?>>> getExoplanetByMass(String exoMass) {
     // TODO: implement getExoplanetByMass
     throw UnimplementedError();
   }
 
   @override
-  Future<Either<Failure, List<ExoplanetEntity?>>> getExoplanetByName(
-      String exoName) {
+  Future<Either<Failure, List<Exoplanet?>>> getExoplanetByName(String exoName) {
     // TODO: implement getExoplanetByName
     throw UnimplementedError();
   }
 
   @override
-  Future<Either<Failure, List<ExoplanetEntity?>>> getExoplanetByTemperature(
+  Future<Either<Failure, List<Exoplanet?>>> getExoplanetByTemperature(
       String exoTemperature) {
     // TODO: implement getExoplanetByTemperature
     throw UnimplementedError();
   }
 
   @override
-  Future<Either<Failure, List<ExoplanetEntity?>>> getExoplanetByType(
-      String exoType) {
+  Future<Either<Failure, List<Exoplanet?>>> getExoplanetByType(String exoType) {
     // TODO: implement getExoplanetByType
     throw UnimplementedError();
   }

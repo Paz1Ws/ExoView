@@ -1,6 +1,6 @@
 import 'package:myapp/config/entities/exoplanet.dart';
 
-class Exoplanet extends ExoplanetEntity {
+class Exoplanet extends ExoPlanetEntity {
   Exoplanet({
     required super.planetName,
     required super.isControversial,
