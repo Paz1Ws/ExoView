@@ -9,6 +9,6 @@ class GetExoplanets implements UseCase<List<Exoplanet>, NoParams> {
 
   @override
   Future<Either<Failure, List<Exoplanet>>> call(NoParams params) async {
-    return await exoplanetRepository.getExoplanets();
+    return await exoplanetRepository.getExoplanets(null);
   }
 }

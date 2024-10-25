@@ -15,7 +15,10 @@ Future<void> initDependencies() async {
   );
   serviceLocator.registerLazySingleton(() => supabase.client);
 
-  serviceLocator.registerFactory(() => InternetConnection());
+  // Registrar InternetConnectionChecker
+  serviceLocator.registerLazySingleton(() => InternetConnection());
+
+  // Registrar ConnectionChecker
   serviceLocator.registerFactory<ConnectionChecker>(
     () => ConnectionCheckerImpl(
       serviceLocator(),
@@ -31,7 +34,8 @@ void _initAuth() {
       () => AuthRemoteDataSourceImpl(
         serviceLocator(),
       ),
-    )..registerFactory<ExoplanetRemoteDataSource>(
+    )
+    ..registerFactory<ExoplanetRemoteDataSource>(
       () => ExoplanetRemoteDataSourceImpl(),
     )
     // Repositories
@@ -40,7 +44,8 @@ void _initAuth() {
         serviceLocator(),
         serviceLocator(),
       ),
-    )..registerFactory<AuthRepositoryImpl>(
+    )
+    ..registerFactory<AuthRepositoryImpl>(
       () => AuthRepositoryImpl(
         serviceLocator(),
         serviceLocator(),
@@ -51,7 +56,8 @@ void _initAuth() {
         serviceLocator(),
         serviceLocator(),
       ),
-    )..registerFactory<ExoplanetRepositoryImpl>(
+    )
+    ..registerFactory<ExoplanetRepositoryImpl>(
       () => ExoplanetRepositoryImpl(
         serviceLocator(),
         serviceLocator(),

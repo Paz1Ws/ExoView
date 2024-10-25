@@ -77,9 +77,7 @@ class AuthMethodLarge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        ExoplanetRemoteDataSourceImpl().getExoplanets();
-      },
+      onTap: () {},
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8),

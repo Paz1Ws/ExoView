@@ -95,7 +95,7 @@ final FeatureData exoplanetFeatureData = FeatureData(
     'The existence of this exoplanet is debated among scientists?: ',
     'The year in which the exoplanet was discovered: ',
     'The method used to discover the exoplanet: ',
-    'The time it takes for the exoplanet to complete one orbit around its star: ',
+    'The time it takes, to complete one orbit around its star: ',
     'The radius of the exoplanet compared to Earth: ',
     'The mass of the exoplanet compared to Earth: ',
     'The equilibrium temperature of the exoplanet in Kelvin: ',

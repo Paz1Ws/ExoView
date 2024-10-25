@@ -3,8 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myapp/config/theme/theme.dart';
 
 class PlanetCategoryCard extends ConsumerWidget {
-  
-   
   // final String? model3D;
   final List<String> defaultPlanets = [
     'assets/images/planet_icons/planet_icon_1.png',
@@ -23,18 +21,17 @@ class PlanetCategoryCard extends ConsumerWidget {
   });
 
   @override
-  Widget build(BuildContext context,ref) {
+  Widget build(BuildContext context, ref) {
     final size = MediaQuery.sizeOf(context);
     return GestureDetector(
       onTap: onTap,
       child: Container(
         height: size.height,
         width: double.infinity,
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
             color: AppColors.brightPurple,
-            borderRadius: BorderRadius.only(
-              bottomRight: Radius.circular(18),
-              topRight: Radius.circular(18),
+            borderRadius: BorderRadius.all(
+              Radius.circular(18),
             )),
         child: Row(
           children: [

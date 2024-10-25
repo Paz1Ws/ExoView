@@ -43,7 +43,10 @@ build_runner:
   flutter_lints: ^4.0.0
   flutter_test:
     sdk: flutter
-  
+
+dependency_overrides:
+  http: ^0.13.4
+
 
 flutter:
 

@@ -12,5 +12,7 @@ final exoplanetRepositoryProvider = Provider<ExoplanetRepositoryImpl>((ref) {
 final exoplanetsProvider =
     Provider<Future<Either<Failure, List<Exoplanet>>>>((ref) {
   final exoplanetRepository = ref.watch(exoplanetRepositoryProvider);
-  return GetExoplanets(exoplanetRepository).exoplanetRepository.getExoplanets();
+  return GetExoplanets(exoplanetRepository)
+      .exoplanetRepository
+      .getExoplanets(null);
 });

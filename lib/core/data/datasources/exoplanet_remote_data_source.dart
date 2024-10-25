@@ -7,7 +7,7 @@ import 'package:myapp/config/failures/exceptions.dart';
 import 'package:myapp/core/data/data.dart';
 
 abstract interface class ExoplanetRemoteDataSource {
-  Future<Either<Failure, List<Exoplanet>>> getExoplanets();
+  Future<Either<Failure, List<Exoplanet>>> getExoplanets(String? url);
   Future<Either<Failure, List<Exoplanet?>>> getExoplanetByDate(
       DateTime exoDate);
   Future<Either<Failure, List<Exoplanet?>>> getExoplanetByDensity(
@@ -29,19 +29,20 @@ abstract interface class ExoplanetRemoteDataSource {
 
 class ExoplanetRemoteDataSourceImpl implements ExoplanetRemoteDataSource {
   @override
-  Future<Either<Failure, List<Exoplanet>>> getExoplanets() async {
+  Future<Either<Failure, List<Exoplanet>>> getExoplanets(
+      String? externalUrl) async {
+    final url = externalUrl == null ? AppSecrets.baseExoplanetUrl : externalUrl;
     try {
-      var response = await http.get(AppSecrets.baseExoplanetUrl);
+      final response = await http.get(Uri.parse(url));
 
       if (response.statusCode == 200) {
-        final List<Exoplanet> exoplanets = (jsonDecode(response.body) as List)
-            .map((data) => Exoplanet.fromJson(data))
-            .toList();
+        final List<dynamic> data = json.decode(response.body);
+        final List<Exoplanet> exoplanets =
+            data.map((json) => Exoplanet.fromJson(json)).toList();
         return Right(exoplanets);
       } else {
         return Left(
-            ServerException('Error fetching exoplanets: ${response.statusCode}')
-                as Failure);
+            Failure('Error fetching exoplanets: ${response.statusCode}'));
       }
     } on SocketException {
       return Left(Failure('No Internet connection'));
@@ -58,194 +59,75 @@ class ExoplanetRemoteDataSourceImpl implements ExoplanetRemoteDataSource {
   Future<Either<Failure, List<Exoplanet?>>> getExoplanetByDate(
       DateTime exoDate) async {
     final year = exoDate.year;
-    final url = Uri.parse(
-        'https://exoplanetarchive.ipac.caltech.edu/TAP/sync?query=select+pl_name,pl_controv_flag,disc_year,discoverymethod,pl_orbper,pl_rade,pl_bmasse,pl_eqt,pl_dens,pl_trandur,pl_insol,hostname,st_spectype,st_teff,st_rad,st_mass,st_age,st_vsin,sy_dist,sy_snum,sy_mnum,sy_pnum+from+ps+where+disc_year=$year&format=json');
-
-    try {
-      final response = await http.get(url);
-
-      if (response.statusCode == 200) {
-        final List<dynamic> data = json.decode(response.body);
-        final List<Exoplanet?> exoplanets =
-            data.map((json) => Exoplanet.fromJson(json)).toList();
-        return Right(exoplanets);
-      } else {
-        return Left(
-            Failure('Error fetching exoplanets: ${response.statusCode}'));
-      }
-    } catch (e) {
-      return Left(Failure('Unexpected error: $e'));
-    }
+    final url =
+        'https://exoplanetarchive.ipac.caltech.edu/TAP/sync?query=select+pl_name,pl_controv_flag,disc_year,discoverymethod,pl_orbper,pl_rade,pl_bmasse,pl_eqt,pl_dens,pl_trandur,pl_insol,hostname,st_spectype,st_teff,st_rad,st_mass,st_age,st_vsin,sy_dist,sy_snum,sy_mnum,sy_pnum+from+ps+where+disc_year=$year&format=json';
+    return getExoplanets(url);
   }
 
   @override
   Future<Either<Failure, List<Exoplanet?>>> getExoplanetByDensity(
       double minDensity, double maxDensity) async {
-    final url = Uri.parse(
-        'https://exoplanetarchive.ipac.caltech.edu/TAP/sync?query=select+pl_name,pl_controv_flag,disc_year,discoverymethod,pl_orbper,pl_rade,pl_bmasse,pl_eqt,pl_dens,pl_trandur,pl_insol,hostname,st_spectype,st_teff,st_rad,st_mass,st_age,st_vsin,sy_dist,sy_snum,sy_mnum,sy_pnum+from+ps+where+pl_dens>=$minDensity+and+pl_dens<=$maxDensity&format=json');
-
-    try {
-      final response = await http.get(url);
-
-      if (response.statusCode == 200) {
-        final List<dynamic> data = json.decode(response.body);
-        final List<Exoplanet?> exoplanets =
-            data.map((json) => Exoplanet.fromJson(json)).toList();
-        return Right(exoplanets);
-      } else {
-        return Left(
-            Failure('Error fetching exoplanets: ${response.statusCode}'));
-      }
-    } catch (e) {
-      return Left(Failure('Unexpected error: $e'));
-    }
+    final url =
+        'https://exoplanetarchive.ipac.caltech.edu/TAP/sync?query=select+pl_name,pl_controv_flag,disc_year,discoverymethod,pl_orbper,pl_rade,pl_bmasse,pl_eqt,pl_dens,pl_trandur,pl_insol,hostname,st_spectype,st_teff,st_rad,st_mass,st_age,st_vsin,sy_dist,sy_snum,sy_mnum,sy_pnum+from+ps+where+pl_dens>=$minDensity+and+pl_dens<=$maxDensity&format=json';
+    return getExoplanets(url);
   }
 
   @override
   Future<Either<Failure, List<Exoplanet?>>> getExoplanetByDiscoveryMethod(
       String exoDiscoveryMethod) async {
-    final url = Uri.parse(
-        'https://exoplanetarchive.ipac.caltech.edu/TAP/sync?query=select+pl_name,pl_controv_flag,disc_year,discoverymethod,pl_orbper,pl_rade,pl_bmasse,pl_eqt,pl_dens,pl_trandur,pl_insol,hostname,st_spectype,st_teff,st_rad,st_mass,st_age,st_vsin,sy_dist,sy_snum,sy_mnum,sy_pnum+from+ps+where+discovermethod=$exoDiscoveryMethod&format=json');
-
-    try {
-      final response = await http.get(url);
-
-      if (response.statusCode == 200) {
-        final List<dynamic> data = json.decode(response.body);
-        final List<Exoplanet?> exoplanets =
-            data.map((json) => Exoplanet.fromJson(json)).toList();
-        return Right(exoplanets);
-      } else {
-        return Left(
-            Failure('Error fetching exoplanets: ${response.statusCode}'));
-      }
-    } catch (e) {
-      return Left(Failure('Unexpected error: $e'));
-    }
+    final url =
+        'https://exoplanetarchive.ipac.caltech.edu/TAP/sync?query=select+pl_name,pl_controv_flag,disc_year,discoverymethod,pl_orbper,pl_rade,pl_bmasse,pl_eqt,pl_dens,pl_trandur,pl_insol,hostname,st_spectype,st_teff,st_rad,st_mass,st_age,st_vsin,sy_dist,sy_snum,sy_mnum,sy_pnum+from+ps+where+discovermethod=$exoDiscoveryMethod&format=json';
+    return getExoplanets(url);
   }
 
   @override
   Future<Either<Failure, List<Exoplanet?>>> getExoplanetByDiscoveryYear(
       double minYear, double maxYear) async {
-    final url = Uri.parse(
-        'https://exoplanetarchive.ipac.caltech.edu/TAP/sync?query=select+pl_name,pl_controv_flag,disc_year,discoverymethod,pl_orbper,pl_rade,pl_bmasse,pl_eqt,pl_dens,pl_trandur,pl_insol,hostname,st_spectype,st_teff,st_rad,st_mass,st_age,st_vsin,sy_dist,sy_snum,sy_mnum,sy_pnum+from+ps+where+disc_year>=$minYear+and+pl_dens<=$maxYear&format=json');
-
-    try {
-      final response = await http.get(url);
-
-      if (response.statusCode == 200) {
-        final List<dynamic> data = json.decode(response.body);
-        final List<Exoplanet?> exoplanets =
-            data.map((json) => Exoplanet.fromJson(json)).toList();
-        return Right(exoplanets);
-      } else {
-        return Left(
-            Failure('Error fetching exoplanets: ${response.statusCode}'));
-      }
-    } catch (e) {
-      return Left(Failure('Unexpected error: $e'));
-    }
+    final url =
+        'https://exoplanetarchive.ipac.caltech.edu/TAP/sync?query=select+pl_name,pl_controv_flag,disc_year,discoverymethod,pl_orbper,pl_rade,pl_bmasse,pl_eqt,pl_dens,pl_trandur,pl_insol,hostname,st_spectype,st_teff,st_rad,st_mass,st_age,st_vsin,sy_dist,sy_snum,sy_mnum,sy_pnum+from+ps+where+disc_year>=$minYear+and+pl_dens<=$maxYear&format=json';
+    return getExoplanets(url);
   }
 
   @override
   Future<Either<Failure, List<Exoplanet?>>> getExoplanetByDistance(
       double minDist, double maxDist) async {
-    final url = Uri.parse(
-        'https://exoplanetarchive.ipac.caltech.edu/TAP/sync?query=select+pl_name,pl_controv_flag,disc_year,discoverymethod,pl_orbper,pl_rade,pl_bmasse,pl_eqt,pl_dens,pl_trandur,pl_insol,hostname,st_spectype,st_teff,st_rad,st_mass,st_age,st_vsin,sy_dist,sy_snum,sy_mnum,sy_pnum+from+ps+where+sy_dist>=$minDist&<=$maxDist&format=json');
-
-    try {
-      final response = await http.get(url);
-
-      if (response.statusCode == 200) {
-        final List<dynamic> data = json.decode(response.body);
-        final List<Exoplanet?> exoplanets =
-            data.map((json) => Exoplanet.fromJson(json)).toList();
-        return Right(exoplanets);
-      } else {
-        return Left(
-            Failure('Error fetching exoplanets: ${response.statusCode}'));
-      }
-    } catch (e) {
-      return Left(Failure('Unexpected error: $e'));
-    }
+    final url =
+        'https://exoplanetarchive.ipac.caltech.edu/TAP/sync?query=select+pl_name,pl_controv_flag,disc_year,discoverymethod,pl_orbper,pl_rade,pl_bmasse,pl_eqt,pl_dens,pl_trandur,pl_insol,hostname,st_spectype,st_teff,st_rad,st_mass,st_age,st_vsin,sy_dist,sy_snum,sy_mnum,sy_pnum+from+ps+where+sy_dist>=$minDist&<=$maxDist&format=json';
+    return getExoplanets(url);
   }
 
   @override
   Future<Either<Failure, List<Exoplanet?>>> getExoplanetByMass(
       double exoMass) async {
-    final url = Uri.parse(
-        'https://exoplanetarchive.ipac.caltech.edu/TAP/sync?query=select+pl_name,pl_controv_flag,disc_year,discoverymethod,pl_orbper,pl_rade,pl_bmasse,pl_eqt,pl_dens,pl_trandur,pl_insol,hostname,st_spectype,st_teff,st_rad,st_mass,st_age,st_vsin,sy_dist,sy_snum,sy_mnum,sy_pnum+from+ps+where+pl_bmasse=$exoMass&format=json');
-
-    try {
-      final response = await http.get(url);
-
-      if (response.statusCode == 200) {
-        final List<dynamic> data = json.decode(response.body);
-        final List<Exoplanet?> exoplanets =
-            data.map((json) => Exoplanet.fromJson(json)).toList();
-        return Right(exoplanets);
-      } else {
-        return Left(
-            Failure('Error fetching exoplanets: ${response.statusCode}'));
-      }
-    } catch (e) {
-      return Left(Failure('Unexpected error: $e'));
-    }
+    final url =
+        'https://exoplanetarchive.ipac.caltech.edu/TAP/sync?query=select+pl_name,pl_controv_flag,disc_year,discoverymethod,pl_orbper,pl_rade,pl_bmasse,pl_eqt,pl_dens,pl_trandur,pl_insol,hostname,st_spectype,st_teff,st_rad,st_mass,st_age,st_vsin,sy_dist,sy_snum,sy_mnum,sy_pnum+from+ps+where+pl_bmasse=$exoMass&format=json';
+    return getExoplanets(url);
   }
 
+  @override
   Future<Either<Failure, List<Exoplanet?>>> getExoplanetByName(
       String exoName) async {
-    final url = Uri.parse(
-        'https://exoplanetarchive.ipac.caltech.edu/TAP/sync?query=select+pl_name,pl_controv_flag,disc_year,discoverymethod,pl_orbper,pl_rade,pl_bmasse,pl_eqt,pl_dens,pl_trandur,pl_insol,hostname,st_spectype,st_teff,st_rad,st_mass,st_age,st_vsin,sy_dist,sy_snum,sy_mnum,sy_pnum+from+ps+where+pl_name=$exoName&format=json');
-
-    try {
-      final response = await http.get(url);
-
-      if (response.statusCode == 200) {
-        final List<dynamic> data = json.decode(response.body);
-        final List<Exoplanet?> exoplanets =
-            data.map((json) => Exoplanet.fromJson(json)).toList();
-        return Right(exoplanets);
-      } else {
-        return Left(
-            Failure('Error fetching exoplanets: ${response.statusCode}'));
-      }
-    } catch (e) {
-      return Left(Failure('Unexpected error: $e'));
-    }
+    final url =
+        'https://exoplanetarchive.ipac.caltech.edu/TAP/sync?query=select+pl_name,pl_controv_flag,disc_year,discoverymethod,pl_orbper,pl_rade,pl_bmasse,pl_eqt,pl_dens,pl_trandur,pl_insol,hostname,st_spectype,st_teff,st_rad,st_mass,st_age,st_vsin,sy_dist,sy_snum,sy_mnum,sy_pnum+from+ps+where+pl_name=$exoName&format=json';
+    return getExoplanets(url);
   }
 
   @override
   Future<Either<Failure, List<Exoplanet?>>> getExoplanetByTemperature(
       double minTemperature, double maxTemperature) async {
-    final url = Uri.parse(
-        'https://exoplanetarchive.ipac.caltech.edu/TAP/sync?query=select+pl_name,pl_controv_flag,disc_year,discoverymethod,pl_orbper,pl_rade,pl_bmasse,pl_eqt,pl_dens,pl_trandur,pl_insol,hostname,st_spectype,st_teff,st_rad,st_mass,st_age,st_vsin,sy_dist,sy_snum,sy_mnum,sy_pnum+from+ps+where+disc_year>=$minTemperature+and+pl_dens<=$maxTemperature&format=json');
-
-    try {
-      final response = await http.get(url);
-
-      if (response.statusCode == 200) {
-        final List<dynamic> data = json.decode(response.body);
-        final List<Exoplanet?> exoplanets =
-            data.map((json) => Exoplanet.fromJson(json)).toList();
-        return Right(exoplanets);
-      } else {
-        return Left(
-            Failure('Error fetching exoplanets: ${response.statusCode}'));
-      }
-    } catch (e) {
-      return Left(Failure('Unexpected error: $e'));
-    }
+    final url =
+        'https://exoplanetarchive.ipac.caltech.edu/TAP/sync?query=select+pl_name,pl_controv_flag,disc_year,discoverymethod,pl_orbper,pl_rade,pl_bmasse,pl_eqt,pl_dens,pl_trandur,pl_insol,hostname,st_spectype,st_teff,st_rad,st_mass,st_age,st_vsin,sy_dist,sy_snum,sy_mnum,sy_pnum+from+ps+where+disc_year>=$minTemperature+and+pl_dens<=$maxTemperature&format=json';
+    return getExoplanets(url);
   }
 
   @override
   Future<Either<Failure, List<Exoplanet?>>> getExoplanetByType(
       String exoType) async {
-    final url = Uri.parse(
-        'https://exoplanetarchive.ipac.caltech.edu/TAP/sync?query=select+pl_name,pl_controv_flag,disc_year,discoverymethod,pl_orbper,pl_rade,pl_bmasse,pl_eqt,pl_dens,pl_trandur,pl_insol,hostname,st_spectype,st_teff,st_rad,st_mass,st_age,st_vsin,sy_dist,sy_snum,sy_mnum,sy_pnum+from+ps&format=json');
+    final url =
+        'https://exoplanetarchive.ipac.caltech.edu/TAP/sync?query=select+pl_name,pl_controv_flag,disc_year,discoverymethod,pl_orbper,pl_rade,pl_bmasse,pl_eqt,pl_dens,pl_trandur,pl_insol,hostname,st_spectype,st_teff,st_rad,st_mass,st_age,st_vsin,sy_dist,sy_snum,sy_mnum,sy_pnum+from+ps&format=json';
 
     try {
-      final response = await http.get(url);
+      final response = await http.get(Uri.parse(url));
 
       if (response.statusCode == 200) {
         final List<dynamic> data = json.decode(response.body);

@@ -15,22 +15,16 @@ class ExoplanetRepositoryImpl implements ExoplanetRepository {
   );
 
   @override
-  Future<Either<Failure, List<Exoplanet>>> getExoplanets() async {
+  Future<Either<Failure, List<Exoplanet>>> getExoplanets(String? url) async {
     try {
-      return await remoteDataSource.getExoplanets();
       // if (await (connectionChecker.isConnected)) {
-
       // }
       // return left(Failure('An error ocurred trying to fetch exoplanets'));
+
+      return await remoteDataSource.getExoplanets(null);
     } on ServerException catch (e) {
       return left(Failure(e.message));
     }
-  }
-
-  @override
-  Future<Either<Failure, void>> addExoplanetToFavorites() {
-    // TODO: implement addExoplanetToFavorites
-    throw UnimplementedError();
   }
 
   @override
@@ -42,7 +36,7 @@ class ExoplanetRepositoryImpl implements ExoplanetRepository {
 
   @override
   Future<Either<Failure, List<Exoplanet?>>> getExoplanetByDensity(
-      String exoDensity) {
+      double minDensity, double maxDensity) {
     // TODO: implement getExoplanetByDensity
     throw UnimplementedError();
   }
@@ -56,20 +50,20 @@ class ExoplanetRepositoryImpl implements ExoplanetRepository {
 
   @override
   Future<Either<Failure, List<Exoplanet?>>> getExoplanetByDiscoveryYear(
-      String exoDiscoveryYear) {
+      double minYear, double maxYear) {
     // TODO: implement getExoplanetByDiscoveryYear
     throw UnimplementedError();
   }
 
   @override
   Future<Either<Failure, List<Exoplanet?>>> getExoplanetByDistance(
-      String exoDistance) {
+      double minDist, double maxDist) {
     // TODO: implement getExoplanetByDistance
     throw UnimplementedError();
   }
 
   @override
-  Future<Either<Failure, List<Exoplanet?>>> getExoplanetByMass(String exoMass) {
+  Future<Either<Failure, List<Exoplanet?>>> getExoplanetByMass(double exoMass) {
     // TODO: implement getExoplanetByMass
     throw UnimplementedError();
   }
@@ -82,7 +76,7 @@ class ExoplanetRepositoryImpl implements ExoplanetRepository {
 
   @override
   Future<Either<Failure, List<Exoplanet?>>> getExoplanetByTemperature(
-      String exoTemperature) {
+      double minTemperature, double maxTemperature) {
     // TODO: implement getExoplanetByTemperature
     throw UnimplementedError();
   }
@@ -90,6 +84,12 @@ class ExoplanetRepositoryImpl implements ExoplanetRepository {
   @override
   Future<Either<Failure, List<Exoplanet?>>> getExoplanetByType(String exoType) {
     // TODO: implement getExoplanetByType
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<Either<Failure, void>> addExoplanetToFavorites() {
+    // TODO: implement addExoplanetToFavorites
     throw UnimplementedError();
   }
 
