@@ -34,7 +34,7 @@ class ExploreView extends StatelessWidget {
             AnimatedTextKit(
               totalRepeatCount: 1,
               animatedTexts: [
-                TypewriterAnimatedText('Looking for a \nnew home?',
+                TypewriterAnimatedText('Looking for a new home?',
                     speed: const Duration(milliseconds: 200),
                     textAlign: TextAlign.center,
                     textStyle: AppFonts.spaceGrotesk40
@@ -42,7 +42,7 @@ class ExploreView extends StatelessWidget {
               ],
             ),
             const SizedBox(
-              height: 20,
+              height: 80,
             ),
             GestureDetector(
               child: Image.asset('assets/images/ask_to_ai.png'),

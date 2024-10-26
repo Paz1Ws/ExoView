@@ -291,6 +291,7 @@ class _FilterSectionState extends ConsumerState<FilterSection> {
     double maxYear = 1000.0;
 
     return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
       children: [
         Text(
           widget.text,
