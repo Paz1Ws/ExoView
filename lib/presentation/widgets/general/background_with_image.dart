@@ -20,7 +20,7 @@ class BackgroundWithImage extends StatefulWidget {
 class _BackgroundWithImageState extends State<BackgroundWithImage> {
   List<Image> backgrounds = [
     Image.asset('assets/images/backgrounds/background_image.webp',
-        fit: BoxFit.cover),
+        colorBlendMode: BlendMode.dstOut, fit: BoxFit.cover),
     Image.asset('assets/images/backgrounds/austronaut_background.webp',
         fit: BoxFit.cover),
     Image.asset('assets/images/backgrounds/earth_background.webp',
