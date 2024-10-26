@@ -44,29 +44,9 @@ class ExploreView extends StatelessWidget {
             const SizedBox(
               height: 20,
             ),
-            GridView.builder(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: 6,
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                mainAxisSpacing: 10,
-                crossAxisSpacing: 20,
-              ),
-              itemBuilder: (context, index) {
-                return PlanetCategoryCard(
-                    exoplanetCategory: exoplanetCategories[index],
-                    onTap: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => ExploreSectionDetails(
-                                section: exoplanetCategories[index],
-                              )));
-                    });
-              },
-            ),
-            const SizedBox(
-              height: 20,
-            ),
+            GestureDetector(
+              child: Image.asset('assets/images/ask_to_ai.png'),
+            )
           ],
         ),
       ),

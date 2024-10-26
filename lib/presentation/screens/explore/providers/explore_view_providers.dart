@@ -8,6 +8,9 @@ import '../../home/providers/exoplanet_providers.dart';
 
 part 'explore_view_providers.g.dart';
 
+final maxYearProv = StateProvider((_) => 1000);
+final minYearProv = StateProvider((_) => 0);
+
 @riverpod
 Future<Either<Failure, List<Exoplanet>>> getAllExoplanets(Ref ref) async {
   final exoplanets = await ref.watch(exoplanetsProvider);

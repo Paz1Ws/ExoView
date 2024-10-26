@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fpdart/fpdart.dart';
@@ -117,14 +119,17 @@ void _showFilterModal(BuildContext context, WidgetRef ref) {
                               Text(
                                 'Filter By',
                                 style: AppFonts.spaceGrotesk16.copyWith(
-                                  color: AppColors.white,
+                                  color: AppColors.lightGray,
                                 ),
                               ),
                               const SizedBox(
                                 width: 10,
                               ),
                               IconButton(
-                                icon: const Icon(Icons.tune),
+                                icon: const Icon(
+                                  Icons.tune,
+                                  color: AppColors.lightGray,
+                                ),
                                 onPressed: () {},
                               ),
                             ],
@@ -189,8 +194,6 @@ void _showFilterModal(BuildContext context, WidgetRef ref) {
                           (failure) => [],
                           (exoplanets) => exoplanets,
                         ),
-                        providerMax: maxDiscoverYearProvider,
-                        providerMin: minDiscoverYearProvider,
                         text: 'Discovery Year',
                       ),
                       const SizedBox(
@@ -268,29 +271,29 @@ void _showFilterModal(BuildContext context, WidgetRef ref) {
       });
 }
 
-class FilterSection extends ConsumerWidget {
+class FilterSection extends ConsumerStatefulWidget {
   final String text;
-  final providerMin;
-  final providerMax;
   final List<Exoplanet> exoplanets;
   const FilterSection({
     required this.text,
-    required this.providerMin,
-    required this.providerMax,
     required this.exoplanets,
     super.key,
   });
 
-  // FIX
-  //NoSuchMethodError (NoSuchMethodError: Class 'MinDiscoverYearFamily' has no instance getter 'notifier'.Receiver: Instance of 'MinDiscoverYearFamily'Tried calling: notifier)
   @override
-  Widget build(BuildContext context, ref) {
-    final minYear = ref.read(ref.read(minDiscoverYearProvider(exoplanets)));
-    final maxYear = ref.read(ref.read(maxDiscoverYearProvider(exoplanets)));
+  ConsumerState<FilterSection> createState() => _FilterSectionState();
+}
+
+class _FilterSectionState extends ConsumerState<FilterSection> {
+  @override
+  Widget build(BuildContext context) {
+    double minYear = 10.0;
+    double maxYear = 1000.0;
+
     return Column(
       children: [
         Text(
-          text,
+          widget.text,
           style: AppFonts.spaceGrotesk16.copyWith(
             color: AppColors.white,
           ),
@@ -299,15 +302,21 @@ class FilterSection extends ConsumerWidget {
           height: 20,
         ),
         RangeSlider(
+           min: minYear,
+          max: maxYear,
           activeColor: AppColors.brightPurple,
           inactiveColor: AppColors.lightGray,
-          values: RangeValues(minYear.toDouble(), maxYear.toDouble()),
-          onChanged: (RangeValues values) {
-            ref.read(providerMin).state = values.start.toInt();
-            ref.read(providerMax).state = values.end.toInt();
+       values: RangeValues(minYear, maxYear),
+          divisions: 5,
+          onChanged: (RangeValues vals) {
+            setState(() {
+              minYear = vals.start;
+              maxYear = vals.end;
+              print(maxYear);
+              print(minYear);
+            });
           },
-          min: minYear.toDouble(),
-          max: maxYear.toDouble(),
+         
         ),
       ],
     );
