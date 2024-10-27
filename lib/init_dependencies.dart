@@ -5,6 +5,8 @@ import 'package:myapp/config/secrets/app_secrets.dart';
 import 'package:myapp/core/data/data.dart';
 import 'package:myapp/core/domain/domain.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:hive/hive.dart';
+import 'package:path_provider/path_provider.dart';
 
 final serviceLocator = GetIt.instance;
 
@@ -13,6 +15,15 @@ Future<void> initDependencies() async {
     url: AppSecrets.supabaseUrl,
     anonKey: AppSecrets.supabaseKey,
   );
+  final dir = await getApplicationDocumentsDirectory();
+
+  Hive.init(dir.path);
+  final box = await Hive.openBox('exoplanetsBox');
+
+  // Registrar Hive Box
+  serviceLocator.registerLazySingleton(() => box);
+
+  // Registrar SupabaseClient
   serviceLocator.registerLazySingleton(() => supabase.client);
 
   // Registrar InternetConnectionChecker
@@ -24,6 +35,37 @@ Future<void> initDependencies() async {
       serviceLocator(),
     ),
   );
+
+  // Registrar ExoplanetLocalDataSource
+  // serviceLocator.registerFactory<ExoplanetLocalDataSource>(
+  //   () => ExoplanetLocalDataSourceImpl(
+  //     serviceLocator(),
+  //     serviceLocator(),
+  //   ),
+  // );
+
+  // Registrar LocalExoplanetRepository
+  serviceLocator.registerFactory<LocalExoplanetRepository>(
+    () => LocalExoplanetRepositoryImpl(
+      serviceLocator(),
+      serviceLocator(),
+    ),
+  );
+
+  // Registrar GetLocalExoplanets UseCase
+  serviceLocator.registerFactory(
+    () => GetLocalExoplanets(
+      serviceLocator(),
+    ),
+  );
+
+  serviceLocator
+      .registerFactory(() => GetRemoteExoplanetsToSave(serviceLocator()));
+
+  serviceLocator.registerFactory(() => LocalExoplanetRepositoryImpl(
+        serviceLocator(),
+        serviceLocator(),
+      ));
   _initAuth();
 }
 
@@ -38,6 +80,7 @@ void _initAuth() {
     ..registerFactory<ExoplanetRemoteDataSource>(
       () => ExoplanetRemoteDataSourceImpl(),
     )
+
     // Repositories
     ..registerFactory<AuthRepository>(
       () => AuthRepositoryImpl(

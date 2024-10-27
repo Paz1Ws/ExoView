@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fpdart/fpdart.dart';
@@ -7,10 +5,11 @@ import 'package:myapp/config/config.dart';
 import 'package:myapp/config/theme/colors.dart';
 import 'package:myapp/config/theme/fonts.dart';
 import 'package:myapp/core/data/data.dart';
+import 'package:myapp/core/data/repositories/exoplanet_local_storage_impl.dart';
+import 'package:myapp/presentation/screens/explore/providers/explore_view_providers.dart';
 import 'package:myapp/presentation/screens/screens.dart';
 import 'package:myapp/presentation/widgets/widgets.dart';
 
-import '../../screens/explore/providers/explore_view_providers.dart';
 import '../../screens/home/providers/exoplanet_providers.dart';
 
 class SearchTab extends ConsumerWidget {
@@ -80,7 +79,8 @@ class SearchTab extends ConsumerWidget {
 }
 
 void _showFilterModal(BuildContext context, WidgetRef ref) {
-  final exoplanets = ref.watch(exoplanetsProvider);
+  final exoplanets = ref.watch(localExoplanetsProvider);
+
   final List<String> exoplanetCategories = [
     'All Exoplanets',
     'Super Earths',
@@ -89,20 +89,15 @@ void _showFilterModal(BuildContext context, WidgetRef ref) {
     'Gas Giants',
     'Neptunians',
   ];
+
   showModalBottomSheet(
-      context: context,
-      builder: (BuildContext context) {
-        return FutureBuilder<Either<Failure, List<Exoplanet>>>(
-          future: exoplanets,
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(
-                  child: CircularProgressIndicator(
-                backgroundColor: Colors.transparent,
-              ));
-            } else if (snapshot.hasError) {
-              return Center(child: Text('Error: ${snapshot.error}'));
-            } else if (snapshot.hasData) {
+    context: context,
+    builder: (BuildContext context) {
+      return exoplanets.when(
+        data: (data) {
+          return data.fold(
+            (failure) => Center(child: Text('Error: ${failure.message}')),
+            (exoplanets) {
               return Container(
                 padding: const EdgeInsets.all(18),
                 color: AppColors.veryDarkPurple,
@@ -114,161 +109,47 @@ void _showFilterModal(BuildContext context, WidgetRef ref) {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Row(
-                            children: [
-                              Text(
-                                'Filter By',
-                                style: AppFonts.spaceGrotesk16.copyWith(
-                                  color: AppColors.lightGray,
-                                ),
-                              ),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              IconButton(
-                                icon: const Icon(
-                                  Icons.tune,
-                                  color: AppColors.lightGray,
-                                ),
-                                onPressed: () {},
-                              ),
-                            ],
+                          Text(
+                            'Filter By',
+                            style: TextStyle(color: Colors.white),
                           ),
                           IconButton(
-                            icon: const Icon(Icons.check),
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
+                            icon: Icon(Icons.close, color: Colors.white),
+                            onPressed: () => Navigator.pop(context),
                           ),
                         ],
                       ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                        'Exoplanet Type',
-                        style: AppFonts.spaceGrotesk16.copyWith(
-                          color: AppColors.white,
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Container(
-                        height: 150,
-                        width: double.infinity,
-                        child: GridView.builder(
-                          scrollDirection: Axis.horizontal,
-                          shrinkWrap: true,
-                          physics: const BouncingScrollPhysics(),
-                          itemCount: 6,
-                          gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 1,
-                            mainAxisSpacing: 10,
-                            crossAxisSpacing: 20,
-                          ),
-                          itemBuilder: (context, index) {
-                            return PlanetCategoryCard(
-                              exoplanetCategory: exoplanetCategories[index],
-                              onTap: () {
-                                Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => ExploreSectionDetails(
-                                    exoplanets: snapshot.data!.fold(
-                                      (failure) => [],
-                                      (exoplanets) => exoplanets,
-                                    ),
-                                    section: exoplanetCategories[index],
-                                  ),
-                                ));
-                              },
-                            );
-                          },
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      FilterSection(
-                        exoplanets: snapshot.data!.fold(
-                          (failure) => [],
-                          (exoplanets) => exoplanets,
-                        ),
-                        text: 'Discovery Year',
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Text(
-                        'Distance from Earth (light years)',
-                        style: AppFonts.spaceGrotesk16.copyWith(
-                          color: AppColors.white,
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      RangeSlider(
-                        activeColor: AppColors.brightPurple,
-                        values: const RangeValues(0, 100),
-                        onChanged: (RangeValues values) {},
-                        min: 0,
-                        max: 100,
-                        divisions: 100,
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Text(
-                        'Mass, compared to Earth',
-                        style: AppFonts.spaceGrotesk16.copyWith(
-                          color: AppColors.white,
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      RangeSlider(
-                        activeColor: AppColors.brightPurple,
-                        values: const RangeValues(0, 100),
-                        onChanged: (RangeValues values) {},
-                        min: 0,
-                        max: 100,
-                        divisions: 100,
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Text(
-                        'Density, compared to Earth',
-                        style: AppFonts.spaceGrotesk16.copyWith(
-                          color: AppColors.white,
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      RangeSlider(
-                        activeColor: AppColors.brightPurple,
-                        values: const RangeValues(0, 100),
-                        onChanged: (RangeValues values) {},
-                        min: 0,
-                        max: 100,
-                        divisions: 100,
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
+                      ...exoplanetCategories.map((category) {
+                        return ListTile(
+                            title: Text(
+                              category,
+                              style: TextStyle(color: Colors.white),
+                            ),
+                            onTap: () {
+                              // Aquí puedes hacer una consulta personalizada
+                              //   final filteredExoplanets = _filterExoplanetsByCategory(exoplanets, category);
+                              //   // Mostrar los exoplanetas filtrados
+                              //   Navigator.pop(context);
+                              //   _showFilteredExoplanets(context, filteredExoplanets);
+                              //
+                            });
+                      }).toList(),
                     ],
                   ),
                 ),
               );
-            } else {
-              return const SizedBox();
-            }
-          },
-        );
-      });
+            },
+          );
+        },
+        loading: () => const Center(
+          child: CircularProgressIndicator(
+            backgroundColor: Colors.transparent,
+          ),
+        ),
+        error: (error, stack) => Center(child: Text('Error: $error')),
+      );
+    },
+  );
 }
 
 class FilterSection extends ConsumerStatefulWidget {
@@ -287,11 +168,13 @@ class FilterSection extends ConsumerStatefulWidget {
 class _FilterSectionState extends ConsumerState<FilterSection> {
   @override
   Widget build(BuildContext context) {
-    double minYear = 10.0;
-    double maxYear = 1000.0;
+    final rangeValues = ref.watch(discoverYearProvider(widget.exoplanets));
+    final rangeNotifier =
+        ref.read(discoverYearProvider(widget.exoplanets).notifier);
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           widget.text,
@@ -303,21 +186,15 @@ class _FilterSectionState extends ConsumerState<FilterSection> {
           height: 20,
         ),
         RangeSlider(
-           min: minYear,
-          max: maxYear,
+          min: rangeValues.start,
+          max: rangeValues.end,
           activeColor: AppColors.brightPurple,
           inactiveColor: AppColors.lightGray,
-       values: RangeValues(minYear, maxYear),
-          divisions: 5,
-          onChanged: (RangeValues vals) {
-            setState(() {
-              minYear = vals.start;
-              maxYear = vals.end;
-              print(maxYear);
-              print(minYear);
-            });
+          values: rangeValues,
+          divisions: 3,
+          onChanged: (RangeValues values) {
+            rangeNotifier.updateRange(values);
           },
-         
         ),
       ],
     );

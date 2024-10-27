@@ -34,6 +34,8 @@ dependencies:
   flutter_test:
     sdk: flutter
   hive: ^2.2.3
+  isar_flutter_libs: ^4.0.0-dev.13
+  path_provider: ^2.1.0
   hive_flutter: ^1.1.0
   hive_generator: ^2.0.1
   build_runner: ^2.4.13
@@ -53,7 +55,7 @@ dependency_overrides:
 
 
 flutter:
-
+  generate: true
   uses-material-design: true
   assets:
     - assets/images/

@@ -31,6 +31,22 @@ class Exoplanet extends ExoPlanetEntity {
     );
   }
 
+  Map<String, dynamic> toJson() {
+    return {
+      'pl_name': planetName,
+      'pl_controv_flag': isControversial ? 1 : 0,
+      'disc_year': discoveryYear,
+      'discoverymethod': discoveryMethod,
+      'pl_orbper': orbitalPeriodDays,
+      'pl_rade': radiusEarthRadius,
+      'pl_bmasse': massEarthMass,
+      'pl_eqt': equilibriumTemperature,
+      'pl_dens': density,
+      'pl_trandur': transitDurationHours,
+      'pl_insol': insolationFlux,
+    };
+  }
+
   Exoplanet copyWith({
     String? planetName,
     bool? isControversial,

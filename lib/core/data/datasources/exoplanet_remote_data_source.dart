@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:fpdart/fpdart.dart';
 import 'package:myapp/config/config.dart';
 import 'package:http/http.dart' as http;
-import 'package:myapp/config/failures/exceptions.dart';
 import 'package:myapp/core/data/data.dart';
 
 abstract interface class ExoplanetRemoteDataSource {

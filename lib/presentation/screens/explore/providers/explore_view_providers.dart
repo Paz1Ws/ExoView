@@ -6,10 +6,8 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../home/providers/exoplanet_providers.dart';
 
+import 'package:flutter/material.dart';
 part 'explore_view_providers.g.dart';
-
-final maxYearProv = StateProvider((_) => 1000);
-final minYearProv = StateProvider((_) => 0);
 
 @riverpod
 Future<Either<Failure, List<Exoplanet>>> getAllExoplanets(Ref ref) async {
@@ -17,23 +15,33 @@ Future<Either<Failure, List<Exoplanet>>> getAllExoplanets(Ref ref) async {
   return exoplanets;
 }
 
-@riverpod
-StateProvider<int> maxDiscoverYear(Ref ref, List<Exoplanet> exoplanets) {
-  final maxYear = exoplanets
-      .reduce((value, element) =>
-          value.discoveryYear > element.discoveryYear ? value : element)
-      .discoveryYear;
-  return StateProvider<int>((ref) => maxYear);
+class DiscoverYearNotifier extends StateNotifier<RangeValues> {
+  DiscoverYearNotifier(List<Exoplanet> exoplanets)
+      : super(_initialRangeValues(exoplanets));
+
+  static RangeValues _initialRangeValues(List<Exoplanet> exoplanets) {
+    final minYear = exoplanets
+        .reduce((value, element) =>
+            value.discoveryYear < element.discoveryYear ? value : element)
+        .discoveryYear
+        .toDouble();
+    final maxYear = exoplanets
+        .reduce((value, element) =>
+            value.discoveryYear > element.discoveryYear ? value : element)
+        .discoveryYear
+        .toDouble();
+    return RangeValues(minYear, maxYear);
+  }
+
+  void updateRange(RangeValues newRange) {
+    state = newRange;
+  }
 }
 
-@riverpod
-StateProvider<int> minDiscoverYear(Ref ref, List<Exoplanet> exoplanets) {
-  final minYear = exoplanets
-      .reduce((value, element) =>
-          value.discoveryYear < element.discoveryYear ? value : element)
-      .discoveryYear;
-  return StateProvider<int>((ref) => minYear);
-}
+final discoverYearProvider = StateNotifierProvider.family<DiscoverYearNotifier,
+    RangeValues, List<Exoplanet>>(
+  (ref, exoplanets) => DiscoverYearNotifier(exoplanets),
+);
 
 @riverpod
 StateProvider<int> maxPlanetDistance(Ref ref) =>
