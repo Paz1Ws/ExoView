@@ -45,12 +45,7 @@ Future<void> initDependencies() async {
   // );
 
   // Registrar LocalExoplanetRepository
-  serviceLocator.registerFactory<LocalExoplanetRepository>(
-    () => LocalExoplanetRepositoryImpl(
-      serviceLocator(),
-      serviceLocator(),
-    ),
-  );
+ 
 
   // Registrar GetLocalExoplanets UseCase
   serviceLocator.registerFactory(
@@ -62,7 +57,7 @@ Future<void> initDependencies() async {
   serviceLocator
       .registerFactory(() => GetRemoteExoplanetsToSave(serviceLocator()));
 
-  serviceLocator.registerFactory(() => LocalExoplanetRepositoryImpl(
+  serviceLocator.registerFactory(() => ExoplanetLocalDataSourceImpl(
         serviceLocator(),
         serviceLocator(),
       ));

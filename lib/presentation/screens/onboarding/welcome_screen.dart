@@ -14,7 +14,7 @@ class WelcomeScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, ref) {
     final size = MediaQuery.of(context).size;
-    final getRemoteExoplanets = ref.read(getRemoteExoplanetsToSaveProvider);
+    final getRemoteExoplanets = ref.read(getRemoteExoplanetsToSaveProviderCaller);
     return BackgroundWithImage(
       backgroundIndex: 0,
       body: Padding(
@@ -41,7 +41,7 @@ class WelcomeScreen extends ConsumerWidget {
             PurpleButton(
               text: 'Tap to Launch',
               onTap: () {
-                getRemoteExoplanets();
+                getRemoteExoplanets;
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) =>
                         FadeInLeft(child: const LoginScreen())));

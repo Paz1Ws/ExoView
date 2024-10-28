@@ -32,3 +32,11 @@ final getRemoteExoplanetsToSaveProvider =
     Provider<GetRemoteExoplanetsToSave>((ref) {
   return serviceLocator<GetRemoteExoplanetsToSave>();
 });
+final getRemoteExoplanetsToSaveProviderCaller =
+    FutureProvider<Either<Failure, void>>((ref) async {
+  final getRemoteExoplanetsToSave = ref.watch(getRemoteExoplanetsToSaveProvider);
+  return await getRemoteExoplanetsToSave.call(NoParams());
+});
+
+
+

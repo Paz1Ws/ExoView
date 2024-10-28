@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:myapp/config/theme/theme.dart';
-import 'package:myapp/core/data/data.dart';
 import 'package:myapp/presentation/screens/screens.dart';
 import 'package:myapp/presentation/widgets/widgets.dart';
 

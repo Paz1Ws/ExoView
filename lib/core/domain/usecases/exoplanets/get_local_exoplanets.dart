@@ -4,7 +4,7 @@ import 'package:myapp/config/usecase/usecase.dart';
 import 'package:myapp/core/data/data.dart';
 
 class GetLocalExoplanets implements UseCase<List<Exoplanet>, NoParams> {
-  final LocalExoplanetRepositoryImpl localExoplanetRepository;
+  final ExoplanetLocalDataSourceImpl localExoplanetRepository;
 
   GetLocalExoplanets(this.localExoplanetRepository);
 
@@ -14,12 +14,12 @@ class GetLocalExoplanets implements UseCase<List<Exoplanet>, NoParams> {
   }
 }
 
-class GetRemoteExoplanetsToSave {
-  final LocalExoplanetRepositoryImpl localExoplanetRepository;
+class GetRemoteExoplanetsToSave implements UseCase<void, NoParams> {
+  final ExoplanetLocalDataSourceImpl localExoplanetRepository;
 
   GetRemoteExoplanetsToSave(this.localExoplanetRepository);
-
-  void call() async {
-    await localExoplanetRepository.getRemoteExoplanets;
+  @override
+  Future<Either<Failure, void>> call(NoParams params) {
+    return localExoplanetRepository.getRemoteExoplanets();
   }
 }

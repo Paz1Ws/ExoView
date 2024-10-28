@@ -1,4 +1,3 @@
-import 'package:myapp/config/entities/exoplanet.dart';
 import 'package:myapp/config/failures/exceptions.dart';
 import 'package:myapp/config/failures/failures.dart';
 import 'package:myapp/config/network/connection_checker.dart';

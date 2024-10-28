@@ -22,3 +22,5 @@ export 'home/exoplanets/exoplanet_features_wrap.dart';
 export 'explore/search_tab.dart';
 export 'explore/planet_category_card.dart';
 export 'explore/touchable_exoplanet_card.dart';
+export 'explore/search/filter_section.dart';
+export 'explore/search/show_filter_modal.dart';
