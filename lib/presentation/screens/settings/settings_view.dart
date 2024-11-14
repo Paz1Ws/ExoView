@@ -50,86 +50,87 @@ class SettingsContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Container(
-            height: 120,
-            width: 120,
-            decoration: const BoxDecoration(
-              color: AppColors.white,
-              borderRadius: BorderRadius.all(Radius.circular(18)),
+    return Center(
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            Container(
+              height: 120,
+              width: 120,
+              decoration: const BoxDecoration(
+                color: AppColors.white,
+                borderRadius: BorderRadius.all(Radius.circular(18)),
+              ),
             ),
-          ),
-          const SizedBox(height: 20),
-          Text(
-            'John Doe',
-            style: AppFonts.spaceGrotesk40.copyWith(
-              color: AppColors.softPurple,
-              fontWeight: FontWeight.bold,
+            const SizedBox(height: 20),
+            Text(
+              'John Doe',
+              style: AppFonts.spaceGrotesk40.copyWith(
+                color: AppColors.softPurple,
+                fontWeight: FontWeight.bold,
+              ),
             ),
-          ),
-          SizedBox(height: size.height * 0.05),
-          Container(
-            alignment: Alignment.center,
-            height: size.height * 0.15,
-            width: size.width * 0.8,
-            decoration: const BoxDecoration(
-              color: AppColors.white,
-              borderRadius: BorderRadius.all(Radius.circular(18)),
-            ),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Flexible(
-                  fit: FlexFit.tight,
-                  child: Image.asset(
-                    'assets/images/profile_planet.webp',
-                    fit: BoxFit.cover,
+            SizedBox(height: size.height * 0.05),
+            Container(
+              alignment: Alignment.center,
+              height: size.height * 0.15,
+              width: size.width * 0.8,
+              decoration: const BoxDecoration(
+                color: AppColors.white,
+                borderRadius: BorderRadius.all(Radius.circular(18)),
+              ),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Flexible(
+                    fit: FlexFit.tight,
+                    child: Image.asset(
+                      'assets/images/profile_planet.webp',
+                      fit: BoxFit.cover,
+                    ),
                   ),
-                ),
-                Expanded(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        '27',
-                        textAlign: TextAlign.center,
-                        style: AppFonts.spaceGrotesk30.copyWith(
-                          fontWeight: FontWeight.bold,
-                          color: AppColors.veryDarkPurple,
+                  Expanded(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          '27',
+                          textAlign: TextAlign.center,
+                          style: AppFonts.spaceGrotesk30.copyWith(
+                            fontWeight: FontWeight.bold,
+                            color: AppColors.veryDarkPurple,
+                          ),
                         ),
-                      ),
-                      Text(
-                        'Exoplanets visited',
-                        textAlign: TextAlign.center,
-                        style: AppFonts.spaceGrotesk16.copyWith(
-                          color: AppColors.veryDarkPurple,
+                        Text(
+                          'Exoplanets visited',
+                          textAlign: TextAlign.center,
+                          style: AppFonts.spaceGrotesk16.copyWith(
+                            color: AppColors.veryDarkPurple,
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-          SizedBox(height: size.height * 0.05),
-          Column(
-              children: List.generate(6, (index) {
-            return Column(
-              children: [
-                SettingsOptionSelector(
-                  icon: settingsOptions.keys.toList()[index],
-                  text: settingsOptions.values.toList()[index],
-                ),
-                const SizedBox(height: 20),
-              ],
-            );
-          })),
-        ],
+            SizedBox(height: size.height * 0.05),
+            Column(
+                children: List.generate(6, (index) {
+              return Column(
+                children: [
+                  SettingsOptionSelector(
+                    icon: settingsOptions.keys.toList()[index],
+                    text: settingsOptions.values.toList()[index],
+                  ),
+                  const SizedBox(height: 20),
+                ],
+              );
+            })),
+          ],
+        ),
       ),
     );
   }

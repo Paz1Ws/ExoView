@@ -20,12 +20,12 @@ class DiscoverYearNotifier extends StateNotifier<RangeValues> {
       : super(_initialRangeValues(exoplanets));
 
   static RangeValues _initialRangeValues(List<Exoplanet> exoplanets) {
-    final minYear = exoplanets
+    double minYear = exoplanets
         .reduce((value, element) =>
             value.discoveryYear < element.discoveryYear ? value : element)
         .discoveryYear
         .toDouble();
-    final maxYear = exoplanets
+    double maxYear = exoplanets
         .reduce((value, element) =>
             value.discoveryYear > element.discoveryYear ? value : element)
         .discoveryYear
@@ -42,7 +42,6 @@ final discoverYearProvider = StateNotifierProvider.family<DiscoverYearNotifier,
     RangeValues, List<Exoplanet>>(
   (ref, exoplanets) => DiscoverYearNotifier(exoplanets),
 );
-
 @riverpod
 StateProvider<int> maxPlanetDistance(Ref ref) =>
     StateProvider<int>((ref) => 2024);

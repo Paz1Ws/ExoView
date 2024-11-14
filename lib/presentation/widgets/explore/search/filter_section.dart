@@ -1,11 +1,9 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myapp/config/theme/colors.dart';
 import 'package:myapp/config/theme/fonts.dart';
 import 'package:myapp/core/data/data.dart';
 import 'package:myapp/presentation/screens/explore/providers/explore_view_providers.dart';
-import 'package:myapp/presentation/widgets/widgets.dart';
 
 class FilterSection extends ConsumerStatefulWidget {
   final String text;
@@ -23,9 +21,35 @@ class FilterSection extends ConsumerStatefulWidget {
 class _FilterSectionState extends ConsumerState<FilterSection> {
   @override
   Widget build(BuildContext context) {
-    RangeValues  rangeValues = ref.watch(discoverYearProvider(widget.exoplanets));
-    final rangeNotifier =
-        ref.read(discoverYearProvider(widget.exoplanets).notifier);
+    RangeValues rangeValues = RangeValues(0, 0);
+    StateNotifierProvider<DiscoverYearNotifier, RangeValues> rangeProvider;
+
+    switch (widget.text) {
+      case 'Date of Discovery':
+        rangeProvider = discoverYearProvider(widget.exoplanets);
+        break;
+      // Uncomment and add other cases as needed
+      // case 'Distance from Earth':
+      //   rangeProvider = distanceProvider(widget.exoplanets);
+      //   break;
+      // case 'Mass of Exoplanet':
+      //   rangeProvider = massProvider(widget.exoplanets);
+      //   break;
+      // case 'Radius of Exoplanet':
+      //   rangeProvider = radiusProvider(widget.exoplanets);
+      //   break;
+      // case 'Orbital Period':
+      //   rangeProvider = orbitalPeriodProvider(widget.exoplanets);
+      //   break;
+      // case 'Is of Controversial Origin?':
+      //   rangeProvider = controversialOriginProvider(widget.exoplanets);
+      //   break;
+      default:
+        throw Exception('Unknown filter type');
+    }
+
+    rangeValues = ref.watch(rangeProvider);
+    final rangeNotifier = ref.read(rangeProvider.notifier);
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
@@ -46,11 +70,8 @@ class _FilterSectionState extends ConsumerState<FilterSection> {
           activeColor: AppColors.brightPurple,
           inactiveColor: AppColors.lightGray,
           values: rangeValues,
-          divisions: 3,
           onChanged: (RangeValues values) {
-            rangeValues = values;
             rangeNotifier.updateRange(values);
-
           },
         ),
       ],

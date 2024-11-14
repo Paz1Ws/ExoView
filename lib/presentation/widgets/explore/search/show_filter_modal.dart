@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myapp/config/theme/colors.dart';
 import 'package:myapp/presentation/screens/home/providers/exoplanet_providers.dart';
+import 'package:myapp/presentation/widgets/widgets.dart';
 
 void showFilterModal(BuildContext context, WidgetRef ref) {
   final List<String> exoplanetCategories = [
@@ -11,6 +12,14 @@ void showFilterModal(BuildContext context, WidgetRef ref) {
     'Rocky Planets',
     'Gas Giants',
     'Neptunians',
+  ];
+  final List<String> exoplanetFilters = [
+    'Date of Discovery',
+    'Distance from Earth',
+    'Mass of Exoplanet',
+    'Radius of Exoplanet',
+    'Orbital Period',
+    'Is of Controversial Origin?'
   ];
 
   showDialog(
@@ -34,8 +43,9 @@ void showFilterModal(BuildContext context, WidgetRef ref) {
                 builder: (BuildContext context) {
                   final data = snapshot.data;
                   return data!.fold(
-                    (failure) =>
-                        Center(child: Text('Error: ${failure.message}')),
+                    (failure) => Center(
+                      child: CircularProgressIndicator(),
+                    ),
                     (exoplanets) {
                       return Container(
                         padding: const EdgeInsets.all(18),
@@ -61,13 +71,40 @@ void showFilterModal(BuildContext context, WidgetRef ref) {
                                   )
                                 ],
                               ),
-                              ...exoplanetCategories.map((category) {
-                                return ListTile(
-                                    title: Text(
-                                      category,
-                                      style: TextStyle(color: Colors.white),
-                                    ),
-                                    onTap: () {});
+                              SizedBox(
+                                width: double.infinity,
+                                height: MediaQuery.sizeOf(context).height / 5,
+                                child: SingleChildScrollView(
+                                  scrollDirection: Axis.horizontal,
+                                  child: Row(
+                                    children:
+                                        exoplanetCategories.map((category) {
+                                      return Container(
+                                        margin:
+                                            const EdgeInsets.only(right: 10),
+                                        width:
+                                            MediaQuery.sizeOf(context).width /
+                                                2.5,
+                                        height:
+                                            MediaQuery.sizeOf(context).height /
+                                                5,
+                                        child: PlanetCategoryCard(
+                                          exoplanetCategory: category,
+                                          onTap: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                        ),
+                                      );
+                                    }).toList(),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: 20),
+                              ...exoplanetFilters.map((filter) {
+                                return FilterSection(
+                                  text: filter,
+                                  exoplanets: exoplanets,
+                                );
                               }).toList(),
                             ],
                           ),
@@ -78,7 +115,7 @@ void showFilterModal(BuildContext context, WidgetRef ref) {
                 },
               );
             });
-            return Container(); // Return an empty container after closing the dialog
+            return Container();
           }
         },
       );
