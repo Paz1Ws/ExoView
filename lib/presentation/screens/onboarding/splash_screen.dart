@@ -8,15 +8,17 @@ import 'package:lottie/lottie.dart';
 import 'package:myapp/config/theme/colors.dart';
 import 'package:myapp/config/theme/fonts.dart';
 import 'package:myapp/presentation/screens/screens.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:myapp/presentation/screens/home/providers/exoplanet_providers.dart';
 
-class SplashPage extends StatefulWidget {
+class SplashPage extends ConsumerStatefulWidget {
   const SplashPage({super.key});
 
   @override
-  State<SplashPage> createState() => _SplashPageState();
+  ConsumerState<SplashPage> createState() => SplashPageState();
 }
 
-class _SplashPageState extends State<SplashPage> {
+class SplashPageState extends ConsumerState<SplashPage> {
   late Timer _timer;
 
   @override
@@ -41,6 +43,7 @@ class _SplashPageState extends State<SplashPage> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.sizeOf(context);
+    ref.read(getRemoteExoplanetsToSaveProviderCaller);
 
     return Scaffold(
       backgroundColor: AppColors.dark,

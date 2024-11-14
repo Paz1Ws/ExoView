@@ -29,7 +29,6 @@ class ExoplanetLocalDataSourceImpl implements ExoplanetLocalDataSource {
         exoplanets.fold(
           (failure) => Left(failure),
           (exoplanets) {
-            print("Data charged");
             storeExoplanets(exoplanets);
           },
         );
@@ -49,8 +48,10 @@ class ExoplanetLocalDataSourceImpl implements ExoplanetLocalDataSource {
       if (exoplanetList == null) {
         return Left(Failure('No exoplanets found'));
       }
-      final exoplanets =
-          exoplanetList.map((e) => Exoplanet.fromJson(e)).toList();
+      final exoplanets = exoplanetList.map((e) {
+        final map = Map<String, dynamic>.from(e as Map);
+        return Exoplanet.fromJson(map);
+      }).toList();
       return Right(exoplanets);
     } catch (e) {
       return Left(Failure('Failed to get local exoplanets'));

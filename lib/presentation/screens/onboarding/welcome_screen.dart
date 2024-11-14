@@ -5,7 +5,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myapp/config/theme/colors.dart';
 import 'package:myapp/config/theme/fonts.dart';
 import 'package:myapp/presentation/screens/auth/screens/login/login_screen.dart';
-import 'package:myapp/presentation/screens/home/providers/exoplanet_providers.dart';
 import 'package:myapp/presentation/widgets/widgets.dart';
 
 class WelcomeScreen extends ConsumerWidget {
@@ -14,7 +13,7 @@ class WelcomeScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, ref) {
     final size = MediaQuery.of(context).size;
-    final getRemoteExoplanets = ref.read(getRemoteExoplanetsToSaveProviderCaller);
+
     return BackgroundWithImage(
       backgroundIndex: 0,
       body: Padding(
@@ -41,7 +40,6 @@ class WelcomeScreen extends ConsumerWidget {
             PurpleButton(
               text: 'Tap to Launch',
               onTap: () {
-                getRemoteExoplanets;
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) =>
                         FadeInLeft(child: const LoginScreen())));

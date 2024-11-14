@@ -1,16 +1,9 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myapp/config/theme/colors.dart';
-import 'package:myapp/config/theme/fonts.dart';
-import 'package:myapp/core/data/data.dart';
-import 'package:myapp/presentation/screens/explore/providers/explore_view_providers.dart';
 import 'package:myapp/presentation/screens/home/providers/exoplanet_providers.dart';
-import 'package:myapp/presentation/widgets/widgets.dart';
-void showFilterModal(BuildContext context, WidgetRef ref) {
-  final exoplanets = ref.watch(localExoplanetsProvider);
 
+void showFilterModal(BuildContext context, WidgetRef ref) {
   final List<String> exoplanetCategories = [
     'All Exoplanets',
     'Super Earths',
@@ -20,63 +13,74 @@ void showFilterModal(BuildContext context, WidgetRef ref) {
     'Neptunians',
   ];
 
-  showModalBottomSheet(
+  showDialog(
     context: context,
+    barrierDismissible: false,
     builder: (BuildContext context) {
-      return exoplanets.when(
-        data: (data) {
-          return data.fold(
-            (failure) => Center(child: Text('Error: ${failure.message}')),
-            (exoplanets) {
-              return Container(
-                padding: const EdgeInsets.all(18),
-                color: AppColors.veryDarkPurple,
-                child: SingleChildScrollView(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'Filter By',
-                            style: TextStyle(color: Colors.white),
+      return FutureBuilder(
+        future: Future.delayed(const Duration(seconds: 1), () async {
+          return await ref.read(localExoplanetsProvider.future);
+        }),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: CircularProgressIndicator());
+          } else if (snapshot.hasError) {
+            return Center(child: Text('Error: ${snapshot.error}'));
+          } else {
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              Navigator.of(context).pop(); // Close the dialog
+              showModalBottomSheet(
+                context: context,
+                builder: (BuildContext context) {
+                  final data = snapshot.data;
+                  return data!.fold(
+                    (failure) =>
+                        Center(child: Text('Error: ${failure.message}')),
+                    (exoplanets) {
+                      return Container(
+                        padding: const EdgeInsets.all(18),
+                        color: AppColors.veryDarkPurple,
+                        child: SingleChildScrollView(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    'Filter By',
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                  IconButton(
+                                    icon:
+                                        Icon(Icons.close, color: Colors.white),
+                                    onPressed: () =>
+                                        Navigator.of(context).pop(),
+                                  )
+                                ],
+                              ),
+                              ...exoplanetCategories.map((category) {
+                                return ListTile(
+                                    title: Text(
+                                      category,
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                    onTap: () {});
+                              }).toList(),
+                            ],
                           ),
-                          IconButton(
-                            icon: Icon(Icons.close, color: Colors.white),
-                            onPressed: () => Navigator.pop(context),
-                          ),
-                        ],
-                      ),
-                      ...exoplanetCategories.map((category) {
-                        return ListTile(
-                            title: Text(
-                              category,
-                              style: TextStyle(color: Colors.white),
-                            ),
-                            onTap: () {
-                              // Aquí puedes hacer una consulta personalizada
-                              //   final filteredExoplanets = _filterExoplanetsByCategory(exoplanets, category);
-                              //   // Mostrar los exoplanetas filtrados
-                              //   Navigator.pop(context);
-                              //   _showFilteredExoplanets(context, filteredExoplanets);
-                              //
-                            });
-                      }).toList(),
-                    ],
-                  ),
-                ),
+                        ),
+                      );
+                    },
+                  );
+                },
               );
-            },
-          );
+            });
+            return Container(); // Return an empty container after closing the dialog
+          }
         },
-        loading: () => const Center(
-          child: CircularProgressIndicator(
-            backgroundColor: Colors.transparent,
-          ),
-        ),
-        error: (error, stack) => Center(child: Text('Error: $error')),
       );
     },
   );
