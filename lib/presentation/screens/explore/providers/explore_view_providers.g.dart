@@ -23,194 +23,147 @@ final getAllExoplanetsProvider =
 
 typedef GetAllExoplanetsRef
     = AutoDisposeFutureProviderRef<Either<Failure, List<Exoplanet>>>;
-String _$maxPlanetDistanceHash() => r'029203427f5472a864b52d493677c62b480d4132';
+String _$discoveryYearRangeHash() =>
+    r'ec3a8282ad4710dfdd41063f3e90e67eb9d134be';
 
-/// See also [maxPlanetDistance].
-@ProviderFor(maxPlanetDistance)
-final maxPlanetDistanceProvider =
-    AutoDisposeProvider<StateProvider<int>>.internal(
-  maxPlanetDistance,
-  name: r'maxPlanetDistanceProvider',
+/// See also [discoveryYearRange].
+@ProviderFor(discoveryYearRange)
+final discoveryYearRangeProvider = AutoDisposeProvider<
+    StateNotifierProvider<RangeValuesNotifier, RangeValues>>.internal(
+  discoveryYearRange,
+  name: r'discoveryYearRangeProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$maxPlanetDistanceHash,
+      : _$discoveryYearRangeHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef MaxPlanetDistanceRef = AutoDisposeProviderRef<StateProvider<int>>;
-String _$minPlanetDistanceHash() => r'518fc6775285b6449be80dabea51c2817fde204a';
+typedef DiscoveryYearRangeRef = AutoDisposeProviderRef<
+    StateNotifierProvider<RangeValuesNotifier, RangeValues>>;
+String _$orbitalPeriodRangeHash() =>
+    r'59f6c41cb9726ab09aeab1a1eadd659e2149e024';
 
-/// See also [minPlanetDistance].
-@ProviderFor(minPlanetDistance)
-final minPlanetDistanceProvider =
-    AutoDisposeProvider<StateProvider<int>>.internal(
-  minPlanetDistance,
-  name: r'minPlanetDistanceProvider',
+/// See also [orbitalPeriodRange].
+@ProviderFor(orbitalPeriodRange)
+final orbitalPeriodRangeProvider = AutoDisposeProvider<
+    StateNotifierProvider<RangeValuesNotifier, RangeValues>>.internal(
+  orbitalPeriodRange,
+  name: r'orbitalPeriodRangeProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$minPlanetDistanceHash,
+      : _$orbitalPeriodRangeHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef MinPlanetDistanceRef = AutoDisposeProviderRef<StateProvider<int>>;
-String _$maxOrbitalPeriodHash() => r'01bf9653f4f30d8d7b5754da1975597ddbdcdb0d';
+typedef OrbitalPeriodRangeRef = AutoDisposeProviderRef<
+    StateNotifierProvider<RangeValuesNotifier, RangeValues>>;
+String _$planetMassRangeHash() => r'f9f5445c091fb8d0081b845a845642079252841e';
 
-/// See also [maxOrbitalPeriod].
-@ProviderFor(maxOrbitalPeriod)
-final maxOrbitalPeriodProvider =
-    AutoDisposeProvider<StateProvider<int>>.internal(
-  maxOrbitalPeriod,
-  name: r'maxOrbitalPeriodProvider',
+/// See also [planetMassRange].
+@ProviderFor(planetMassRange)
+final planetMassRangeProvider = AutoDisposeProvider<
+    StateNotifierProvider<RangeValuesNotifier, RangeValues>>.internal(
+  planetMassRange,
+  name: r'planetMassRangeProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$maxOrbitalPeriodHash,
+      : _$planetMassRangeHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef MaxOrbitalPeriodRef = AutoDisposeProviderRef<StateProvider<int>>;
-String _$minOrbitalPeriodHash() => r'04393192d8f74b35e400f09faf2898e0aeb24bf4';
+typedef PlanetMassRangeRef = AutoDisposeProviderRef<
+    StateNotifierProvider<RangeValuesNotifier, RangeValues>>;
+String _$planetRadiusRangeHash() => r'f44fea0e3b4bbd73b7a929034c1b367b5bc90c5b';
 
-/// See also [minOrbitalPeriod].
-@ProviderFor(minOrbitalPeriod)
-final minOrbitalPeriodProvider =
-    AutoDisposeProvider<StateProvider<int>>.internal(
-  minOrbitalPeriod,
-  name: r'minOrbitalPeriodProvider',
+/// See also [planetRadiusRange].
+@ProviderFor(planetRadiusRange)
+final planetRadiusRangeProvider = AutoDisposeProvider<
+    StateNotifierProvider<RangeValuesNotifier, RangeValues>>.internal(
+  planetRadiusRange,
+  name: r'planetRadiusRangeProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$minOrbitalPeriodHash,
+      : _$planetRadiusRangeHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef MinOrbitalPeriodRef = AutoDisposeProviderRef<StateProvider<int>>;
-String _$maxPlanetMassHash() => r'6cc778d4bff5bc704f5d63907dd17940b8facc85';
+typedef PlanetRadiusRangeRef = AutoDisposeProviderRef<
+    StateNotifierProvider<RangeValuesNotifier, RangeValues>>;
+String _$planetTempRangeHash() => r'571b84061add2f92ffa5b903fdf363c0b08ee00d';
 
-/// See also [maxPlanetMass].
-@ProviderFor(maxPlanetMass)
-final maxPlanetMassProvider = AutoDisposeProvider<StateProvider<int>>.internal(
-  maxPlanetMass,
-  name: r'maxPlanetMassProvider',
+/// See also [planetTempRange].
+@ProviderFor(planetTempRange)
+final planetTempRangeProvider = AutoDisposeProvider<
+    StateNotifierProvider<RangeValuesNotifier, RangeValues>>.internal(
+  planetTempRange,
+  name: r'planetTempRangeProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$maxPlanetMassHash,
+      : _$planetTempRangeHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef MaxPlanetMassRef = AutoDisposeProviderRef<StateProvider<int>>;
-String _$minPlanetMassHash() => r'877ffd5d59afe79caec9797c738e358cf1cc20c4';
+typedef PlanetTempRangeRef = AutoDisposeProviderRef<
+    StateNotifierProvider<RangeValuesNotifier, RangeValues>>;
+String _$planetDensityRangeHash() =>
+    r'7b960003d442de6811157fde258d6b6d349b2bff';
 
-/// See also [minPlanetMass].
-@ProviderFor(minPlanetMass)
-final minPlanetMassProvider = AutoDisposeProvider<StateProvider<int>>.internal(
-  minPlanetMass,
-  name: r'minPlanetMassProvider',
+/// See also [planetDensityRange].
+@ProviderFor(planetDensityRange)
+final planetDensityRangeProvider = AutoDisposeProvider<
+    StateNotifierProvider<RangeValuesNotifier, RangeValues>>.internal(
+  planetDensityRange,
+  name: r'planetDensityRangeProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$minPlanetMassHash,
+      : _$planetDensityRangeHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef MinPlanetMassRef = AutoDisposeProviderRef<StateProvider<int>>;
-String _$maxPlanetRadiusHash() => r'9b780c42cbbe53bed928a246885a9bd27c6d427e';
+typedef PlanetDensityRangeRef = AutoDisposeProviderRef<
+    StateNotifierProvider<RangeValuesNotifier, RangeValues>>;
+String _$transitDurationRangeHash() =>
+    r'9d9b40c27434fe5a37ce96d50a2dbf0b5e806591';
 
-/// See also [maxPlanetRadius].
-@ProviderFor(maxPlanetRadius)
-final maxPlanetRadiusProvider =
-    AutoDisposeProvider<StateProvider<int>>.internal(
-  maxPlanetRadius,
-  name: r'maxPlanetRadiusProvider',
+/// See also [transitDurationRange].
+@ProviderFor(transitDurationRange)
+final transitDurationRangeProvider = AutoDisposeProvider<
+    StateNotifierProvider<RangeValuesNotifier, RangeValues>>.internal(
+  transitDurationRange,
+  name: r'transitDurationRangeProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$maxPlanetRadiusHash,
+      : _$transitDurationRangeHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef MaxPlanetRadiusRef = AutoDisposeProviderRef<StateProvider<int>>;
-String _$minPlanetRadiusHash() => r'8d068bd8948157263ad0c60809ce309a2fd6742a';
+typedef TransitDurationRangeRef = AutoDisposeProviderRef<
+    StateNotifierProvider<RangeValuesNotifier, RangeValues>>;
+String _$insolationFluxRangeHash() =>
+    r'0a739d1435ad80e8cc199f4ed3866e01eb3ca8f7';
 
-/// See also [minPlanetRadius].
-@ProviderFor(minPlanetRadius)
-final minPlanetRadiusProvider =
-    AutoDisposeProvider<StateProvider<int>>.internal(
-  minPlanetRadius,
-  name: r'minPlanetRadiusProvider',
+/// See also [insolationFluxRange].
+@ProviderFor(insolationFluxRange)
+final insolationFluxRangeProvider = AutoDisposeProvider<
+    StateNotifierProvider<RangeValuesNotifier, RangeValues>>.internal(
+  insolationFluxRange,
+  name: r'insolationFluxRangeProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$minPlanetRadiusHash,
+      : _$insolationFluxRangeHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef MinPlanetRadiusRef = AutoDisposeProviderRef<StateProvider<int>>;
-String _$maxPlanetTempHash() => r'9af7ebbf04be09ffc4364dc3a2204723866b7849';
-
-/// See also [maxPlanetTemp].
-@ProviderFor(maxPlanetTemp)
-final maxPlanetTempProvider = AutoDisposeProvider<StateProvider<int>>.internal(
-  maxPlanetTemp,
-  name: r'maxPlanetTempProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$maxPlanetTempHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-typedef MaxPlanetTempRef = AutoDisposeProviderRef<StateProvider<int>>;
-String _$minPlanetTempHash() => r'3bbc543dc6a6deb65567f2ad59cf02e181f33c40';
-
-/// See also [minPlanetTemp].
-@ProviderFor(minPlanetTemp)
-final minPlanetTempProvider = AutoDisposeProvider<StateProvider<int>>.internal(
-  minPlanetTemp,
-  name: r'minPlanetTempProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$minPlanetTempHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-typedef MinPlanetTempRef = AutoDisposeProviderRef<StateProvider<int>>;
-String _$maxPlanetDensityHash() => r'603a2e8e0a6bef495510e366fe978bddaa6dce8e';
-
-/// See also [maxPlanetDensity].
-@ProviderFor(maxPlanetDensity)
-final maxPlanetDensityProvider =
-    AutoDisposeProvider<StateProvider<int>>.internal(
-  maxPlanetDensity,
-  name: r'maxPlanetDensityProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$maxPlanetDensityHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-typedef MaxPlanetDensityRef = AutoDisposeProviderRef<StateProvider<int>>;
-String _$minPlanetDensityHash() => r'3a46a400fac94d0be1e41e489c830f675fe70602';
-
-/// See also [minPlanetDensity].
-@ProviderFor(minPlanetDensity)
-final minPlanetDensityProvider =
-    AutoDisposeProvider<StateProvider<int>>.internal(
-  minPlanetDensity,
-  name: r'minPlanetDensityProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$minPlanetDensityHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-typedef MinPlanetDensityRef = AutoDisposeProviderRef<StateProvider<int>>;
+typedef InsolationFluxRangeRef = AutoDisposeProviderRef<
+    StateNotifierProvider<RangeValuesNotifier, RangeValues>>;
 String _$discoverPlanetMethodHash() =>
     r'c3027fa49f96518fb7a29163f0d32f0681a04d93';
 
@@ -228,5 +181,23 @@ final discoverPlanetMethodProvider =
 );
 
 typedef DiscoverPlanetMethodRef = AutoDisposeProviderRef<StateProvider<String>>;
+String _$controversialOriginRangeHash() =>
+    r'6161022f335fd06cb9e02e655f282170f9ebb44a';
+
+/// See also [controversialOriginRange].
+@ProviderFor(controversialOriginRange)
+final controversialOriginRangeProvider = AutoDisposeProvider<
+    StateNotifierProvider<RangeValuesNotifier, RangeValues>>.internal(
+  controversialOriginRange,
+  name: r'controversialOriginRangeProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$controversialOriginRangeHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef ControversialOriginRangeRef = AutoDisposeProviderRef<
+    StateNotifierProvider<RangeValuesNotifier, RangeValues>>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

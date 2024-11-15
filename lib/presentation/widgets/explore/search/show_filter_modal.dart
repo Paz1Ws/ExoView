@@ -15,11 +15,15 @@ void showFilterModal(BuildContext context, WidgetRef ref) {
   ];
   final List<String> exoplanetFilters = [
     'Date of Discovery',
-    'Distance from Earth',
     'Mass of Exoplanet',
     'Radius of Exoplanet',
     'Orbital Period',
-    'Is of Controversial Origin?'
+    // 'Is of Controversial Origin?',
+    // 'Discovery Method',
+    'Equilibrium Temperature',
+    'Density',
+    'Transit Duration',
+    'Insolation Flux'
   ];
 
   showDialog(

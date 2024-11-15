@@ -15,74 +15,68 @@ Future<Either<Failure, List<Exoplanet>>> getAllExoplanets(Ref ref) async {
   return exoplanets;
 }
 
-class DiscoverYearNotifier extends StateNotifier<RangeValues> {
-  DiscoverYearNotifier(List<Exoplanet> exoplanets)
-      : super(_initialRangeValues(exoplanets));
+class RangeValuesNotifier extends StateNotifier<RangeValues> {
+  RangeValuesNotifier() : super(RangeValues(0, 1000));
 
-  static RangeValues _initialRangeValues(List<Exoplanet> exoplanets) {
-    double minYear = exoplanets
-        .reduce((value, element) =>
-            value.discoveryYear < element.discoveryYear ? value : element)
-        .discoveryYear
-        .toDouble();
-    double maxYear = exoplanets
-        .reduce((value, element) =>
-            value.discoveryYear > element.discoveryYear ? value : element)
-        .discoveryYear
-        .toDouble();
-    return RangeValues(minYear, maxYear);
-  }
-
-  void updateRange(RangeValues newRange) {
-    state = newRange;
+  void setRangeValues(RangeValues values) {
+    state = values;
   }
 }
 
-final discoverYearProvider = StateNotifierProvider.family<DiscoverYearNotifier,
-    RangeValues, List<Exoplanet>>(
-  (ref, exoplanets) => DiscoverYearNotifier(exoplanets),
-);
 @riverpod
-StateProvider<int> maxPlanetDistance(Ref ref) =>
-    StateProvider<int>((ref) => 2024);
+StateNotifierProvider<RangeValuesNotifier, RangeValues> discoveryYearRange(
+        Ref ref) =>
+    StateNotifierProvider<RangeValuesNotifier, RangeValues>(
+        (ref) => RangeValuesNotifier());
 
 @riverpod
-StateProvider<int> minPlanetDistance(Ref ref) =>
-    StateProvider<int>((ref) => 1990);
+StateNotifierProvider<RangeValuesNotifier, RangeValues> orbitalPeriodRange(
+        Ref ref) =>
+    StateNotifierProvider<RangeValuesNotifier, RangeValues>(
+        (ref) => RangeValuesNotifier());
 
 @riverpod
-StateProvider<int> maxOrbitalPeriod(Ref ref) =>
-    StateProvider<int>((ref) => 1000);
+StateNotifierProvider<RangeValuesNotifier, RangeValues> planetMassRange(
+        Ref ref) =>
+    StateNotifierProvider<RangeValuesNotifier, RangeValues>(
+        (ref) => RangeValuesNotifier());
 
 @riverpod
-StateProvider<int> minOrbitalPeriod(Ref ref) => StateProvider<int>((ref) => 0);
+StateNotifierProvider<RangeValuesNotifier, RangeValues> planetRadiusRange(
+        Ref ref) =>
+    StateNotifierProvider<RangeValuesNotifier, RangeValues>(
+        (ref) => RangeValuesNotifier());
 
 @riverpod
-StateProvider<int> maxPlanetMass(Ref ref) => StateProvider<int>((ref) => 1000);
+StateNotifierProvider<RangeValuesNotifier, RangeValues> planetTempRange(
+        Ref ref) =>
+    StateNotifierProvider<RangeValuesNotifier, RangeValues>(
+        (ref) => RangeValuesNotifier());
 
 @riverpod
-StateProvider<int> minPlanetMass(Ref ref) => StateProvider<int>((ref) => 0);
+StateNotifierProvider<RangeValuesNotifier, RangeValues> planetDensityRange(
+        Ref ref) =>
+    StateNotifierProvider<RangeValuesNotifier, RangeValues>(
+        (ref) => RangeValuesNotifier());
 
 @riverpod
-StateProvider<int> maxPlanetRadius(Ref ref) =>
-    StateProvider<int>((ref) => 1000);
+StateNotifierProvider<RangeValuesNotifier, RangeValues> transitDurationRange(
+        Ref ref) =>
+    StateNotifierProvider<RangeValuesNotifier, RangeValues>(
+        (ref) => RangeValuesNotifier());
 
 @riverpod
-StateProvider<int> minPlanetRadius(Ref ref) => StateProvider<int>((ref) => 0);
-
-@riverpod
-StateProvider<int> maxPlanetTemp(Ref ref) => StateProvider<int>((ref) => 1000);
-
-@riverpod
-StateProvider<int> minPlanetTemp(Ref ref) => StateProvider<int>((ref) => 0);
-
-@riverpod
-StateProvider<int> maxPlanetDensity(Ref ref) =>
-    StateProvider<int>((ref) => 1000);
-
-@riverpod
-StateProvider<int> minPlanetDensity(Ref ref) => StateProvider<int>((ref) => 0);
+StateNotifierProvider<RangeValuesNotifier, RangeValues> insolationFluxRange(
+        Ref ref) =>
+    StateNotifierProvider<RangeValuesNotifier, RangeValues>(
+        (ref) => RangeValuesNotifier());
 
 @riverpod
 StateProvider<String> discoverPlanetMethod(Ref ref) =>
     StateProvider<String>((ref) => 'All');
+
+@riverpod
+StateNotifierProvider<RangeValuesNotifier, RangeValues>
+    controversialOriginRange(Ref ref) =>
+        StateNotifierProvider<RangeValuesNotifier, RangeValues>(
+            (ref) => RangeValuesNotifier());
