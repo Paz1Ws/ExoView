@@ -11,8 +11,9 @@ part 'explore_view_providers.g.dart';
 
 @riverpod
 Future<Either<Failure, List<Exoplanet>>> getAllExoplanets(Ref ref) async {
-  final exoplanets = await ref.watch(exoplanetsProvider);
-  return exoplanets;
+  final localDataSource = ref.read(exoplanetLocalDataSourceProvider);
+  await localDataSource.getRemoteExoplanets();
+  return await localDataSource.getLocalExoplanets();
 }
 
 class RangeValuesNotifier extends StateNotifier<RangeValues> {
@@ -20,6 +21,22 @@ class RangeValuesNotifier extends StateNotifier<RangeValues> {
 
   void setRangeValues(RangeValues values) {
     state = values;
+  }
+}
+
+class StringNotifier extends StateNotifier<String> {
+  StringNotifier() : super('All');
+
+  void setString(String value) {
+    state = value;
+  }
+}
+
+class BoolNotifier extends StateNotifier<bool> {
+  BoolNotifier() : super(false);
+
+  void setBool(bool value) {
+    state = value;
   }
 }
 
@@ -72,11 +89,9 @@ StateNotifierProvider<RangeValuesNotifier, RangeValues> insolationFluxRange(
         (ref) => RangeValuesNotifier());
 
 @riverpod
-StateProvider<String> discoverPlanetMethod(Ref ref) =>
-    StateProvider<String>((ref) => 'All');
+StateNotifierProvider<BoolNotifier, bool> controversialOriginRange(Ref ref) =>
+    StateNotifierProvider<BoolNotifier, bool>((ref) => BoolNotifier());
 
 @riverpod
-StateNotifierProvider<RangeValuesNotifier, RangeValues>
-    controversialOriginRange(Ref ref) =>
-        StateNotifierProvider<RangeValuesNotifier, RangeValues>(
-            (ref) => RangeValuesNotifier());
+StateNotifierProvider<StringNotifier, String> discoverPlanetMethod(Ref ref) =>
+    StateNotifierProvider<StringNotifier, String>((ref) => StringNotifier());

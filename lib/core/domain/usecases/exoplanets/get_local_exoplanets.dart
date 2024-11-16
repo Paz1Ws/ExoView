@@ -19,7 +19,12 @@ class GetRemoteExoplanetsToSave implements UseCase<void, NoParams> {
 
   GetRemoteExoplanetsToSave(this.localExoplanetRepository);
   @override
-  Future<Either<Failure, void>> call(NoParams params) {
-    return localExoplanetRepository.getRemoteExoplanets();
+  Future<Either<Failure, void>> call(NoParams params) async {
+    try {
+      localExoplanetRepository.getRemoteExoplanets();
+      return const Right(null);
+    } catch (e) {
+      return Left(Failure(e.toString()));
+    }
   }
 }

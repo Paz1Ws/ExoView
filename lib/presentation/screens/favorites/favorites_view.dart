@@ -10,42 +10,6 @@ class FavoritesView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final exoplanetsAsyncValue = ref.watch(exoplanetsProvider);
-
-    return FutureBuilder<Either<Failure, List<Exoplanet>>>(
-      future: exoplanetsAsyncValue,
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(child: CircularProgressIndicator());
-        } else if (snapshot.hasError) {
-          return Center(child: Text('Error: ${snapshot.error}'));
-        } else if (snapshot.hasData) {
-          final exoplanets = snapshot.data!;
-
-          return exoplanets.fold(
-            (failure) => Center(child: Text('Error: $failure')),
-            (exoplanets) => ListView.builder(
-              itemCount: exoplanets.length,
-              itemBuilder: (context, index) {
-                final exoplanet = exoplanets[index];
-                return ListTile(
-                  trailing: Text(
-                    exoplanet.equilibriumTemperature.toString(),
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  title: Text(
-                    exoplanet.planetName,
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  subtitle: Text(exoplanet.discoveryMethod),
-                );
-              },
-            ),
-          );
-        } else {
-          return const Center(child: Text('No data'));
-        }
-      },
-    );
+    return Container();
   }
 }

@@ -27,25 +27,18 @@ class ExploreView extends StatelessWidget {
               height: 20,
             ),
             const SearchTab(),
-            const SizedBox(
-              height: 20,
+            Center(
+              child: AnimatedTextKit(
+                totalRepeatCount: 1,
+                animatedTexts: [
+                  TypewriterAnimatedText('Looking for a new home?',
+                      speed: const Duration(milliseconds: 200),
+                      textAlign: TextAlign.center,
+                      textStyle: AppFonts.spaceGrotesk40
+                          .copyWith(fontWeight: FontWeight.normal)),
+                ],
+              ),
             ),
-            AnimatedTextKit(
-              totalRepeatCount: 1,
-              animatedTexts: [
-                TypewriterAnimatedText('Looking for a new home?',
-                    speed: const Duration(milliseconds: 200),
-                    textAlign: TextAlign.center,
-                    textStyle: AppFonts.spaceGrotesk40
-                        .copyWith(fontWeight: FontWeight.normal)),
-              ],
-            ),
-            const SizedBox(
-              height: 80,
-            ),
-            GestureDetector(
-              child: Image.asset('assets/images/ask_to_ai.png'),
-            )
           ],
         ),
       ),
