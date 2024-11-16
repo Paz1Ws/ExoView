@@ -164,30 +164,13 @@ final insolationFluxRangeProvider = AutoDisposeProvider<
 
 typedef InsolationFluxRangeRef = AutoDisposeProviderRef<
     StateNotifierProvider<RangeValuesNotifier, RangeValues>>;
-String _$discoverPlanetMethodHash() =>
-    r'c3027fa49f96518fb7a29163f0d32f0681a04d93';
-
-/// See also [discoverPlanetMethod].
-@ProviderFor(discoverPlanetMethod)
-final discoverPlanetMethodProvider =
-    AutoDisposeProvider<StateProvider<String>>.internal(
-  discoverPlanetMethod,
-  name: r'discoverPlanetMethodProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$discoverPlanetMethodHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-typedef DiscoverPlanetMethodRef = AutoDisposeProviderRef<StateProvider<String>>;
 String _$controversialOriginRangeHash() =>
-    r'6161022f335fd06cb9e02e655f282170f9ebb44a';
+    r'eb498775dcc86297a81832243cb6d1c45b7238b0';
 
 /// See also [controversialOriginRange].
 @ProviderFor(controversialOriginRange)
-final controversialOriginRangeProvider = AutoDisposeProvider<
-    StateNotifierProvider<RangeValuesNotifier, RangeValues>>.internal(
+final controversialOriginRangeProvider =
+    AutoDisposeProvider<StateNotifierProvider<BoolNotifier, bool>>.internal(
   controversialOriginRange,
   name: r'controversialOriginRangeProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -197,7 +180,25 @@ final controversialOriginRangeProvider = AutoDisposeProvider<
   allTransitiveDependencies: null,
 );
 
-typedef ControversialOriginRangeRef = AutoDisposeProviderRef<
-    StateNotifierProvider<RangeValuesNotifier, RangeValues>>;
+typedef ControversialOriginRangeRef
+    = AutoDisposeProviderRef<StateNotifierProvider<BoolNotifier, bool>>;
+String _$discoverPlanetMethodHash() =>
+    r'3e9e6116012746fe6c926a54fa8e5394582ae0fd';
+
+/// See also [discoverPlanetMethod].
+@ProviderFor(discoverPlanetMethod)
+final discoverPlanetMethodProvider =
+    AutoDisposeProvider<StateNotifierProvider<StringNotifier, String>>.internal(
+  discoverPlanetMethod,
+  name: r'discoverPlanetMethodProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$discoverPlanetMethodHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef DiscoverPlanetMethodRef
+    = AutoDisposeProviderRef<StateNotifierProvider<StringNotifier, String>>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

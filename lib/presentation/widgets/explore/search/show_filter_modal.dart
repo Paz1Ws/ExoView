@@ -31,9 +31,7 @@ void showFilterModal(BuildContext context, WidgetRef ref) {
     barrierDismissible: false,
     builder: (BuildContext context) {
       return FutureBuilder(
-        future: Future.delayed(const Duration(seconds: 1), () async {
-          return await ref.read(localExoplanetsProvider.future);
-        }),
+        future: ref.refresh(localExoplanetsProvider.future),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(child: CircularProgressIndicator());

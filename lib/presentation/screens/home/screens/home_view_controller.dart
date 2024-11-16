@@ -15,7 +15,7 @@ class _HomeViewControllerState extends State<HomeViewController> {
   final List<Widget> pages = [
     ExploreView(),
     const HomeView(),
-    const FavoritesView(),
+    // const FavoritesView(),
     const SettingsView(),
   ];
 
