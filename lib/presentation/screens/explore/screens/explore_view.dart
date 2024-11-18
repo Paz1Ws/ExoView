@@ -19,6 +19,33 @@ class ExploreView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(20.0),
+<<<<<<< HEAD
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const SizedBox(
+            height: 20,
+          ),
+          const SearchTab(),
+          Spacer(),
+          Divider(),
+          Center(
+            child: AnimatedTextKit(
+              totalRepeatCount: 100,
+              animatedTexts: [
+                TypewriterAnimatedText('Looking for a new home?',
+                    speed: const Duration(milliseconds: 200),
+                    textAlign: TextAlign.center,
+                    textStyle: AppFonts.spaceGrotesk40
+                        .copyWith(fontWeight: FontWeight.normal)),
+              ],
+            ),
+          ),
+          Divider(),
+          Spacer(),
+        ],
+=======
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -41,6 +68,7 @@ class ExploreView extends StatelessWidget {
             ),
           ],
         ),
+>>>>>>> 275d990a493e835dbb2845d7f98a93b0c1d820ec
       ),
     );
   }
