@@ -6,7 +6,7 @@ part of 'explore_view_providers.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$getAllExoplanetsHash() => r'0f1e7680fedd12c669bd16cd8611ed7fc188091a';
+String _$getAllExoplanetsHash() => r'62e554efa078ece85b91dcaa8383dd986a99c06b';
 
 /// See also [getAllExoplanets].
 @ProviderFor(getAllExoplanets)
@@ -24,12 +24,11 @@ final getAllExoplanetsProvider =
 typedef GetAllExoplanetsRef
     = AutoDisposeFutureProviderRef<Either<Failure, List<Exoplanet>>>;
 String _$discoveryYearRangeHash() =>
-    r'ec3a8282ad4710dfdd41063f3e90e67eb9d134be';
+    r'd27ad1a744744101fb996f1c3cc267804ce829eb';
 
 /// See also [discoveryYearRange].
 @ProviderFor(discoveryYearRange)
-final discoveryYearRangeProvider = AutoDisposeProvider<
-    StateNotifierProvider<RangeValuesNotifier, RangeValues>>.internal(
+final discoveryYearRangeProvider = AutoDisposeProvider<RangeValues>.internal(
   discoveryYearRange,
   name: r'discoveryYearRangeProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -39,15 +38,13 @@ final discoveryYearRangeProvider = AutoDisposeProvider<
   allTransitiveDependencies: null,
 );
 
-typedef DiscoveryYearRangeRef = AutoDisposeProviderRef<
-    StateNotifierProvider<RangeValuesNotifier, RangeValues>>;
+typedef DiscoveryYearRangeRef = AutoDisposeProviderRef<RangeValues>;
 String _$orbitalPeriodRangeHash() =>
-    r'59f6c41cb9726ab09aeab1a1eadd659e2149e024';
+    r'f6bac62ffbb56d39632ee77c156b278c2032be10';
 
 /// See also [orbitalPeriodRange].
 @ProviderFor(orbitalPeriodRange)
-final orbitalPeriodRangeProvider = AutoDisposeProvider<
-    StateNotifierProvider<RangeValuesNotifier, RangeValues>>.internal(
+final orbitalPeriodRangeProvider = AutoDisposeProvider<RangeValues>.internal(
   orbitalPeriodRange,
   name: r'orbitalPeriodRangeProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -57,14 +54,12 @@ final orbitalPeriodRangeProvider = AutoDisposeProvider<
   allTransitiveDependencies: null,
 );
 
-typedef OrbitalPeriodRangeRef = AutoDisposeProviderRef<
-    StateNotifierProvider<RangeValuesNotifier, RangeValues>>;
-String _$planetMassRangeHash() => r'f9f5445c091fb8d0081b845a845642079252841e';
+typedef OrbitalPeriodRangeRef = AutoDisposeProviderRef<RangeValues>;
+String _$planetMassRangeHash() => r'b4055cc5fe35e8d421d92eeb47641244cb23bd05';
 
 /// See also [planetMassRange].
 @ProviderFor(planetMassRange)
-final planetMassRangeProvider = AutoDisposeProvider<
-    StateNotifierProvider<RangeValuesNotifier, RangeValues>>.internal(
+final planetMassRangeProvider = AutoDisposeProvider<RangeValues>.internal(
   planetMassRange,
   name: r'planetMassRangeProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -74,14 +69,12 @@ final planetMassRangeProvider = AutoDisposeProvider<
   allTransitiveDependencies: null,
 );
 
-typedef PlanetMassRangeRef = AutoDisposeProviderRef<
-    StateNotifierProvider<RangeValuesNotifier, RangeValues>>;
-String _$planetRadiusRangeHash() => r'f44fea0e3b4bbd73b7a929034c1b367b5bc90c5b';
+typedef PlanetMassRangeRef = AutoDisposeProviderRef<RangeValues>;
+String _$planetRadiusRangeHash() => r'5458251f9b10506b58b423126328ea5baaf9e033';
 
 /// See also [planetRadiusRange].
 @ProviderFor(planetRadiusRange)
-final planetRadiusRangeProvider = AutoDisposeProvider<
-    StateNotifierProvider<RangeValuesNotifier, RangeValues>>.internal(
+final planetRadiusRangeProvider = AutoDisposeProvider<RangeValues>.internal(
   planetRadiusRange,
   name: r'planetRadiusRangeProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -91,14 +84,12 @@ final planetRadiusRangeProvider = AutoDisposeProvider<
   allTransitiveDependencies: null,
 );
 
-typedef PlanetRadiusRangeRef = AutoDisposeProviderRef<
-    StateNotifierProvider<RangeValuesNotifier, RangeValues>>;
-String _$planetTempRangeHash() => r'571b84061add2f92ffa5b903fdf363c0b08ee00d';
+typedef PlanetRadiusRangeRef = AutoDisposeProviderRef<RangeValues>;
+String _$planetTempRangeHash() => r'0cfc660ebfe1eac115c15fb2e174482586375e68';
 
 /// See also [planetTempRange].
 @ProviderFor(planetTempRange)
-final planetTempRangeProvider = AutoDisposeProvider<
-    StateNotifierProvider<RangeValuesNotifier, RangeValues>>.internal(
+final planetTempRangeProvider = AutoDisposeProvider<RangeValues>.internal(
   planetTempRange,
   name: r'planetTempRangeProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -108,15 +99,13 @@ final planetTempRangeProvider = AutoDisposeProvider<
   allTransitiveDependencies: null,
 );
 
-typedef PlanetTempRangeRef = AutoDisposeProviderRef<
-    StateNotifierProvider<RangeValuesNotifier, RangeValues>>;
+typedef PlanetTempRangeRef = AutoDisposeProviderRef<RangeValues>;
 String _$planetDensityRangeHash() =>
-    r'7b960003d442de6811157fde258d6b6d349b2bff';
+    r'648da71d1bfde940e5b5acb908b23c81b54dc104';
 
 /// See also [planetDensityRange].
 @ProviderFor(planetDensityRange)
-final planetDensityRangeProvider = AutoDisposeProvider<
-    StateNotifierProvider<RangeValuesNotifier, RangeValues>>.internal(
+final planetDensityRangeProvider = AutoDisposeProvider<RangeValues>.internal(
   planetDensityRange,
   name: r'planetDensityRangeProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -126,15 +115,13 @@ final planetDensityRangeProvider = AutoDisposeProvider<
   allTransitiveDependencies: null,
 );
 
-typedef PlanetDensityRangeRef = AutoDisposeProviderRef<
-    StateNotifierProvider<RangeValuesNotifier, RangeValues>>;
+typedef PlanetDensityRangeRef = AutoDisposeProviderRef<RangeValues>;
 String _$transitDurationRangeHash() =>
-    r'9d9b40c27434fe5a37ce96d50a2dbf0b5e806591';
+    r'f45665a2b5692a93b25e4d934aaf55beab3430cf';
 
 /// See also [transitDurationRange].
 @ProviderFor(transitDurationRange)
-final transitDurationRangeProvider = AutoDisposeProvider<
-    StateNotifierProvider<RangeValuesNotifier, RangeValues>>.internal(
+final transitDurationRangeProvider = AutoDisposeProvider<RangeValues>.internal(
   transitDurationRange,
   name: r'transitDurationRangeProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -144,15 +131,13 @@ final transitDurationRangeProvider = AutoDisposeProvider<
   allTransitiveDependencies: null,
 );
 
-typedef TransitDurationRangeRef = AutoDisposeProviderRef<
-    StateNotifierProvider<RangeValuesNotifier, RangeValues>>;
+typedef TransitDurationRangeRef = AutoDisposeProviderRef<RangeValues>;
 String _$insolationFluxRangeHash() =>
-    r'0a739d1435ad80e8cc199f4ed3866e01eb3ca8f7';
+    r'a3bd51d0dd6713112c8fa477177c5a72147c83d2';
 
 /// See also [insolationFluxRange].
 @ProviderFor(insolationFluxRange)
-final insolationFluxRangeProvider = AutoDisposeProvider<
-    StateNotifierProvider<RangeValuesNotifier, RangeValues>>.internal(
+final insolationFluxRangeProvider = AutoDisposeProvider<RangeValues>.internal(
   insolationFluxRange,
   name: r'insolationFluxRangeProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -162,15 +147,13 @@ final insolationFluxRangeProvider = AutoDisposeProvider<
   allTransitiveDependencies: null,
 );
 
-typedef InsolationFluxRangeRef = AutoDisposeProviderRef<
-    StateNotifierProvider<RangeValuesNotifier, RangeValues>>;
+typedef InsolationFluxRangeRef = AutoDisposeProviderRef<RangeValues>;
 String _$controversialOriginRangeHash() =>
-    r'eb498775dcc86297a81832243cb6d1c45b7238b0';
+    r'596ea9f80d5c93555732eeeedae75483dbd329da';
 
 /// See also [controversialOriginRange].
 @ProviderFor(controversialOriginRange)
-final controversialOriginRangeProvider =
-    AutoDisposeProvider<StateNotifierProvider<BoolNotifier, bool>>.internal(
+final controversialOriginRangeProvider = AutoDisposeProvider<bool>.internal(
   controversialOriginRange,
   name: r'controversialOriginRangeProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -180,15 +163,13 @@ final controversialOriginRangeProvider =
   allTransitiveDependencies: null,
 );
 
-typedef ControversialOriginRangeRef
-    = AutoDisposeProviderRef<StateNotifierProvider<BoolNotifier, bool>>;
+typedef ControversialOriginRangeRef = AutoDisposeProviderRef<bool>;
 String _$discoverPlanetMethodHash() =>
-    r'3e9e6116012746fe6c926a54fa8e5394582ae0fd';
+    r'a72b1a178622d8568b54855e8617550e526df723';
 
 /// See also [discoverPlanetMethod].
 @ProviderFor(discoverPlanetMethod)
-final discoverPlanetMethodProvider =
-    AutoDisposeProvider<StateNotifierProvider<StringNotifier, String>>.internal(
+final discoverPlanetMethodProvider = AutoDisposeProvider<String>.internal(
   discoverPlanetMethod,
   name: r'discoverPlanetMethodProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -198,7 +179,6 @@ final discoverPlanetMethodProvider =
   allTransitiveDependencies: null,
 );
 
-typedef DiscoverPlanetMethodRef
-    = AutoDisposeProviderRef<StateNotifierProvider<StringNotifier, String>>;
+typedef DiscoverPlanetMethodRef = AutoDisposeProviderRef<String>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

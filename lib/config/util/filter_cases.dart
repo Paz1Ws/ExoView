@@ -49,3 +49,11 @@ RangeValues getInsolationFluxRange(List<Exoplanet> exoplanets) {
   return _getRangeValues(
       exoplanets, (exoplanet) => exoplanet.insolationFlux.toDouble());
 }
+List<Exoplanet> getByControversialOrigin (List<Exoplanet> exoplanets) {
+   return exoplanets.where((element) => element.isControversial == true).toList();
+}
+List<Exoplanet> getByDiscoveryMethod (List<Exoplanet> exoplanets, String discoveryMethod) {
+   return exoplanets.where((element) => element.discoveryMethod == discoveryMethod).toList();
+
+  
+}

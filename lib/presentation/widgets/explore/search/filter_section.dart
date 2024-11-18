@@ -25,7 +25,7 @@ class _FilterSectionState extends ConsumerState<FilterSection> {
   late RangeValues rangeValues;
   late double minRange;
   late double maxRange;
-
+  late RangeValues prov;
   @override
   void initState() {
     super.initState();
@@ -33,33 +33,42 @@ class _FilterSectionState extends ConsumerState<FilterSection> {
     switch (widget.text) {
       case 'Date of Discovery':
         rangeValues = getDiscoveryYearRange(widget.exoplanets);
+        prov = ref.read(discoveryYearRangeProvider);
+
         break;
       case 'Mass of Exoplanet':
         rangeValues = getPlanetMassRange(widget.exoplanets);
+        prov = ref.read(planetMassRangeProvider);
+
         break;
       case 'Radius of Exoplanet':
         rangeValues = getPlanetRadiusRange(widget.exoplanets);
+        prov = ref.read(planetRadiusRangeProvider);
+
         break;
       case 'Orbital Period':
         rangeValues = getOrbitalPeriodRange(widget.exoplanets);
+        prov = ref.read(orbitalPeriodRangeProvider);
         break;
-      // case 'Is of Controversial Origin?':
-      //   rangeValues = getControversialOriginRange(widget.exoplanets);
-      //   break;
-      // case 'Discovery Method':
-      //   rangeValues = getDiscoveryMethodRange(widget.exoplanets);
-      //   break;
       case 'Equilibrium Temperature':
         rangeValues = getPlanetTempRange(widget.exoplanets);
+        prov = ref.read(planetTempRangeProvider);
+
         break;
       case 'Density':
         rangeValues = getPlanetDensityRange(widget.exoplanets);
+        prov = ref.read(planetDensityRangeProvider);
+
         break;
       case 'Transit Duration':
         rangeValues = getTransitDurationRange(widget.exoplanets);
+        prov = ref.read(transitDurationRangeProvider);
+
         break;
       case 'Insolation Flux':
         rangeValues = getInsolationFluxRange(widget.exoplanets);
+        prov = ref.read(insolationFluxRangeProvider);
+
         break;
       default:
         throw ArgumentError('Invalid property: ${widget.text}');
@@ -73,6 +82,7 @@ class _FilterSectionState extends ConsumerState<FilterSection> {
   Widget build(BuildContext context) {
     final division =
         (maxRange - minRange).round() <= 0 ? 1 : (maxRange - minRange).round();
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -100,7 +110,7 @@ class _FilterSectionState extends ConsumerState<FilterSection> {
           onChanged: (RangeValues values) {
             setState(() {
               rangeValues = values;
-              // ref.read(discoveryYearRange.call()).end = values.end;
+              prov = values;
             });
           },
         ),

@@ -41,57 +41,52 @@ class BoolNotifier extends StateNotifier<bool> {
 }
 
 @riverpod
-StateNotifierProvider<RangeValuesNotifier, RangeValues> discoveryYearRange(
-        Ref ref) =>
-    StateNotifierProvider<RangeValuesNotifier, RangeValues>(
-        (ref) => RangeValuesNotifier());
+RangeValues discoveryYearRange(Ref ref) {
+  return RangeValues(1995, 2024);
+}
 
 @riverpod
-StateNotifierProvider<RangeValuesNotifier, RangeValues> orbitalPeriodRange(
-        Ref ref) =>
-    StateNotifierProvider<RangeValuesNotifier, RangeValues>(
-        (ref) => RangeValuesNotifier());
+RangeValues orbitalPeriodRange(Ref ref) {
+  return const RangeValues(0, 1000); // Adjust initial values as needed
+}
 
 @riverpod
-StateNotifierProvider<RangeValuesNotifier, RangeValues> planetMassRange(
-        Ref ref) =>
-    StateNotifierProvider<RangeValuesNotifier, RangeValues>(
-        (ref) => RangeValuesNotifier());
+RangeValues planetMassRange(Ref ref) {
+  return const RangeValues(0, 1000); // Adjust initial values as needed
+}
 
 @riverpod
-StateNotifierProvider<RangeValuesNotifier, RangeValues> planetRadiusRange(
-        Ref ref) =>
-    StateNotifierProvider<RangeValuesNotifier, RangeValues>(
-        (ref) => RangeValuesNotifier());
+RangeValues planetRadiusRange(Ref ref) {
+  return const RangeValues(0, 1000); // Adjust initial values as needed
+}
 
 @riverpod
-StateNotifierProvider<RangeValuesNotifier, RangeValues> planetTempRange(
-        Ref ref) =>
-    StateNotifierProvider<RangeValuesNotifier, RangeValues>(
-        (ref) => RangeValuesNotifier());
+RangeValues planetTempRange(Ref ref) {
+  return const RangeValues(0, 1000); // Adjust initial values as needed
+}
 
 @riverpod
-StateNotifierProvider<RangeValuesNotifier, RangeValues> planetDensityRange(
-        Ref ref) =>
-    StateNotifierProvider<RangeValuesNotifier, RangeValues>(
-        (ref) => RangeValuesNotifier());
+RangeValues planetDensityRange(Ref ref) {
+  return const RangeValues(0, 1000); // Adjust initial values as needed
+}
 
 @riverpod
-StateNotifierProvider<RangeValuesNotifier, RangeValues> transitDurationRange(
-        Ref ref) =>
-    StateNotifierProvider<RangeValuesNotifier, RangeValues>(
-        (ref) => RangeValuesNotifier());
+RangeValues transitDurationRange(Ref ref) {
+  return const RangeValues(0, 1000); // Adjust initial values as needed
+}
 
 @riverpod
-StateNotifierProvider<RangeValuesNotifier, RangeValues> insolationFluxRange(
-        Ref ref) =>
-    StateNotifierProvider<RangeValuesNotifier, RangeValues>(
-        (ref) => RangeValuesNotifier());
+RangeValues insolationFluxRange(Ref ref) {
+  return const RangeValues(0, 1000); // Adjust initial values as needed
+}
+
+// These two might need different approaches if you still need state management:
+@riverpod
+bool controversialOriginRange(Ref ref) {
+  return false; // Initial value
+}
 
 @riverpod
-StateNotifierProvider<BoolNotifier, bool> controversialOriginRange(Ref ref) =>
-    StateNotifierProvider<BoolNotifier, bool>((ref) => BoolNotifier());
-
-@riverpod
-StateNotifierProvider<StringNotifier, String> discoverPlanetMethod(Ref ref) =>
-    StateNotifierProvider<StringNotifier, String>((ref) => StringNotifier());
+String discoverPlanetMethod(Ref ref) {
+  return ''; // Initial value
+}
