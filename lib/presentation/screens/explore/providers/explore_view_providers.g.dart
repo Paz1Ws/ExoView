@@ -24,7 +24,7 @@ final getAllExoplanetsProvider =
 typedef GetAllExoplanetsRef
     = AutoDisposeFutureProviderRef<Either<Failure, List<Exoplanet>>>;
 String _$discoveryYearRangeHash() =>
-    r'd27ad1a744744101fb996f1c3cc267804ce829eb';
+    r'f2a754504d640b256f9987afdc65afaa9dadb6db';
 
 /// See also [discoveryYearRange].
 @ProviderFor(discoveryYearRange)
@@ -40,7 +40,7 @@ final discoveryYearRangeProvider = AutoDisposeProvider<RangeValues>.internal(
 
 typedef DiscoveryYearRangeRef = AutoDisposeProviderRef<RangeValues>;
 String _$orbitalPeriodRangeHash() =>
-    r'f6bac62ffbb56d39632ee77c156b278c2032be10';
+    r'c6a11b4515433c7046fdb246ecb9af487d957d5a';
 
 /// See also [orbitalPeriodRange].
 @ProviderFor(orbitalPeriodRange)
@@ -55,7 +55,7 @@ final orbitalPeriodRangeProvider = AutoDisposeProvider<RangeValues>.internal(
 );
 
 typedef OrbitalPeriodRangeRef = AutoDisposeProviderRef<RangeValues>;
-String _$planetMassRangeHash() => r'b4055cc5fe35e8d421d92eeb47641244cb23bd05';
+String _$planetMassRangeHash() => r'060992a5d6c3d825744fdc21da3accc367f657df';
 
 /// See also [planetMassRange].
 @ProviderFor(planetMassRange)
@@ -70,7 +70,7 @@ final planetMassRangeProvider = AutoDisposeProvider<RangeValues>.internal(
 );
 
 typedef PlanetMassRangeRef = AutoDisposeProviderRef<RangeValues>;
-String _$planetRadiusRangeHash() => r'5458251f9b10506b58b423126328ea5baaf9e033';
+String _$planetRadiusRangeHash() => r'5079a914701628787247eaf03022356c74b318c5';
 
 /// See also [planetRadiusRange].
 @ProviderFor(planetRadiusRange)
@@ -85,7 +85,7 @@ final planetRadiusRangeProvider = AutoDisposeProvider<RangeValues>.internal(
 );
 
 typedef PlanetRadiusRangeRef = AutoDisposeProviderRef<RangeValues>;
-String _$planetTempRangeHash() => r'0cfc660ebfe1eac115c15fb2e174482586375e68';
+String _$planetTempRangeHash() => r'89483a249f6c8b5757afa315635623110a7e2441';
 
 /// See also [planetTempRange].
 @ProviderFor(planetTempRange)
@@ -101,7 +101,7 @@ final planetTempRangeProvider = AutoDisposeProvider<RangeValues>.internal(
 
 typedef PlanetTempRangeRef = AutoDisposeProviderRef<RangeValues>;
 String _$planetDensityRangeHash() =>
-    r'648da71d1bfde940e5b5acb908b23c81b54dc104';
+    r'fb626e75b3af3376ab37ce8588cb7f2ce2898a56';
 
 /// See also [planetDensityRange].
 @ProviderFor(planetDensityRange)
@@ -117,7 +117,7 @@ final planetDensityRangeProvider = AutoDisposeProvider<RangeValues>.internal(
 
 typedef PlanetDensityRangeRef = AutoDisposeProviderRef<RangeValues>;
 String _$transitDurationRangeHash() =>
-    r'f45665a2b5692a93b25e4d934aaf55beab3430cf';
+    r'ee754c00ff7c917dc78a4024f726cae03d4b2249';
 
 /// See also [transitDurationRange].
 @ProviderFor(transitDurationRange)
@@ -133,7 +133,7 @@ final transitDurationRangeProvider = AutoDisposeProvider<RangeValues>.internal(
 
 typedef TransitDurationRangeRef = AutoDisposeProviderRef<RangeValues>;
 String _$insolationFluxRangeHash() =>
-    r'a3bd51d0dd6713112c8fa477177c5a72147c83d2';
+    r'a86cc79e006ad0e8f9c9cb3bc32831e1ba4e6cbd';
 
 /// See also [insolationFluxRange].
 @ProviderFor(insolationFluxRange)

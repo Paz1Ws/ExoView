@@ -1,34 +1,17 @@
+import 'dart:isolate';
 import 'package:fpdart/fpdart.dart';
-
 import 'package:myapp/config/config.dart';
 import 'package:myapp/core/data/data.dart';
-import 'package:fpdart/fpdart.dart';
 import 'package:hive/hive.dart';
 import 'package:myapp/config/failures/failures.dart';
 import 'package:myapp/config/usecase/usecase.dart';
+import 'package:myapp/core/data/datasources/store_exoplanets_isolate.dart';
 import 'package:myapp/core/domain/domain.dart';
 
 abstract interface class ExoplanetLocalDataSource {
   Future<Either<Failure, List<Exoplanet>>> getLocalExoplanets();
-  // Future<Either<Failure, List<Exoplanet?>>> getExoplanetByDate(
-  //     DateTime exoDate);
-  // Future<Either<Failure, List<Exoplanet?>>> getExoplanetByDensity(
-  //     double minDensity, double maxDensity);
-  // Future<Either<Failure, List<Exoplanet?>>> getExoplanetByDiscoveryMethod(
-  //     String exoDiscoveryMethod);
-  // Future<Either<Failure, List<Exoplanet?>>> getExoplanetByDiscoveryYear(
-  //     double minYear, double maxYear);
-  // Future<Either<Failure, List<Exoplanet?>>> getExoplanetByDistance(
-  //     double minDist, double maxDist);
-  // Future<Either<Failure, List<Exoplanet?>>> getExoplanetByMass(double exoMass);
-  // Future<Either<Failure, List<Exoplanet?>>> getExoplanetByName(String exoName);
-  // Future<Either<Failure, List<Exoplanet?>>> getExoplanetByTemperature(
-  //     double minTemperature, double maxTemperature);
-  // Future<Either<Failure, List<Exoplanet?>>> getExoplanetByType(String exoType);
-  // Future<Either<Failure, void>> addExoplanetToFavorites();
-  // Future<Either<Failure, void>> removeExoplanetFromFavorites(String id);
   void storeExoplanets(List<Exoplanet> exoplanets);
-  void getRemoteExoplanets();
+  Future<void> getRemoteExoplanets();
 }
 
 class ExoplanetLocalDataSourceImpl implements ExoplanetLocalDataSource {
@@ -73,12 +56,24 @@ class ExoplanetLocalDataSourceImpl implements ExoplanetLocalDataSource {
   }
 
   @override
-  void storeExoplanets(List<Exoplanet> exoplanets) {
-    final existingExoplanets = box.get('exoplanets') as List<dynamic>? ?? [];
-    final exoplanetList = exoplanets.map((e) => e.toJson()).toList();
-    existingExoplanets.addAll(exoplanetList);
-    box.put('exoplanets', existingExoplanets);
+  void storeExoplanets(List<Exoplanet> exoplanets) async {
+    final receivePort = ReceivePort();
+    await Isolate.spawn(storeExoplanetsInIsolate, receivePort.sendPort);
+
+    final sendPort = await receivePort.first as SendPort;
+    final responsePort = ReceivePort();
+
+    sendPort.send([exoplanets, box, responsePort.sendPort]);
+
+    await for (final message in responsePort) {
+      if (message == 'done') {
+        responsePort.close();
+        break;
+      }
+    }
   }
+}
+
   // @override
   // Future<Either<Failure, List<Exoplanet?>>> getExoplanetByType(
   //     String exoType) async {
@@ -108,4 +103,4 @@ class ExoplanetLocalDataSourceImpl implements ExoplanetLocalDataSource {
   //     return Left(Failure('Unexpected error: $e'));
   //   }
   // }
-}
+

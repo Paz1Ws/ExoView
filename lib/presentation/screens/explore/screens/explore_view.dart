@@ -1,10 +1,13 @@
+import 'dart:async';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myapp/config/theme/fonts.dart';
 import 'package:myapp/config/theme/theme.dart';
+import 'package:myapp/presentation/screens/explore/providers/explore_view_providers.dart';
 import 'package:myapp/presentation/widgets/widgets.dart';
 
-class ExploreView extends StatelessWidget {
+class ExploreView extends ConsumerStatefulWidget {
   final List<String> exoplanetCategories = [
     'All Exoplanets',
     'Super Earths',
@@ -16,59 +19,98 @@ class ExploreView extends StatelessWidget {
   ExploreView({super.key});
 
   @override
+  ConsumerState<ExploreView> createState() => _ExploreViewState();
+}
+
+class _ExploreViewState extends ConsumerState<ExploreView> {
+  Timer? _timer;
+  final ScrollController _scrollController = ScrollController();
+  int _loadedItems = 10;
+
+  @override
+  void initState() {
+    super.initState();
+    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
+      setState(() {});
+    });
+    _scrollController.addListener(_onScroll);
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  void _onScroll() {
+    if (_scrollController.position.pixels ==
+        _scrollController.position.maxScrollExtent) {
+      setState(() {
+        if (_loadedItems < ref.read(filteredExoplanetsProvider).length) {
+          _loadedItems += 10;
+        }
+      });
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final exoplanets = ref.read(filteredExoplanetsProvider);
     return Padding(
       padding: const EdgeInsets.all(20.0),
-<<<<<<< HEAD
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const SizedBox(
-            height: 20,
-          ),
-          const SearchTab(),
-          Spacer(),
-          Divider(),
-          Center(
-            child: AnimatedTextKit(
-              totalRepeatCount: 100,
-              animatedTexts: [
-                TypewriterAnimatedText('Looking for a new home?',
-                    speed: const Duration(milliseconds: 200),
-                    textAlign: TextAlign.center,
-                    textStyle: AppFonts.spaceGrotesk40
-                        .copyWith(fontWeight: FontWeight.normal)),
-              ],
-            ),
-          ),
-          Divider(),
-          Spacer(),
-        ],
-=======
       child: SingleChildScrollView(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const SizedBox(
               height: 20,
             ),
             const SearchTab(),
-            Center(
-              child: AnimatedTextKit(
-                totalRepeatCount: 1,
-                animatedTexts: [
-                  TypewriterAnimatedText('Looking for a new home?',
-                      speed: const Duration(milliseconds: 200),
-                      textAlign: TextAlign.center,
-                      textStyle: AppFonts.spaceGrotesk40
-                          .copyWith(fontWeight: FontWeight.normal)),
-                ],
-              ),
-            ),
+            exoplanets != null
+                ? GridView.builder(
+                    physics: const NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    controller: _scrollController,
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      crossAxisSpacing: 10,
+                      mainAxisSpacing: 10,
+                    ),
+                    itemCount: _loadedItems < exoplanets.length
+                        ? _loadedItems
+                        : exoplanets.length,
+                    itemBuilder: (context, index) {
+                      return Padding(
+                        padding: const EdgeInsets.only(bottom: 10),
+                        child: TouchableExoplanetCard(
+                          exoplanet: exoplanets[index],
+                        ),
+                      );
+                    },
+                  )
+                : Column(
+                    children: [
+                      Spacer(),
+                      Center(
+                        child: AnimatedTextKit(
+                          totalRepeatCount: 1,
+                          animatedTexts: [
+                            TypewriterAnimatedText(
+                              'Looking for a new home?',
+                              speed: const Duration(milliseconds: 200),
+                              textAlign: TextAlign.center,
+                              textStyle: AppFonts.spaceGrotesk40
+                                  .copyWith(fontWeight: FontWeight.normal),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Spacer(),
+                    ],
+                  ),
           ],
         ),
->>>>>>> 275d990a493e835dbb2845d7f98a93b0c1d820ec
       ),
     );
   }

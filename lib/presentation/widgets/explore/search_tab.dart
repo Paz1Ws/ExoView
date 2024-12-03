@@ -6,8 +6,6 @@ import 'package:myapp/core/data/data.dart';
 import 'package:myapp/presentation/screens/explore/providers/explore_view_providers.dart';
 import 'package:myapp/presentation/widgets/widgets.dart';
 
-import '../../screens/home/providers/exoplanet_providers.dart';
-
 class SearchTab extends ConsumerWidget {
   const SearchTab({
     super.key,

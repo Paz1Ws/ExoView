@@ -39,7 +39,7 @@ void showFilterModal(BuildContext context, WidgetRef ref) {
             return Center(child: Text('Error: ${snapshot.error}'));
           } else {
             WidgetsBinding.instance.addPostFrameCallback((_) {
-              Navigator.of(context).pop(); // Close the dialog
+              Navigator.of(context).pop();
               showModalBottomSheet(
                 context: context,
                 builder: (BuildContext context) {

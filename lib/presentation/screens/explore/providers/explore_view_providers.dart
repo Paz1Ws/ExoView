@@ -40,6 +40,10 @@ class BoolNotifier extends StateNotifier<bool> {
   }
 }
 
+final filteredExoplanetsProvider = StateProvider<List<Exoplanet>>((ref) {
+  return [];
+});
+
 @riverpod
 RangeValues discoveryYearRange(Ref ref) {
   return RangeValues(1995, 2024);
@@ -47,37 +51,37 @@ RangeValues discoveryYearRange(Ref ref) {
 
 @riverpod
 RangeValues orbitalPeriodRange(Ref ref) {
-  return const RangeValues(0, 1000); // Adjust initial values as needed
+  return RangeValues(0, 1000); // Adjust initial values as needed
 }
 
 @riverpod
 RangeValues planetMassRange(Ref ref) {
-  return const RangeValues(0, 1000); // Adjust initial values as needed
+  return RangeValues(0, 1000); // Adjust initial values as needed
 }
 
 @riverpod
 RangeValues planetRadiusRange(Ref ref) {
-  return const RangeValues(0, 1000); // Adjust initial values as needed
+  return RangeValues(0, 1000); // Adjust initial values as needed
 }
 
 @riverpod
 RangeValues planetTempRange(Ref ref) {
-  return const RangeValues(0, 1000); // Adjust initial values as needed
+  return RangeValues(0, 1000); // Adjust initial values as needed
 }
 
 @riverpod
 RangeValues planetDensityRange(Ref ref) {
-  return const RangeValues(0, 1000); // Adjust initial values as needed
+  return RangeValues(0, 1000); // Adjust initial values as needed
 }
 
 @riverpod
 RangeValues transitDurationRange(Ref ref) {
-  return const RangeValues(0, 1000); // Adjust initial values as needed
+  return RangeValues(0, 1000); // Adjust initial values as needed
 }
 
 @riverpod
 RangeValues insolationFluxRange(Ref ref) {
-  return const RangeValues(0, 1000); // Adjust initial values as needed
+  return RangeValues(0, 1000); // Adjust initial values as needed
 }
 
 // These two might need different approaches if you still need state management:
