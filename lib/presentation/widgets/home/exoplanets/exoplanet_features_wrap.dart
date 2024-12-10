@@ -92,16 +92,16 @@ final FeatureData exoplanetFeatureData = FeatureData(
     'Insolation Flux (Earth fluxes)',
   ],
   descriptions: [
-    'The existence of this exoplanet is debated among scientists?: ',
+    'Existence debated among scientists?: ',
     'The year in which the exoplanet was discovered: ',
     'The method used to discover the exoplanet: ',
-    'The time it takes, to complete one orbit around its star: ',
+    'Time to orbit around its star: ',
     'The radius of the exoplanet compared to Earth: ',
     'The mass of the exoplanet compared to Earth: ',
     'The equilibrium temperature of the exoplanet in Kelvin: ',
     'The density of the exoplanet in grams per cubic centimeter: ',
     'The duration of the transit of the exoplanet in hours: ',
-    'The amount of stellar energy received by the exoplanet compared to Earth: ',
+    'Amount of stellar energy received, compared with Earth: ',
   ],
 );
 

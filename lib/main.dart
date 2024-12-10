@@ -8,11 +8,13 @@ Future<void> main() async {
 
   await initDependencies();
 
-  runApp(const ProviderScope(child: MyApp()));
+  runApp(const ProviderScope(child: ExoView
+()));
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class ExoView extends StatelessWidget {
+  const ExoView
+({super.key});
 
   @override
   Widget build(BuildContext context) {

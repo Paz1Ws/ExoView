@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:myapp/config/failures/failures.dart';
+import 'package:myapp/config/util/filter_cases.dart';
 import 'package:myapp/core/data/data.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -40,51 +41,82 @@ class BoolNotifier extends StateNotifier<bool> {
   }
 }
 
-final filteredExoplanetsProvider = StateProvider<List<Exoplanet>>((ref) {
+final filteredExoplanets = StateProvider<List<Exoplanet>>((ref) {
   return [];
 });
 
 @riverpod
 RangeValues discoveryYearRange(Ref ref) {
-  return RangeValues(1995, 2024);
+  List<Exoplanet> exoplanets = ref.watch(localExoplanetsProvider).maybeWhen(
+        data: (data) => data.fold((l) => [], (r) => r),
+        orElse: () => [],
+      );
+  return getDiscoveryYearRange(exoplanets);
 }
 
 @riverpod
 RangeValues orbitalPeriodRange(Ref ref) {
-  return RangeValues(0, 1000); // Adjust initial values as needed
+  List<Exoplanet> exoplanets = ref.watch(localExoplanetsProvider).maybeWhen(
+        data: (data) => data.fold((l) => [], (r) => r),
+        orElse: () => [],
+      );
+  return getOrbitalPeriodRange(exoplanets);
 }
 
 @riverpod
 RangeValues planetMassRange(Ref ref) {
-  return RangeValues(0, 1000); // Adjust initial values as needed
+  List<Exoplanet> exoplanets = ref.watch(localExoplanetsProvider).maybeWhen(
+        data: (data) => data.fold((l) => [], (r) => r),
+        orElse: () => [],
+      );
+  return getPlanetMassRange(exoplanets);
 }
 
 @riverpod
 RangeValues planetRadiusRange(Ref ref) {
-  return RangeValues(0, 1000); // Adjust initial values as needed
+  List<Exoplanet> exoplanets = ref.watch(localExoplanetsProvider).maybeWhen(
+        data: (data) => data.fold((l) => [], (r) => r),
+        orElse: () => [],
+      );
+  return getPlanetRadiusRange(exoplanets);
 }
 
 @riverpod
 RangeValues planetTempRange(Ref ref) {
-  return RangeValues(0, 1000); // Adjust initial values as needed
+  List<Exoplanet> exoplanets = ref.watch(localExoplanetsProvider).maybeWhen(
+        data: (data) => data.fold((l) => [], (r) => r),
+        orElse: () => [],
+      );
+  return getPlanetTempRange(exoplanets);
 }
 
 @riverpod
 RangeValues planetDensityRange(Ref ref) {
-  return RangeValues(0, 1000); // Adjust initial values as needed
+  List<Exoplanet> exoplanets = ref.watch(localExoplanetsProvider).maybeWhen(
+        data: (data) => data.fold((l) => [], (r) => r),
+        orElse: () => [],
+      );
+  return getPlanetDensityRange(exoplanets);
 }
 
 @riverpod
 RangeValues transitDurationRange(Ref ref) {
-  return RangeValues(0, 1000); // Adjust initial values as needed
+  List<Exoplanet> exoplanets = ref.watch(localExoplanetsProvider).maybeWhen(
+        data: (data) => data.fold((l) => [], (r) => r),
+        orElse: () => [],
+      );
+  return getTransitDurationRange(exoplanets);
 }
 
 @riverpod
 RangeValues insolationFluxRange(Ref ref) {
-  return RangeValues(0, 1000); // Adjust initial values as needed
+  List<Exoplanet> exoplanets = ref.watch(localExoplanetsProvider).maybeWhen(
+        data: (data) => data.fold((l) => [], (r) => r),
+        orElse: () => [],
+      );
+  return getInsolationFluxRange(exoplanets);
 }
 
-// These two might need different approaches if you still need state management:
 @riverpod
 bool controversialOriginRange(Ref ref) {
   return false; // Initial value

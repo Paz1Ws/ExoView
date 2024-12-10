@@ -1,12 +1,8 @@
-import 'dart:isolate';
 import 'package:fpdart/fpdart.dart';
 import 'package:myapp/config/config.dart';
 import 'package:myapp/core/data/data.dart';
 import 'package:hive/hive.dart';
 import 'package:myapp/config/failures/failures.dart';
-import 'package:myapp/config/usecase/usecase.dart';
-import 'package:myapp/core/data/datasources/store_exoplanets_isolate.dart';
-import 'package:myapp/core/domain/domain.dart';
 
 abstract interface class ExoplanetLocalDataSource {
   Future<Either<Failure, List<Exoplanet>>> getLocalExoplanets();
@@ -56,21 +52,25 @@ class ExoplanetLocalDataSourceImpl implements ExoplanetLocalDataSource {
   }
 
   @override
-  void storeExoplanets(List<Exoplanet> exoplanets) async {
-    final receivePort = ReceivePort();
-    await Isolate.spawn(storeExoplanetsInIsolate, receivePort.sendPort);
+  Future<void> storeExoplanets(List<Exoplanet> exoplanets) async {
+    await Future(() async {
+      final existingExoplanets = box.get('exoplanets') as List<dynamic>? ?? [];
+      final existingExoplanetIds = existingExoplanets
+          .map((e) => Exoplanet.fromJson(Map<String, dynamic>.from(e as Map))
+              .planetName)
+          .toSet();
 
-    final sendPort = await receivePort.first as SendPort;
-    final responsePort = ReceivePort();
-
-    sendPort.send([exoplanets, box, responsePort.sendPort]);
-
-    await for (final message in responsePort) {
-      if (message == 'done') {
-        responsePort.close();
-        break;
+      final newExoplanets = <Map<String, dynamic>>[];
+      for (var exoplanet in exoplanets) {
+        if (!existingExoplanetIds.contains(exoplanet.planetName)) {
+          newExoplanets.add(exoplanet.toJson());
+          existingExoplanetIds.add(exoplanet.planetName);
+        }
       }
-    }
+
+      existingExoplanets.addAll(newExoplanets);
+      await box.put('exoplanets', existingExoplanets);
+    });
   }
 }
 

@@ -1,6 +1,7 @@
 // REPOSITORIES
 export 'package:myapp/core/domain/repositories/auth_repository.dart';
 export 'package:myapp/core/domain/repositories/local_exoplanet_repository.dart';
+export 'package:myapp/core/domain/repositories/favorites_repository.dart';
 
 // USECASES
 export 'package:myapp/core/domain/usecases/auth/sign_up.dart';

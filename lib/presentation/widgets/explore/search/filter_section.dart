@@ -24,7 +24,6 @@ class _FilterSectionState extends ConsumerState<FilterSection> {
   late RangeValues rangeValues;
   late double minRange;
   late double maxRange;
-  late RangeValues prov;
 
   final Map<String, Function> rangeFunctions = {
     'Date of Discovery': getDiscoveryYearRange,
@@ -55,57 +54,54 @@ class _FilterSectionState extends ConsumerState<FilterSection> {
     if (rangeFunctions.containsKey(widget.text) &&
         providers.containsKey(widget.text)) {
       rangeValues = rangeFunctions[widget.text]!(widget.exoplanets);
-      prov = ref.read(providers[widget.text]!);
     } else {
       throw ArgumentError('Invalid property: ${widget.text}');
     }
 
     minRange = rangeValues.start;
     maxRange = rangeValues.end;
+
+    rangeValues = ref.read(providers[widget.text]!);
   }
 
-  void updateFilteredExoplanets(RangeValues values) {
-    List<Exoplanet> filteredExoplanets = widget.exoplanets.where((exoplanet) {
-      switch (widget.text) {
-        case 'Date of Discovery':
-          return exoplanet.discoveryYear >= values.start &&
-              exoplanet.discoveryYear <= values.end;
-        case 'Mass of Exoplanet':
-          return exoplanet.massEarthMass >= values.start &&
-              exoplanet.massEarthMass <= values.end;
-        case 'Radius of Exoplanet':
-          return exoplanet.radiusEarthRadius >= values.start &&
-              exoplanet.radiusEarthRadius <= values.end;
-        case 'Orbital Period':
-          return exoplanet.orbitalPeriodDays >= values.start &&
-              exoplanet.orbitalPeriodDays <= values.end;
-        case 'Equilibrium Temperature':
-          return exoplanet.equilibriumTemperature >= values.start &&
-              exoplanet.equilibriumTemperature <= values.end;
-        case 'Density':
-          return exoplanet.density >= values.start &&
-              exoplanet.density <= values.end;
-        case 'Transit Duration':
-          return exoplanet.transitDurationHours >= values.start &&
-              exoplanet.transitDurationHours <= values.end;
-        case 'Insolation Flux':
-          return exoplanet.insolationFlux >= values.start &&
-              exoplanet.insolationFlux <= values.end;
-        default:
-          return false;
-      }
-    }).toList();
+  void updateFilteredExoplanets() {
+    List<Exoplanet> newFilteredExoplanets = widget.exoplanets;
 
-    final existingExoplanets = ref.read(filteredExoplanetsProvider);
-    final existingExoplanetIds =
-        existingExoplanets.map((e) => e.planetName).toSet();
-    final newExoplanets = filteredExoplanets
-        .where((e) => !existingExoplanetIds.contains(e.planetName))
-        .toList();
-    ref.read(filteredExoplanetsProvider.notifier).state = [
-      ...existingExoplanets,
-      ...newExoplanets
-    ];
+    providers.forEach((key, provider) {
+      final range = ref.read(provider);
+      newFilteredExoplanets = newFilteredExoplanets.where((exoplanet) {
+        switch (key) {
+          case 'Date of Discovery':
+            return exoplanet.discoveryYear >= range.start &&
+                exoplanet.discoveryYear <= range.end;
+          case 'Mass of Exoplanet':
+            return exoplanet.massEarthMass >= range.start &&
+                exoplanet.massEarthMass <= range.end;
+          case 'Radius of Exoplanet':
+            return exoplanet.radiusEarthRadius >= range.start &&
+                exoplanet.radiusEarthRadius <= range.end;
+          case 'Orbital Period':
+            return exoplanet.orbitalPeriodDays >= range.start &&
+                exoplanet.orbitalPeriodDays <= range.end;
+          case 'Equilibrium Temperature':
+            return exoplanet.equilibriumTemperature >= range.start &&
+                exoplanet.equilibriumTemperature <= range.end;
+          case 'Density':
+            return exoplanet.density >= range.start &&
+                exoplanet.density <= range.end;
+          case 'Transit Duration':
+            return exoplanet.transitDurationHours >= range.start &&
+                exoplanet.transitDurationHours <= range.end;
+          case 'Insolation Flux':
+            return exoplanet.insolationFlux >= range.start &&
+                exoplanet.insolationFlux <= range.end;
+          default:
+            return true;
+        }
+      }).toList();
+    });
+
+    ref.read(filteredExoplanets.notifier).state = newFilteredExoplanets;
   }
 
   @override
@@ -140,8 +136,9 @@ class _FilterSectionState extends ConsumerState<FilterSection> {
           onChanged: (RangeValues values) {
             setState(() {
               rangeValues = values;
-              prov = values;
-              updateFilteredExoplanets(values);
+              ref.read(providers[widget.text]!).start = values.start;
+              ref.read(providers[widget.text]!).end = values.end;
+              updateFilteredExoplanets();
             });
           },
         ),

@@ -19,6 +19,6 @@ export 'exoplanet/screens/exoplanet_show.dart';
 export 'explore/screens/explore_view.dart';
 export 'explore/screens/explore_section_details.dart';
 // FAVORITES
-export 'favorites/favorites_view.dart';
+export 'favorites/screens/favorites_view.dart';
 // PROFILE
 export 'settings/settings_view.dart';

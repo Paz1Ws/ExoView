@@ -6,68 +6,106 @@ import 'package:myapp/core/data/data.dart';
 import 'package:myapp/presentation/screens/explore/providers/explore_view_providers.dart';
 import 'package:myapp/presentation/widgets/widgets.dart';
 
-class SearchTab extends ConsumerWidget {
-  const SearchTab({
-    super.key,
-  });
+class SearchTab extends ConsumerStatefulWidget {
+  SearchTab({super.key});
 
   @override
-  Widget build(BuildContext context, ref) {
+  _SearchTabState createState() => _SearchTabState();
+}
+
+class _SearchTabState extends ConsumerState<SearchTab> {
+  final TextEditingController searchController = TextEditingController();
+
+  void updateFilteredExoplanets(WidgetRef ref) {
+    final query = searchController.text;
+    final exoplanets = ref.read(filteredExoplanets);
+
+    final newfilteredExoplanets = exoplanets.where((exoplanet) {
+      return exoplanet.planetName.toLowerCase().contains(query.toLowerCase());
+    }).toList();
+
+    ref.read(filteredExoplanets.notifier).state = newfilteredExoplanets;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    searchController.addListener(() {
+      updateFilteredExoplanets(ref);
+    });
+  }
+
+  @override
+  void dispose() {
+    searchController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return WhiteBorderContainer(
-        border: 6,
+      border: 6,
+      width: double.infinity,
+      widget: Container(
+        decoration: BoxDecoration(
+          color: AppColors.veryDarkPurple,
+          borderRadius: BorderRadius.circular(6),
+        ),
+        height: 50,
         width: double.infinity,
-        widget: Container(
-            decoration: BoxDecoration(
-              color: AppColors.veryDarkPurple,
-              borderRadius: BorderRadius.circular(6),
+        child: Row(
+          children: [
+            Expanded(
+              flex: 3,
+              child: Padding(
+                padding: const EdgeInsets.only(left: 20),
+                child: TextField(
+                  controller: searchController,
+                  decoration: InputDecoration(
+                    icon: const Icon(Icons.search),
+                    hintText: 'Search...',
+                    hintStyle: AppFonts.spaceGrotesk16,
+                    border: InputBorder.none,
+                  ),
+                  style: AppFonts.spaceGrotesk16,
+                  onChanged: (value) {
+                    updateFilteredExoplanets(ref);
+                  },
+                ),
+              ),
             ),
-            height: 50,
-            width: double.infinity,
-            child: Row(
-              children: [
-                Expanded(
-                  flex: 3,
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 20),
-                    child: TextField(
-                      decoration: InputDecoration(
-                        icon: const Icon(Icons.search),
-                        hintText: 'Search...',
-                        hintStyle: AppFonts.spaceGrotesk16,
-                        border: InputBorder.none,
-                      ),
-                      style: AppFonts.spaceGrotesk16,
-                    ),
+            Expanded(
+              child: IconButton(
+                icon: Icon(
+                  Icons.tune,
+                  color: AppColors.lightGray,
+                ),
+                onPressed: () {
+                  showFilterModal(context, ref);
+                },
+              ),
+            ),
+            Expanded(
+              child: Container(
+                decoration: const BoxDecoration(
+                  color: AppColors.brightTealGreen,
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(20),
+                    bottomRight: Radius.circular(6),
+                    topRight: Radius.circular(6),
                   ),
                 ),
-                Expanded(
-                  child: IconButton(
-                    icon: Icon(
-                      Icons.tune,
-                      color: AppColors.lightGray,
-                    ),
-                    onPressed: () {
-                      showFilterModal(context, ref);
-                    },
-                  ),
+                child: IconButton(
+                  icon: const Icon(Icons.check),
+                  onPressed: () {
+                    FocusScope.of(context).unfocus();
+                  },
                 ),
-                Expanded(
-                  child: Container(
-                    decoration: const BoxDecoration(
-                      color: AppColors.brightTealGreen,
-                      borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(20),
-                        bottomRight: Radius.circular(6),
-                        topRight: Radius.circular(6),
-                      ),
-                    ),
-                    child: IconButton(
-                      icon: const Icon(Icons.mic),
-                      onPressed: () {},
-                    ),
-                  ),
-                ),
-              ],
-            )));
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

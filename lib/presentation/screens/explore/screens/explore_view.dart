@@ -47,7 +47,7 @@ class _ExploreViewState extends ConsumerState<ExploreView> {
     if (_scrollController.position.pixels ==
         _scrollController.position.maxScrollExtent) {
       setState(() {
-        if (_loadedItems < ref.read(filteredExoplanetsProvider).length) {
+        if (_loadedItems < ref.read(filteredExoplanets).length) {
           _loadedItems += 10;
         }
       });
@@ -56,20 +56,21 @@ class _ExploreViewState extends ConsumerState<ExploreView> {
 
   @override
   Widget build(BuildContext context) {
-    final exoplanets = ref.read(filteredExoplanetsProvider);
+    final exoplanets = ref.watch(filteredExoplanets);
     return Padding(
       padding: const EdgeInsets.all(20.0),
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            const SizedBox(
-              height: 20,
-            ),
-            const SearchTab(),
-            exoplanets != null
-                ? GridView.builder(
-                    physics: const NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
+      child: Column(
+        children: [
+          const SizedBox(
+            height: 20,
+          ),
+          SearchTab(),
+          const SizedBox(
+            height: 20,
+          ),
+          exoplanets != null || exoplanets.length > 0
+              ? Expanded(
+                  child: GridView.builder(
                     controller: _scrollController,
                     gridDelegate:
                         const SliverGridDelegateWithFixedCrossAxisCount(
@@ -88,8 +89,10 @@ class _ExploreViewState extends ConsumerState<ExploreView> {
                         ),
                       );
                     },
-                  )
-                : Column(
+                  ),
+                )
+              : Expanded(
+                  child: Column(
                     children: [
                       Spacer(),
                       Center(
@@ -109,8 +112,8 @@ class _ExploreViewState extends ConsumerState<ExploreView> {
                       Spacer(),
                     ],
                   ),
-          ],
-        ),
+                ),
+        ],
       ),
     );
   }

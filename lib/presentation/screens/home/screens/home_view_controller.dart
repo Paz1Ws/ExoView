@@ -13,9 +13,9 @@ class _HomeViewControllerState extends State<HomeViewController> {
   final PageController _pageController = PageController();
   int _selectedIndex = 0;
   final List<Widget> pages = [
-    ExploreView(),
     const HomeView(),
-    // const FavoritesView(),
+    ExploreView(),
+    const FavoritesView(),
     const SettingsView(),
   ];
 

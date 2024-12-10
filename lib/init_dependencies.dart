@@ -36,17 +36,6 @@ Future<void> initDependencies() async {
     ),
   );
 
-  // Registrar ExoplanetLocalDataSource
-  // serviceLocator.registerFactory<ExoplanetLocalDataSource>(
-  //   () => ExoplanetLocalDataSourceImpl(
-  //     serviceLocator(),
-  //     serviceLocator(),
-  //   ),
-  // );
-
-  // Registrar LocalExoplanetRepository
-
-  // Registrar GetLocalExoplanets UseCase
   serviceLocator.registerFactory(
     () => GetLocalExoplanets(
       serviceLocator(),
@@ -60,6 +49,11 @@ Future<void> initDependencies() async {
         serviceLocator(),
         serviceLocator(),
       ));
+  serviceLocator.registerFactory(() => FavoritesRepositoryImpl(
+        serviceLocator(),
+        serviceLocator(),
+      ));
+
   _initAuth();
 }
 
@@ -88,18 +82,6 @@ void _initAuth() {
         serviceLocator(),
       ),
     )
-    // ..registerFactory<ExoplanetRepository>(
-    //   () => ExoplanetRepositoryImpl(
-    //     serviceLocator(),
-    //     serviceLocator(),
-    //   ),
-    // )
-    // ..registerFactory<ExoplanetRepositoryImpl>(
-    //   () => ExoplanetRepositoryImpl(
-    //     serviceLocator(),
-    //     serviceLocator(),
-    //   ),
-    // )
 
     // Usecases
     ..registerFactory(
@@ -112,7 +94,4 @@ void _initAuth() {
         serviceLocator(),
       ),
     );
-  // ..registerFactory(() => GetExoplanets(
-  //       serviceLocator(),
-  //     ));
 }

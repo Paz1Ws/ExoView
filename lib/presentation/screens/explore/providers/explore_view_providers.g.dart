@@ -24,7 +24,7 @@ final getAllExoplanetsProvider =
 typedef GetAllExoplanetsRef
     = AutoDisposeFutureProviderRef<Either<Failure, List<Exoplanet>>>;
 String _$discoveryYearRangeHash() =>
-    r'f2a754504d640b256f9987afdc65afaa9dadb6db';
+    r'35374e2eab87b2a2e883681ca1fc10d2aea7aab0';
 
 /// See also [discoveryYearRange].
 @ProviderFor(discoveryYearRange)
