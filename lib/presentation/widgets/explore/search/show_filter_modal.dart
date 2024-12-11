@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myapp/config/theme/colors.dart';
+import 'package:myapp/config/util/filter_type_exoplanet.dart';
 import 'package:myapp/presentation/screens/home/providers/exoplanet_providers.dart';
 import 'package:myapp/presentation/widgets/widgets.dart';
+
+import '../../../screens/explore/providers/explore_view_providers.dart';
 
 void showFilterModal(BuildContext context, WidgetRef ref) {
   final List<String> exoplanetCategories = [
@@ -18,8 +21,6 @@ void showFilterModal(BuildContext context, WidgetRef ref) {
     'Mass of Exoplanet',
     'Radius of Exoplanet',
     'Orbital Period',
-    // 'Is of Controversial Origin?',
-    // 'Discovery Method',
     'Equilibrium Temperature',
     'Density',
     'Transit Duration',
@@ -93,6 +94,12 @@ void showFilterModal(BuildContext context, WidgetRef ref) {
                                         child: PlanetCategoryCard(
                                           exoplanetCategory: category,
                                           onTap: () {
+                                            ref
+                                                    .read(filteredExoplanets
+                                                        .notifier)
+                                                    .state =
+                                                filterExoplanetsByCategory(
+                                                    exoplanets, category);
                                             Navigator.of(context).pop();
                                           },
                                         ),

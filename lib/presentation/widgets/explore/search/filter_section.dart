@@ -34,6 +34,7 @@ class _FilterSectionState extends ConsumerState<FilterSection> {
     'Density': getPlanetDensityRange,
     'Transit Duration': getTransitDurationRange,
     'Insolation Flux': getInsolationFluxRange,
+
   };
 
   final Map<String, AutoDisposeProvider<RangeValues>> providers = {

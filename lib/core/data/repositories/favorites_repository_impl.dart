@@ -1,41 +1,65 @@
 import 'package:fpdart/fpdart.dart';
-import 'package:hive/hive.dart';
-import 'package:myapp/core/data/models/exoplanet_model.dart';
+import 'package:myapp/core/data/data.dart';
+import 'package:myapp/core/data/datasources/favorites_data_source.dart';
 import 'package:myapp/core/domain/repositories/favorites_repository.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
-
 import 'package:myapp/config/failures/failures.dart';
 
 class FavoritesRepositoryImpl implements FavoritesRepository {
-  final SupabaseClient supabaseClient;
-  final Box box;
+  final FavoritesRemoteDataSource remoteDataSource;
+  FavoritesRepositoryImpl(this.remoteDataSource);
 
-  FavoritesRepositoryImpl(this.supabaseClient, this.box);
   @override
-  Future<Either<Failure, List<Exoplanet>>> getFavoriteExoplanets() async {
-    final response = await supabaseClient.from('favorites').select();
-
+  Future<Either<Failure, void>> addFavorite(String id) async {
     try {
-      final List<dynamic> data = response;
-      final favoriteExoplanets =
-          data.map((e) => Exoplanet.fromJson(e)).toList();
-
-      // Store in Hive
-      await box.put('favoriteExoplanets',
-          favoriteExoplanets.map((e) => e.toJson()).toList());
-
-      return Right(favoriteExoplanets);
+      await remoteDataSource.addFavorite(id);
+      return const Right(null);
     } catch (e) {
-      return Left(Failure('Failed to fetch favorites: $e'));
+      return Left(Failure('Failed to add favorite: $e'));
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> removeFavorite(String id) async {
+    try {
+      await remoteDataSource.removeFavorite(id);
+      return const Right(null);
+    } catch (e) {
+      return Left(Failure('Failed to remove favorite: $e'));
     }
   }
 
   @override
   Future<Either<Failure, List<Exoplanet>>> getLocalFavoriteExoplanets() async {
-    final List<dynamic> data = box.get('favoriteExoplanets', defaultValue: []);
-    final favoriteExoplanets = data
-        .map((e) => Exoplanet.fromJson(Map<String, dynamic>.from(e)))
-        .toList();
-    return Right(favoriteExoplanets);
+    try {
+      final favorites = await remoteDataSource.getLocalFavoriteExoplanets();
+      return favorites;
+    } catch (e) {
+      return Left(Failure('Failed to fetch local favorites: $e'));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<Exoplanet>>> putFavoriteExoplanets() async {
+    try {
+      final result = await remoteDataSource.putFavoriteExoplanets();
+      return result;
+    } catch (e) {
+      return Left(Failure('Failed to put favorite exoplanets: $e'));
+    }
+  }
+
+  @override
+  Future<Either<Failure, bool>> isFavorite(String id) async {
+    try {
+      final isFavorite = await remoteDataSource.isFavorite(id);
+      return Right(isFavorite);
+    } catch (e) {
+      return Left(Failure('Failed to check favorite: $e'));
+    }
+  }
+
+  @override
+  Future<List<Exoplanet>> getFavorites() {
+    return remoteDataSource.getFavorites();
   }
 }

@@ -46,7 +46,8 @@ class ExoplanetOrShipDetails extends StatelessWidget {
                   size: size,
                   defaultPlanets: defaultPlanets,
                   chartData: chartData,
-                  isShip: isShip),
+                  isShip: isShip,
+                  exoplanet: exoplanet!),
             ),
             Column(
               children: [

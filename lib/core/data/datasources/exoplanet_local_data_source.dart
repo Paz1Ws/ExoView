@@ -74,33 +74,4 @@ class ExoplanetLocalDataSourceImpl implements ExoplanetLocalDataSource {
   }
 }
 
-  // @override
-  // Future<Either<Failure, List<Exoplanet?>>> getExoplanetByType(
-  //     String exoType) async {
-  //   final url =
-  //       'https://exoplanetarchive.ipac.caltech.edu/TAP/sync?query=select+pl_name,pl_controv_flag,disc_year,discoverymethod,pl_orbper,pl_rade,pl_bmasse,pl_eqt,pl_dens,pl_trandur,pl_insol,hostname,st_spectype,st_teff,st_rad,st_mass,st_age,st_vsin,sy_dist,sy_snum,sy_mnum,sy_pnum+from+ps&format=json';
-
-  //   try {
-  //     final response = await http.get(Uri.parse(url));
-
-  //     if (response.statusCode == 200) {
-  //       final List<dynamic> data = json.decode(response.body);
-  //       final List<Exoplanet?> exoplanets = data
-  //           .map((json) {
-  //             final exoplanet = Exoplanet.fromJson(json);
-  //             final type = classifyExoplanet(
-  //                 exoplanet.massEarthMass, exoplanet.radiusEarthRadius);
-  //             return type == exoType ? exoplanet : null;
-  //           })
-  //           .where((exoplanet) => exoplanet != null)
-  //           .toList();
-  //       return Right(exoplanets);
-  //     } else {
-  //       return Left(
-  //           Failure('Error fetching exoplanets: ${response.statusCode}'));
-  //     }
-  //   } catch (e) {
-  //     return Left(Failure('Unexpected error: $e'));
-  //   }
-  // }
-
+  

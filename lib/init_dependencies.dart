@@ -4,6 +4,7 @@ import 'package:myapp/config/network/connection_checker.dart';
 import 'package:myapp/config/secrets/app_secrets.dart';
 import 'package:myapp/core/data/data.dart';
 import 'package:myapp/core/domain/domain.dart';
+import 'package:myapp/core/domain/usecases/favorites/favorites_usecases.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
@@ -51,7 +52,6 @@ Future<void> initDependencies() async {
       ));
   serviceLocator.registerFactory(() => FavoritesRepositoryImpl(
         serviceLocator(),
-        serviceLocator(),
       ));
 
   _initAuth();
@@ -91,6 +91,28 @@ void _initAuth() {
     )
     ..registerFactory(
       () => SignIn(
+        serviceLocator(),
+      ),
+    )
+    ..registerFactory(
+      () => AddFavorite(
+        serviceLocator(),
+      ),
+    )
+    ..registerFactory(
+      () => RemoveFavorite(
+        serviceLocator(),
+      ),
+    )
+
+    // )
+    ..registerFactory(
+      () => IsFavorite(
+        serviceLocator(),
+      ),
+    )
+    ..registerFactory(
+      () => PutFavorites(
         serviceLocator(),
       ),
     );

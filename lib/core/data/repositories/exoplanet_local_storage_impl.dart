@@ -1,8 +1,5 @@
 import 'package:fpdart/fpdart.dart';
-import 'package:hive/hive.dart';
-import 'package:myapp/config/failures/exceptions.dart';
 import 'package:myapp/config/failures/failures.dart';
-import 'package:myapp/config/usecase/usecase.dart';
 import 'package:myapp/core/data/data.dart';
 import 'package:myapp/core/domain/domain.dart';
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:myapp/config/theme/theme.dart';
+import 'package:myapp/core/data/data.dart';
 import 'package:myapp/presentation/widgets/widgets.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
@@ -11,6 +12,7 @@ class PlanetAndChart extends StatelessWidget {
     required this.defaultPlanets,
     required this.chartData,
     required this.isShip,
+    required this.exoplanet,
   });
 
   final String? model3D;
@@ -18,9 +20,12 @@ class PlanetAndChart extends StatelessWidget {
   final List<String> defaultPlanets;
   final List<ChartData> chartData;
   final bool isShip;
+  final Exoplanet exoplanet;
 
   @override
   Widget build(BuildContext context) {
+    final double temperatureRatio =
+        (exoplanet.equilibriumTemperature / 288.0).ceilToDouble();
     return Stack(
       alignment: Alignment.bottomRight,
       children: [
@@ -49,9 +54,15 @@ class PlanetAndChart extends StatelessWidget {
               Stack(
                 alignment: Alignment.center,
                 children: [
-                  Text(
-                    '90°',
-                    style: AppFonts.spaceGrotesk16,
+                  FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: Text(
+                      exoplanet.equilibriumTemperature
+                              .ceilToDouble()
+                              .toString() +
+                          ' K',
+                      style: AppFonts.spaceGrotesk16,
+                    ),
                   ),
                   SizedBox(
                     width: size.width / 2.8,
@@ -81,9 +92,9 @@ class PlanetAndChart extends StatelessWidget {
               Text(
                 isShip
                     ? 'Max. Velocity'
-                    : 'Average Temperature.\n 3x More than Earth',
-              overflow: TextOverflow.fade,
-              maxLines: 2,
+                    : 'Average Temperature.\n x$temperatureRatio  More than Earth',
+                overflow: TextOverflow.fade,
+                maxLines: 2,
                 style: AppFonts.spaceGrotesk12,
               ),
             ],

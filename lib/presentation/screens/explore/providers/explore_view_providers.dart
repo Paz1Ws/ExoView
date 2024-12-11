@@ -118,11 +118,6 @@ RangeValues insolationFluxRange(Ref ref) {
 }
 
 @riverpod
-bool controversialOriginRange(Ref ref) {
-  return false; // Initial value
-}
-
-@riverpod
-String discoverPlanetMethod(Ref ref) {
+String typeOfExoplanet(Ref ref) {
   return ''; // Initial value
 }
