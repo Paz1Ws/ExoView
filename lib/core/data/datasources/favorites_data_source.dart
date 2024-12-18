@@ -5,11 +5,12 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:myapp/core/data/data.dart';
 
 abstract interface class FavoritesDataSource {
-  Future<void> addFavorite(String id);
+  Future<void> addFavorite(String id, String name);
   Future<void> removeFavorite(String id);
   Future<List<Exoplanet>> getFavorites();
   Future<bool> isFavorite(String id);
-  Future<Either<Failure, List<Exoplanet>>> putFavoriteExoplanets();
+  Future<Either<Failure, void>> addExoplanetFavoritestoLocal(
+      String id, String name);
   Future<Either<Failure, List<Exoplanet>>> getLocalFavoriteExoplanets();
 }
 
@@ -22,82 +23,107 @@ class FavoritesRemoteDataSource implements FavoritesDataSource {
   FavoritesRemoteDataSource(this.supabaseClient, this.box);
 
   @override
-  Future<void> addFavorite(String id) async {
-    final response = await supabaseClient.from('favorites').insert({
-      'user_id': currentUser!.user.id,
-      'exoplanet_id': id,
-    });
+  Future<void> addFavorite(String id, String name) async {
+    final response = await supabaseClient
+        .from('users')
+        .select('favorites')
+        .eq('id', currentUser!.user.id)
+        .single();
 
-    if (response.error != null) {
-      throw Exception('Failed to add favorite: ${response.error!.message}');
+    List<Map<String, dynamic>> favorites =
+        List<Map<String, dynamic>>.from(response['favorites'] ?? []);
+    if (!favorites.any((favorite) => favorite['id'] == id)) {
+      favorites.add({'id': id, 'name': name});
     }
+
+    await box.put('favorites', favorites);
   }
 
   @override
   Future<void> removeFavorite(String id) async {
     final response = await supabaseClient
-        .from('favorites')
-        .delete()
-        .eq('user_id', currentUser!.user.id)
-        .eq('exoplanet_id', id);
+        .from('users')
+        .select('favorites')
+        .eq('id', currentUser!.user.id)
+        .single();
 
-    if (response.error != null) {
-      throw Exception('Failed to remove favorite: ${response.error!.message}');
-    }
+    List<Map<String, dynamic>> favorites =
+        List<Map<String, dynamic>>.from(response['favorites'] ?? []);
+    favorites.removeWhere((favorite) => favorite['id'] == id);
+    await supabaseClient
+        .from('users')
+        .update({'favorites': favorites})
+        .eq('id', currentUser!.user.id)
+        .single();
+
+    await box.put('favorites', favorites);
   }
 
   @override
   Future<List<Exoplanet>> getFavorites() async {
     final response = await supabaseClient
-        .from('favorites')
-        .select('exoplanet_id')
-        .eq('user_id', currentUser!.user.id);
+        .from('users')
+        .select('favorites')
+        .eq('id', currentUser!.user.id)
+        .single();
 
-    final List<dynamic> data = response;
-    final List<String> favoriteIds =
-        data.map((e) => e['exoplanet_id'] as String).toList();
+    List<Map<String, String>> favoriteIds =
+        List<Map<String, String>>.from(response['favorites'] ?? []);
 
-    final exoplanetsResponse =
-        await supabaseClient.from('exoplanets').select().eq('id', favoriteIds);
+    if (favoriteIds.isEmpty) {
+      return [];
+    }
+
+    final exoplanetsResponse = await supabaseClient
+        .from('exoplanets')
+        .select()
+        .eq('id', favoriteIds.map((favorite) => favorite['id']).toList());
 
     final List<dynamic> exoplanetsData = exoplanetsResponse;
-    return exoplanetsData.map((e) => Exoplanet.fromJson(e)).toList();
+    return exoplanetsData.map((e) => Exoplanet.fromJson(e, e['id'])).toList();
   }
 
   @override
   Future<bool> isFavorite(String id) async {
     final response = await supabaseClient
-        .from('favorites')
-        .select()
-        .eq('user_id', currentUser!.user.id)
-        .eq('exoplanet_id', id);
+        .from('users')
+        .select('favorites')
+        .eq('id', currentUser!.user.id)
+        .single();
 
-    return response.isNotEmpty;
+    List<Map<String, String>> favorites =
+        List<Map<String, String>>.from(response['favorites'] ?? []);
+    return favorites.any((favorite) => favorite['id'] == id);
   }
 
   @override
-  Future<Either<Failure, List<Exoplanet>>> putFavoriteExoplanets() async {
-    final response = await supabaseClient.from('favorites').select();
+  Future<Either<Failure, void>> addExoplanetFavoritestoLocal(
+      String id, String name) async {
+    final response = await supabaseClient
+        .from('users')
+        .select('favorites')
+        .eq('id', currentUser!.user.id)
+        .single();
 
-    try {
-      final List<dynamic> data = response;
-      final favoriteExoplanets =
-          data.map((e) => Exoplanet.fromJson(e)).toList();
+    List<Map<String, dynamic>> favoriteIds =
+        List<Map<String, dynamic>>.from(response['favorites'] ?? []);
 
-      await box.put('favoriteExoplanets',
-          favoriteExoplanets.map((e) => e.toJson()).toList());
-
-      return Right(favoriteExoplanets);
-    } catch (e) {
-      return Left(Failure('Failed to fetch favorites: $e'));
+    if (favoriteIds.isEmpty) {
+      return Right([]);
     }
+
+    await box.put('favoriteExoplanets', favoriteIds);
+
+    return Right(favoriteIds);
   }
 
   @override
   Future<Either<Failure, List<Exoplanet>>> getLocalFavoriteExoplanets() async {
     final List<dynamic> data = box.get('favoriteExoplanets', defaultValue: []);
+
     final favoriteExoplanets = data
-        .map((e) => Exoplanet.fromJson(Map<String, dynamic>.from(e)))
+        .map((e) =>
+            Exoplanet.fromJson(Map<String, String>.from(e), int.parse(e['id'])))
         .toList();
     return Right(favoriteExoplanets);
   }

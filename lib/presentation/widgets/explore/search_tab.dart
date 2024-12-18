@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myapp/config/theme/colors.dart';
 import 'package:myapp/config/theme/fonts.dart';
-import 'package:myapp/core/data/data.dart';
 import 'package:myapp/presentation/screens/explore/providers/explore_view_providers.dart';
 import 'package:myapp/presentation/widgets/widgets.dart';
 
@@ -17,14 +16,19 @@ class _SearchTabState extends ConsumerState<SearchTab> {
   final TextEditingController searchController = TextEditingController();
 
   void updateFilteredExoplanets(WidgetRef ref) {
-    final query = searchController.text;
+    final query = searchController.text.toLowerCase();
     final exoplanets = ref.read(filteredExoplanets);
 
-    final newfilteredExoplanets = exoplanets.where((exoplanet) {
-      return exoplanet.planetName.toLowerCase().contains(query.toLowerCase());
+    final newFilteredExoplanets = exoplanets.where((exoplanet) {
+      return exoplanet.planetName.toLowerCase().contains(query) ||
+          exoplanet.discoveryYear.toString().toLowerCase().contains(query) ||
+          exoplanet.equilibriumTemperature
+              .toString()
+              .toLowerCase()
+              .contains(query);
     }).toList();
 
-    ref.read(filteredExoplanets.notifier).state = newfilteredExoplanets;
+    ref.read(filteredExoplanets.notifier).state = newFilteredExoplanets;
   }
 
   @override

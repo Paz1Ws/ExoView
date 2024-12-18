@@ -8,17 +8,18 @@ Future<void> main() async {
 
   await initDependencies();
 
-  runApp(const ProviderScope(child: ExoView
-()));
+  runApp(const ProviderScope(child: ExoView()));
 }
 
 class ExoView extends StatelessWidget {
-  const ExoView
-({super.key});
+  const ExoView({super.key});
 
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-        debugShowCheckedModeBanner: false, home: SplashPage());
+      debugShowCheckedModeBanner: false,
+      home: SplashPage(),
+      themeMode: ThemeMode.light,
+    );
   }
 }

@@ -3,6 +3,7 @@ import 'package:internet_connection_checker_plus/internet_connection_checker_plu
 import 'package:myapp/config/network/connection_checker.dart';
 import 'package:myapp/config/secrets/app_secrets.dart';
 import 'package:myapp/core/data/data.dart';
+import 'package:myapp/core/data/datasources/favorites_data_source.dart';
 import 'package:myapp/core/domain/domain.dart';
 import 'package:myapp/core/domain/usecases/favorites/favorites_usecases.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -50,9 +51,22 @@ Future<void> initDependencies() async {
         serviceLocator(),
         serviceLocator(),
       ));
+  serviceLocator.registerFactory(() => FavoritesRemoteDataSource(
+        serviceLocator(),
+        serviceLocator(),
+      ));
+
+  // Registrar FavoritesRepository
   serviceLocator.registerFactory(() => FavoritesRepositoryImpl(
         serviceLocator(),
       ));
+
+  // Registrar Use Cases
+  serviceLocator.registerFactory(() => AddFavorite(serviceLocator()));
+  serviceLocator.registerFactory(() => RemoveFavorite(serviceLocator()));
+  serviceLocator.registerFactory(() => AddFavoritesToLocal(serviceLocator()));
+  serviceLocator.registerFactory(() => IsFavorite(serviceLocator()));
+  serviceLocator.registerFactory(() => GetLocalFavorites(serviceLocator()));
 
   _initAuth();
 }
@@ -91,28 +105,6 @@ void _initAuth() {
     )
     ..registerFactory(
       () => SignIn(
-        serviceLocator(),
-      ),
-    )
-    ..registerFactory(
-      () => AddFavorite(
-        serviceLocator(),
-      ),
-    )
-    ..registerFactory(
-      () => RemoveFavorite(
-        serviceLocator(),
-      ),
-    )
-
-    // )
-    ..registerFactory(
-      () => IsFavorite(
-        serviceLocator(),
-      ),
-    )
-    ..registerFactory(
-      () => PutFavorites(
         serviceLocator(),
       ),
     );

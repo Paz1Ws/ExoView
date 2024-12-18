@@ -68,7 +68,7 @@ class _ExploreViewState extends ConsumerState<ExploreView> {
           const SizedBox(
             height: 20,
           ),
-          exoplanets != null || exoplanets.length > 0
+          exoplanets.isNotEmpty
               ? Expanded(
                   child: GridView.builder(
                     controller: _scrollController,

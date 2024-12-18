@@ -1,12 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:myapp/config/theme/theme.dart';
 import 'dart:math';
 import 'package:myapp/core/data/data.dart';
 import 'package:myapp/presentation/screens/exoplanet/screens/exoplanet_or_ship_details.dart';
+import 'package:myapp/presentation/screens/explore/providers/explore_view_providers.dart';
 
-class TouchableExoplanetCard extends StatelessWidget {
+class TouchableExoplanetCard extends ConsumerStatefulWidget {
   final Exoplanet exoplanet;
+
+  TouchableExoplanetCard({
+    required this.exoplanet,
+    super.key,
+  });
+
+  @override
+  _TouchableExoplanetCardState createState() => _TouchableExoplanetCardState();
+}
+
+class _TouchableExoplanetCardState
+    extends ConsumerState<TouchableExoplanetCard> {
+  late final int maxFilledStars;
   final List<String> defaultPlanets = [
     'assets/images/planet_icons/planet_icon_1.png',
     'assets/images/planet_icons/planet_icon_2.png',
@@ -15,25 +30,24 @@ class TouchableExoplanetCard extends StatelessWidget {
     'assets/images/planet_icons/planet_icon_5.png',
   ];
 
-  TouchableExoplanetCard({
-    required this.exoplanet,
-    super.key,
-    //this.model3D
-  });
+  @override
+  void initState() {
+    super.initState();
+    maxFilledStars = Random().nextInt(5) + 1;
+  }
 
   @override
   Widget build(BuildContext context) {
-    final random = Random();
-    int maxFilledStars = random.nextInt(5) + 1;
     final size = MediaQuery.sizeOf(context);
     return GestureDetector(
         onTap: () {
           Navigator.push(context, MaterialPageRoute(builder: (context) {
             return ExoplanetOrShipDetails(
-              exoplanet: exoplanet,
+              exoplanet: widget.exoplanet,
               isShip: false,
             );
           }));
+          // ref.read(visitedExoplanetsProvider).state++;
         },
         child: Container(
           height: size.height,
@@ -69,7 +83,7 @@ class TouchableExoplanetCard extends StatelessWidget {
                     }),
                   ),
                   Text(
-                    exoplanet.planetName,
+                    widget.exoplanet.planetName,
                     textAlign: TextAlign.center,
                     style: AppFonts.spaceGrotesk16,
                     softWrap: true,

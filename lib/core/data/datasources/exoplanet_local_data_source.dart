@@ -18,7 +18,7 @@ class ExoplanetLocalDataSourceImpl implements ExoplanetLocalDataSource {
 
   @override
   Future<void> getRemoteExoplanets() async {
-    int startYear = 1995;
+    int startYear = box.get('lastFetchedYear', defaultValue: 1995);
     int currentYear = DateTime.now().year;
 
     while (startYear <= currentYear) {
@@ -29,6 +29,7 @@ class ExoplanetLocalDataSourceImpl implements ExoplanetLocalDataSource {
         (exoplanets) async {
           storeExoplanets(exoplanets);
           startYear++;
+          await box.put('lastFetchedYear', startYear);
         },
       );
     }
@@ -37,13 +38,10 @@ class ExoplanetLocalDataSourceImpl implements ExoplanetLocalDataSource {
   @override
   Future<Either<Failure, List<Exoplanet>>> getLocalExoplanets() async {
     try {
-      final exoplanetList = box.get('exoplanets') as List<dynamic>?;
-      if (exoplanetList == null) {
-        return Left(Failure('No exoplanets found'));
-      }
+      final exoplanetList = box.get('exoplanets') as List<dynamic>? ?? [];
       final exoplanets = exoplanetList.map((e) {
         final map = Map<String, dynamic>.from(e as Map);
-        return Exoplanet.fromJson(map);
+        return Exoplanet.fromJson(map, map['id']);
       }).toList();
       return Right(exoplanets);
     } catch (e) {
@@ -53,25 +51,19 @@ class ExoplanetLocalDataSourceImpl implements ExoplanetLocalDataSource {
 
   @override
   Future<void> storeExoplanets(List<Exoplanet> exoplanets) async {
-    await Future(() async {
-      final existingExoplanets = box.get('exoplanets') as List<dynamic>? ?? [];
-      final existingExoplanetIds = existingExoplanets
-          .map((e) => Exoplanet.fromJson(Map<String, dynamic>.from(e as Map))
-              .planetName)
-          .toSet();
+    final existingExoplanets = box.get('exoplanets') as List<dynamic>? ?? [];
+    final existingExoplanetIds =
+        existingExoplanets.map((e) => (e as Map)['pl_name'] as String).toSet();
 
-      final newExoplanets = <Map<String, dynamic>>[];
-      for (var exoplanet in exoplanets) {
-        if (!existingExoplanetIds.contains(exoplanet.planetName)) {
-          newExoplanets.add(exoplanet.toJson());
-          existingExoplanetIds.add(exoplanet.planetName);
-        }
+    final newExoplanets = <Map<String, dynamic>>[];
+    for (var exoplanet in exoplanets) {
+      if (!existingExoplanetIds.contains(exoplanet.planetName)) {
+        newExoplanets.add(exoplanet.toJson());
+        existingExoplanetIds.add(exoplanet.planetName);
       }
+    }
 
-      existingExoplanets.addAll(newExoplanets);
-      await box.put('exoplanets', existingExoplanets);
-    });
+    existingExoplanets.addAll(newExoplanets);
+    await box.put('exoplanets', existingExoplanets);
   }
 }
-
-  

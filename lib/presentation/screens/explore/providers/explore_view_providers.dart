@@ -46,6 +46,11 @@ final filteredExoplanets = StateProvider<List<Exoplanet>>((ref) {
 });
 
 @riverpod
+int visitedExoplanets(Ref ref) {
+  return 0;
+}
+
+@riverpod
 RangeValues discoveryYearRange(Ref ref) {
   List<Exoplanet> exoplanets = ref.watch(localExoplanetsProvider).maybeWhen(
         data: (data) => data.fold((l) => [], (r) => r),

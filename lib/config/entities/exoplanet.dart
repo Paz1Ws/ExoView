@@ -4,6 +4,7 @@
 //sy_dist,sy_snum,sy_mnum,sy_pnum+from+ps+where+disc_year>=2020+and+disc_year<=2024&format=json
 
 class ExoPlanetEntity {
+  final int? id;
   // Nombre del planeta (usualmente asignado por los descubridores)
   final String planetName;
 
@@ -38,6 +39,7 @@ class ExoPlanetEntity {
   final double insolationFlux;
 
   ExoPlanetEntity({
+    this.id = 0,
     required this.planetName,
     required this.isControversial,
     required this.discoveryYear,

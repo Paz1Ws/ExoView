@@ -24,3 +24,5 @@ export 'explore/planet_category_card.dart';
 export 'explore/touchable_exoplanet_card.dart';
 export 'explore/search/filter_section.dart';
 export 'explore/search/show_filter_modal.dart';
+// SETTINGS
+export 'settings/settings_widgets.dart';

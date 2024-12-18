@@ -38,7 +38,7 @@ class ExoplanetFeaturesWrap extends StatelessWidget {
           : exoplanetFeatureData.features!.length,
       itemBuilder: (context, index) {
         return ExoplanetFeaturesCard(
-          exoplanetFeaturesData: exoplanetFeaturesData[index],
+          exoplanetFeaturesData: isShip ==true?null: exoplanetFeaturesData[index],
           features: isShip == true
               ? shipFeatureData.features![index]
               : exoplanetFeatureData.features![index],
@@ -84,7 +84,7 @@ final FeatureData exoplanetFeatureData = FeatureData(
     'Discovery Year',
     'Discovery Method',
     'Orbital Period (days)',
-    'Planet Radius (Earth radii)',
+    'Planet Radius (Earth radius)',
     'Planet Mass (Earth masses)',
     'Equilibrium Temperature (K)',
     'Density (g/cm³)',
@@ -92,16 +92,16 @@ final FeatureData exoplanetFeatureData = FeatureData(
     'Insolation Flux (Earth fluxes)',
   ],
   descriptions: [
-    'Existence debated among scientists?: ',
-    'The year in which the exoplanet was discovered: ',
-    'The method used to discover the exoplanet: ',
+    'Existence debated among scientists? ',
+    'Year in which the exoplanet was discovered: ',
+    'Method used to discover the exoplanet: ',
     'Time to orbit around its star: ',
-    'The radius of the exoplanet compared to Earth: ',
-    'The mass of the exoplanet compared to Earth: ',
-    'The equilibrium temperature of the exoplanet in Kelvin: ',
-    'The density of the exoplanet in grams per cubic centimeter: ',
-    'The duration of the transit of the exoplanet in hours: ',
-    'Amount of stellar energy received, compared with Earth: ',
+    'Radius of the exoplanet compared to Earth: ',
+    'Mass of the exoplanet compared to Earth: ',
+    'Equilibrium temperature of the exoplanet in Kelvin: ',
+    'Density of the exoplanet in grams per cubic centimeter: ',
+    'Duration of the transit of the exoplanet in hours: ',
+    'Stellar energy received, compared with Earth: ',
   ],
 );
 

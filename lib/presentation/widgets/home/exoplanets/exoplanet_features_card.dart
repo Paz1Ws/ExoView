@@ -6,7 +6,7 @@ class ExoplanetFeaturesCard extends StatelessWidget {
   final IconData featuresIcons;
   final String features;
   final String featuresDescription;
-  final String exoplanetFeaturesData;
+  final String? exoplanetFeaturesData;
   ExoplanetFeaturesCard({
     required this.features,
     required this.featuresIcons,
@@ -58,12 +58,12 @@ class ExoplanetFeaturesCard extends StatelessWidget {
           const SizedBox(
             height: 10,
           ),
-          // Flexible widget to allow the child to be flexible within the available space
           Flexible(
             fit: FlexFit.loose,
             child: LayoutBuilder(
               builder: (context, constraints) {
-                final text = featuresDescription + '\n' + exoplanetFeaturesData;
+                final text = featuresDescription;
+
                 final textStyle = AppFonts.spaceGrotesk16;
 
                 // Function to calculate the appropriate text scale factor
@@ -87,12 +87,32 @@ class ExoplanetFeaturesCard extends StatelessWidget {
                 final scaleFactor =
                     calculateTextScaleFactor(constraints, text, textStyle);
 
-                return Text(
-                  text,
-                  overflow: TextOverflow.visible,
-                  textAlign: TextAlign.center,
-                  textScaler: TextScaler.linear(scaleFactor),
-                  style: textStyle,
+                return Column(
+                  children: [
+                    Text(
+                      text,
+                      overflow: TextOverflow.visible,
+                      textAlign: TextAlign.start,
+                      textScaler: TextScaler.linear(scaleFactor),
+                      style: textStyle,
+                    ),
+                    Spacer(),
+                    exoplanetFeaturesData != null
+                        ? Align(
+                            alignment: Alignment.centerRight,
+                            child: Text(
+                              exoplanetFeaturesData! == 'false'
+                                  ? 'No'
+                                  : exoplanetFeaturesData! == 'true'
+                                      ? 'Yes'
+                                      : exoplanetFeaturesData!,
+                              overflow: TextOverflow.visible,
+                              textScaler: TextScaler.linear(scaleFactor),
+                              style: textStyle,
+                            ),
+                          )
+                        : Container(),
+                  ],
                 );
               },
             ),

@@ -9,9 +9,9 @@ class FavoritesRepositoryImpl implements FavoritesRepository {
   FavoritesRepositoryImpl(this.remoteDataSource);
 
   @override
-  Future<Either<Failure, void>> addFavorite(String id) async {
+  Future<Either<Failure, void>> addFavorite(String id, String name) async {
     try {
-      await remoteDataSource.addFavorite(id);
+      await remoteDataSource.addFavorite(id, name);
       return const Right(null);
     } catch (e) {
       return Left(Failure('Failed to add favorite: $e'));
@@ -39,9 +39,11 @@ class FavoritesRepositoryImpl implements FavoritesRepository {
   }
 
   @override
-  Future<Either<Failure, List<Exoplanet>>> putFavoriteExoplanets() async {
+  Future<Either<Failure, void>> addFavoriteExoplanetstoLocal(
+      String id, String name) async {
     try {
-      final result = await remoteDataSource.putFavoriteExoplanets();
+      final result =
+          await remoteDataSource.addExoplanetFavoritestoLocal(id, name);
       return result;
     } catch (e) {
       return Left(Failure('Failed to put favorite exoplanets: $e'));
@@ -59,7 +61,12 @@ class FavoritesRepositoryImpl implements FavoritesRepository {
   }
 
   @override
-  Future<List<Exoplanet>> getFavorites() {
-    return remoteDataSource.getFavorites();
+  Future<Either<Failure, List<Exoplanet>>> getFavorites() async {
+    try {
+      final favorites = await remoteDataSource.getFavorites();
+      return Right(favorites);
+    } catch (e) {
+      return Left(Failure('Failed to check favorite: $e'));
+    }
   }
 }

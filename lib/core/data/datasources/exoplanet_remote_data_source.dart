@@ -18,12 +18,15 @@ class ExoplanetRemoteDataSourceImpl implements ExoplanetRemoteDataSource {
     final result = await http.get(Uri.parse(url));
     if (result.statusCode == 200) {
       final List<dynamic> jsonList = json.decode(result.body);
-      final List<Exoplanet> exoplanets =
-          jsonList.map((json) => Exoplanet.fromJson(json)).toList();
+      final List<Exoplanet> exoplanets = jsonList
+          .asMap()
+          .entries
+          .map((entry) => Exoplanet.fromJson(entry.value, entry.key))
+          .toList();
 
       return Right(exoplanets);
     } else {
-      return Left(Failure("Check http conection."));
+      return Left(Failure("Check http connection."));
     }
   }
 }

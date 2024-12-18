@@ -148,3 +148,20 @@ final insolationFluxRangeProvider = AutoDisposeProvider<RangeValues>.internal(
 );
 
 typedef InsolationFluxRangeRef = AutoDisposeProviderRef<RangeValues>;
+String _$typeOfExoplanetHash() => r'75bf684228da32524af2b98fafc6f88e721e7a90';
+
+/// See also [typeOfExoplanet].
+@ProviderFor(typeOfExoplanet)
+final typeOfExoplanetProvider = AutoDisposeProvider<String>.internal(
+  typeOfExoplanet,
+  name: r'typeOfExoplanetProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$typeOfExoplanetHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef TypeOfExoplanetRef = AutoDisposeProviderRef<String>;
+// ignore_for_file: type=lint
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

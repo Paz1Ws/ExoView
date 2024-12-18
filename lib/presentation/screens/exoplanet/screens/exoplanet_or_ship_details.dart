@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myapp/config/theme/theme.dart';
 import 'package:myapp/core/data/data.dart';
+import 'package:myapp/core/domain/usecases/favorites/favorites_usecases.dart';
+import 'package:myapp/presentation/screens/favorites/providers/favorites_providers.dart';
 import 'package:myapp/presentation/widgets/widgets.dart';
 
-class ExoplanetOrShipDetails extends StatelessWidget {
+class ExoplanetOrShipDetails extends ConsumerStatefulWidget {
   final Exoplanet? exoplanet;
-
   final String? model3D;
   final bool isShip;
   final List<String> defaultPlanets = [
@@ -30,6 +32,59 @@ class ExoplanetOrShipDetails extends StatelessWidget {
   });
 
   @override
+  _ExoplanetOrShipDetailsState createState() => _ExoplanetOrShipDetailsState();
+}
+
+class _ExoplanetOrShipDetailsState
+    extends ConsumerState<ExoplanetOrShipDetails> {
+  bool isFavorite = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _checkIfFavorite();
+  }
+
+  Future<void> _checkIfFavorite() async {
+    final result = await ref.read(isFavoriteProvider(
+            IsFavoriteParams(id: widget.exoplanet!.id.toString()))
+        .future);
+    result.fold(
+      (failure) => setState(() => isFavorite = false),
+      (favorite) => setState(() => isFavorite = favorite),
+    );
+  }
+
+  Future<void> _toggleFavorite() async {
+    if (isFavorite) {
+      final result = await ref.read(removeFavoriteProvider(
+              RemoveFavoriteParams(id: widget.exoplanet!.id.toString()))
+          .future);
+
+      result.fold(
+        (failure) => ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Failed to remove favorite: $failure')),
+        ),
+        (_) => setState(() => isFavorite = false),
+      );
+    } else {
+      final result = await ref.read(addFavoriteProvider(AddFavoriteParams(
+              id: widget.exoplanet!.id.toString(),
+              name: widget.exoplanet!.planetName))
+          .future);
+      await ref.read(saveFavoritesLocallyProvider((AddFavoriteParams(
+          id: widget.exoplanet!.id.toString(),
+          name: widget.exoplanet!.planetName))));
+      result.fold(
+        (failure) => ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Failed to add favorite: $failure')),
+        ),
+        (_) => setState(() => isFavorite = true),
+      );
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     final size = MediaQuery.sizeOf(context);
     return PurpleBackground(
@@ -42,12 +97,12 @@ class ExoplanetOrShipDetails extends StatelessWidget {
               height: size.height * 0.4,
               width: size.width,
               child: PlanetAndChart(
-                  model3D: model3D,
+                  model3D: widget.model3D,
                   size: size,
-                  defaultPlanets: defaultPlanets,
-                  chartData: chartData,
-                  isShip: isShip,
-                  exoplanet: exoplanet!),
+                  defaultPlanets: widget.defaultPlanets,
+                  chartData: widget.chartData,
+                  isShip: widget.isShip,
+                  exoplanet: widget.exoplanet!),
             ),
             Column(
               children: [
@@ -57,7 +112,9 @@ class ExoplanetOrShipDetails extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        isShip ? 'Nebula Voyager' : exoplanet!.planetName,
+                        widget.isShip
+                            ? 'Nebula Voyager'
+                            : widget.exoplanet!.planetName,
                         style: AppFonts.spaceGrotesk18,
                       ),
                       const SizedBox(
@@ -74,7 +131,9 @@ class ExoplanetOrShipDetails extends StatelessWidget {
                           ),
                         ),
                         child: Text(
-                          isShip ? '2020' : exoplanet!.discoveryYear.toString(),
+                          widget.isShip
+                              ? '2020'
+                              : widget.exoplanet!.discoveryYear.toString(),
                           textAlign: TextAlign.center,
                           style: AppFonts.spaceGrotesk18,
                         ),
@@ -87,8 +146,8 @@ class ExoplanetOrShipDetails extends StatelessWidget {
                   child: Column(
                     children: [
                       ExoplanetFeaturesWrap(
-                        exoplanet: exoplanet,
-                        isShip: isShip,
+                        exoplanet: widget.exoplanet,
+                        isShip: widget.isShip,
                       ),
                       const SizedBox(
                         height: 20,
@@ -102,11 +161,15 @@ class ExoplanetOrShipDetails extends StatelessWidget {
                                 width: 50,
                                 height: 50,
                                 widget: IconButton(
-                                  icon: const Icon(
-                                    Icons.favorite_border,
+                                  icon: Icon(
+                                    isFavorite
+                                        ? Icons.favorite
+                                        : Icons.favorite_border,
                                     color: Colors.red,
                                   ),
-                                  onPressed: () {},
+                                  onPressed: () async {
+                                    _toggleFavorite();
+                                  },
                                 )),
                           ),
                           const SizedBox(
@@ -115,9 +178,10 @@ class ExoplanetOrShipDetails extends StatelessWidget {
                           Expanded(
                               flex: 2,
                               child: PurpleButton(
-                                  text: isShip ? 'Book' : 'Book A Travel',
+                                  text:
+                                      widget.isShip ? 'Book' : 'Book A Travel',
                                   onTap: () {
-                                    isShip
+                                    widget.isShip
                                         ? ScaffoldMessenger.of(context)
                                             .showSnackBar(
                                             const SnackBar(
@@ -129,7 +193,8 @@ class ExoplanetOrShipDetails extends StatelessWidget {
                                                 builder: (context) =>
                                                     ExoplanetOrShipDetails(
                                                       isShip: true,
-                                                      exoplanet: exoplanet,
+                                                      exoplanet:
+                                                          widget.exoplanet,
                                                       model3D:
                                                           'assets/animations/voyager.glb',
                                                     )));
@@ -137,7 +202,7 @@ class ExoplanetOrShipDetails extends StatelessWidget {
                           const SizedBox(
                             width: 10,
                           ),
-                          isShip
+                          widget.isShip
                               ? const SizedBox.shrink()
                               : Expanded(
                                   child: WhiteBorderContainer(

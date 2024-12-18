@@ -29,14 +29,14 @@ class PlanetAndChart extends StatelessWidget {
     return Stack(
       alignment: Alignment.bottomRight,
       children: [
-        Positioned(
-          top: -size.height / 4,
-          left: -size.width / 5,
-          child: model3D != null
-              ? Exoplanet3DContainer(
-                  model: model3D!,
-                )
-              : FittedBox(
+        model3D != null
+            ? Exoplanet3DContainer(
+                model: model3D!,
+              )
+            : Positioned(
+                top: -size.height / 4,
+                left: -size.width / 5,
+                child: FittedBox(
                   child: Image.asset(
                     (defaultPlanets..shuffle()).first,
                     width: size.width / 1.4,
@@ -45,7 +45,7 @@ class PlanetAndChart extends StatelessWidget {
                     color: AppColors.lightGray,
                   ),
                 ),
-        ),
+              ),
         Positioned(
           right: 20,
           top: 40,
@@ -57,16 +57,20 @@ class PlanetAndChart extends StatelessWidget {
                   FittedBox(
                     fit: BoxFit.scaleDown,
                     child: Text(
-                      exoplanet.equilibriumTemperature
-                              .ceilToDouble()
-                              .toString() +
-                          ' K',
+                      isShip
+                          ? '30000\n km/s'
+                          : exoplanet.equilibriumTemperature
+                                  .ceilToDouble()
+                                  .toString() +
+                              ' K',
                       style: AppFonts.spaceGrotesk16,
                     ),
                   ),
                   SizedBox(
-                    width: size.width / 2.8,
-                    height: size.width / 2.8,
+                    width: size.width / 3
+                    ,
+                    height: size.width / 3
+                    ,
                     child: SfCircularChart(
                       margin: EdgeInsets.zero,
                       series: <CircularSeries>[
