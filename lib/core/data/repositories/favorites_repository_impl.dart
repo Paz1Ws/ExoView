@@ -3,6 +3,7 @@ import 'package:myapp/core/data/data.dart';
 import 'package:myapp/core/data/datasources/favorites_data_source.dart';
 import 'package:myapp/core/domain/repositories/favorites_repository.dart';
 import 'package:myapp/config/failures/failures.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class FavoritesRepositoryImpl implements FavoritesRepository {
   final FavoritesRemoteDataSource remoteDataSource;
@@ -61,12 +62,13 @@ class FavoritesRepositoryImpl implements FavoritesRepository {
   }
 
   @override
-  Future<Either<Failure, List<Exoplanet>>> getFavorites() async {
+  Future<PostgrestMap> getFavorites() async {
     try {
       final favorites = await remoteDataSource.getFavorites();
-      return Right(favorites);
+      return favorites;
     } catch (e) {
-      return Left(Failure('Failed to check favorite: $e'));
+      throw Exception('Failed to fetch favorites: $e');
+    
     }
   }
 }

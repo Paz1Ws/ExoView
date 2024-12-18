@@ -87,7 +87,7 @@ RangeValues planetRadiusRange(Ref ref) {
 }
 
 @riverpod
-RangeValues planetTempRange(Ref ref) {
+ RangeValues planetTempRange(Ref ref) {
   List<Exoplanet> exoplanets = ref.watch(localExoplanetsProvider).maybeWhen(
         data: (data) => data.fold((l) => [], (r) => r),
         orElse: () => [],
