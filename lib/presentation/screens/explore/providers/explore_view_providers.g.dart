@@ -23,6 +23,21 @@ final getAllExoplanetsProvider =
 
 typedef GetAllExoplanetsRef
     = AutoDisposeFutureProviderRef<Either<Failure, List<Exoplanet>>>;
+String _$visitedExoplanetsHash() => r'a6d1cb1d15d666a635b9c3f9924592df44093ecb';
+
+/// See also [visitedExoplanets].
+@ProviderFor(visitedExoplanets)
+final visitedExoplanetsProvider = AutoDisposeProvider<int>.internal(
+  visitedExoplanets,
+  name: r'visitedExoplanetsProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$visitedExoplanetsHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef VisitedExoplanetsRef = AutoDisposeProviderRef<int>;
 String _$discoveryYearRangeHash() =>
     r'e3eb3af8d880b270372c6c65a3a1c9b0147f0d7b';
 

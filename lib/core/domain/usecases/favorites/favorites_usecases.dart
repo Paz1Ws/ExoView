@@ -10,8 +10,25 @@ class AddFavorite implements UseCase<void, AddFavoriteParams> {
 
   @override
   Future<Either<Failure, void>> call(AddFavoriteParams params) async {
-    return await repository.addFavorite(params.id, params.name);
+    final result = await repository.addFavorite(params.exoplanet);
+    return result.fold(
+      (failure) => Left(failure),
+      (success) async {
+        final localResult = await repository.addFavoriteExoplanetstoLocal(
+            params.exoplanet.id.toString(), params.exoplanet.planetName);
+        return localResult.fold(
+          (localFailure) => Left(localFailure),
+          (localSuccess) => Right(localSuccess),
+        );
+      },
+    );
   }
+}
+
+class AddFavoriteParams {
+  final Exoplanet exoplanet;
+
+  AddFavoriteParams({required this.exoplanet});
 }
 
 class AddFavoritesToLocal implements UseCase<void, AddFavoriteParams> {
@@ -22,15 +39,8 @@ class AddFavoritesToLocal implements UseCase<void, AddFavoriteParams> {
   @override
   Future<Either<Failure, void>> call(AddFavoriteParams params) async {
     return await repository.addFavoriteExoplanetstoLocal(
-        params.id, params.name);
+        params.exoplanet.id.toString(), params.exoplanet.planetName);
   }
-}
-
-class AddFavoriteParams {
-  final String id;
-
-  final String name;
-  AddFavoriteParams({required this.id, required this.name});
 }
 
 class RemoveFavorite implements UseCase<void, RemoveFavoriteParams> {
@@ -86,5 +96,23 @@ class GetLocalFavorites implements UseCase<List<Exoplanet>, NoParams> {
   @override
   Future<Either<Failure, List<Exoplanet>>> call(NoParams params) async {
     return await repository.getLocalFavoriteExoplanets();
+  }
+}
+
+class GetFavoritesWithFallback implements UseCase<List<Exoplanet>, NoParams> {
+  final FavoritesRepositoryImpl repository;
+
+  GetFavoritesWithFallback(this.repository);
+
+  @override
+  Future<Either<Failure, List<Exoplanet>>> call(NoParams params) async {
+    final localResult = await repository.getLocalFavoriteExoplanets();
+    return localResult.fold(
+      (failure) async {
+        final remoteResult = await repository.getFavorites();
+        return remoteResult;
+      },
+      (localFavorites) => Right(localFavorites),
+    );
   }
 }

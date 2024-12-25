@@ -68,13 +68,11 @@ class _ExoplanetOrShipDetailsState
         (_) => setState(() => isFavorite = false),
       );
     } else {
-      final result = await ref.read(addFavoriteProvider(AddFavoriteParams(
-              id: widget.exoplanet!.id.toString(),
-              name: widget.exoplanet!.planetName))
-          .future);
-      await ref.read(saveFavoritesLocallyProvider((AddFavoriteParams(
-          id: widget.exoplanet!.id.toString(),
-          name: widget.exoplanet!.planetName))));
+      final result = await ref.read(
+          addFavoriteProvider(AddFavoriteParams(exoplanet: widget.exoplanet!))
+              .future);
+      await ref.read(saveFavoritesLocallyProvider(
+          AddFavoriteParams(exoplanet: widget.exoplanet!)));
       result.fold(
         (failure) => ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Failed to add favorite: $failure')),

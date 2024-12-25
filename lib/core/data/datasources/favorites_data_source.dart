@@ -5,12 +5,10 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:myapp/core/data/data.dart';
 
 abstract interface class FavoritesDataSource {
-  Future<void> addFavorite(String id, String name);
+  Future<void> addFavorite(Exoplanet exoplanet);
   Future<void> removeFavorite(String id);
   Future<List<Exoplanet>> getFavorites();
   Future<bool> isFavorite(String id);
-  Future<Either<Failure, void>> addExoplanetFavoritestoLocal(
-      String id, String name);
   Future<Either<Failure, List<Exoplanet>>> getLocalFavoriteExoplanets();
 }
 
@@ -23,7 +21,7 @@ class FavoritesRemoteDataSource implements FavoritesDataSource {
   FavoritesRemoteDataSource(this.supabaseClient, this.box);
 
   @override
-  Future<void> addFavorite(String id, String name) async {
+  Future<void> addFavorite(Exoplanet exoplanet) async {
     final response = await supabaseClient
         .from('users')
         .select('favorites')
@@ -32,8 +30,8 @@ class FavoritesRemoteDataSource implements FavoritesDataSource {
 
     List<Map<String, dynamic>> favorites =
         List<Map<String, dynamic>>.from(response['favorites'] ?? []);
-    if (!favorites.any((favorite) => favorite['id'] == id)) {
-      favorites.add({'id': id, 'name': name});
+    if (!favorites.any((favorite) => favorite['id'] == exoplanet.id)) {
+      favorites.add(exoplanet.toJson());
     }
 
     await box.put('favorites', favorites);
@@ -67,8 +65,8 @@ class FavoritesRemoteDataSource implements FavoritesDataSource {
         .eq('id', currentUser!.user.id)
         .single();
 
-    List<Map<String, String>> favoriteIds =
-        List<Map<String, String>>.from(response['favorites'] ?? []);
+    List<Map<String, dynamic>> favoriteIds =
+        List<Map<String, dynamic>>.from(response['favorites'] ?? []);
 
     if (favoriteIds.isEmpty) {
       return [];
@@ -123,7 +121,7 @@ class FavoritesRemoteDataSource implements FavoritesDataSource {
 
     final favoriteExoplanets = data
         .map((e) =>
-            Exoplanet.fromJson(Map<String, String>.from(e), int.parse(e['id'])))
+            Exoplanet.fromJson(Map<String, dynamic>.from(e), int.parse(e['id'])))
         .toList();
     return Right(favoriteExoplanets);
   }

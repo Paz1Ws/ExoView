@@ -51,6 +51,12 @@ GetLocalFavorites getLocalFavoritesUseCase(GetLocalFavoritesUseCaseRef ref) {
   return GetLocalFavorites(repository);
 }
 
+@riverpod
+GetFavoritesWithFallback getFavoritesWithFallbackUseCase(ref) {
+  final repository = ref.watch(favoritesRepositoryProvider);
+  return GetFavoritesWithFallback(repository);
+}
+
 // Providers para interactuar con los Use Cases
 @riverpod
 Future<Either<Failure, void>> addFavorite(

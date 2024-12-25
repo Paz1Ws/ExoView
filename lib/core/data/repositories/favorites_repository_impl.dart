@@ -9,9 +9,9 @@ class FavoritesRepositoryImpl implements FavoritesRepository {
   FavoritesRepositoryImpl(this.remoteDataSource);
 
   @override
-  Future<Either<Failure, void>> addFavorite(String id, String name) async {
+  Future<Either<Failure, void>> addFavorite(Exoplanet exoplanet) async {
     try {
-      await remoteDataSource.addFavorite(id, name);
+      await remoteDataSource.addFavorite(exoplanet);
       return const Right(null);
     } catch (e) {
       return Left(Failure('Failed to add favorite: $e'));
