@@ -74,6 +74,23 @@ final removeFavoriteUseCaseProvider =
 );
 
 typedef RemoveFavoriteUseCaseRef = AutoDisposeProviderRef<RemoveFavorite>;
+String _$removeFavoriteUseCaseHash() =>
+    r'63546bb28c16165fe774cb8d7bdfefab11692ceb';
+
+/// See also [removeFavoriteUseCase].
+@ProviderFor(removeFavoriteUseCase)
+final removeFavoriteUseCaseProvider =
+    AutoDisposeProvider<RemoveFavorite>.internal(
+  removeFavoriteUseCase,
+  name: r'removeFavoriteUseCaseProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$removeFavoriteUseCaseHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef RemoveFavoriteUseCaseRef = AutoDisposeProviderRef<RemoveFavorite>;
 String _$isFavoriteUseCaseHash() => r'c814d1a344595e9656e1ac747599d940f682c811';
 
 /// See also [isFavoriteUseCase].
@@ -89,22 +106,6 @@ final isFavoriteUseCaseProvider = AutoDisposeProvider<IsFavorite>.internal(
 );
 
 typedef IsFavoriteUseCaseRef = AutoDisposeProviderRef<IsFavorite>;
-String _$getFavoritesUseCaseHash() =>
-    r'be0deec51ef22e5f63fb5f59382c3544879ee54e';
-
-/// See also [getFavoritesUseCase].
-@ProviderFor(getFavoritesUseCase)
-final getFavoritesUseCaseProvider = AutoDisposeProvider<GetFavorites>.internal(
-  getFavoritesUseCase,
-  name: r'getFavoritesUseCaseProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$getFavoritesUseCaseHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-typedef GetFavoritesUseCaseRef = AutoDisposeProviderRef<GetFavorites>;
 String _$getLocalFavoritesUseCaseHash() =>
     r'77e82c3aa6d76418a0001b4af53426b38dcc9012';
 
@@ -293,7 +294,12 @@ class _AddFavoriteProviderElement
 
 String _$saveFavoritesLocallyHash() =>
     r'14aed78d40f710fcdf7a977a857c89049725a9f9';
+String _$saveFavoritesLocallyHash() =>
+    r'14aed78d40f710fcdf7a977a857c89049725a9f9';
 
+/// See also [saveFavoritesLocally].
+@ProviderFor(saveFavoritesLocally)
+const saveFavoritesLocallyProvider = SaveFavoritesLocallyFamily();
 /// See also [saveFavoritesLocally].
 @ProviderFor(saveFavoritesLocally)
 const saveFavoritesLocallyProvider = SaveFavoritesLocallyFamily();
@@ -303,17 +309,28 @@ class SaveFavoritesLocallyFamily
     extends Family<AsyncValue<Either<Failure, void>>> {
   /// See also [saveFavoritesLocally].
   const SaveFavoritesLocallyFamily();
+/// See also [saveFavoritesLocally].
+class SaveFavoritesLocallyFamily
+    extends Family<AsyncValue<Either<Failure, void>>> {
+  /// See also [saveFavoritesLocally].
+  const SaveFavoritesLocallyFamily();
 
   /// See also [saveFavoritesLocally].
   SaveFavoritesLocallyProvider call(
     AddFavoriteParams params,
+  /// See also [saveFavoritesLocally].
+  SaveFavoritesLocallyProvider call(
+    AddFavoriteParams params,
   ) {
+    return SaveFavoritesLocallyProvider(
     return SaveFavoritesLocallyProvider(
       params,
     );
   }
 
   @override
+  SaveFavoritesLocallyProvider getProviderOverride(
+    covariant SaveFavoritesLocallyProvider provider,
   SaveFavoritesLocallyProvider getProviderOverride(
     covariant SaveFavoritesLocallyProvider provider,
   ) {
@@ -335,19 +352,29 @@ class SaveFavoritesLocallyFamily
 
   @override
   String? get name => r'saveFavoritesLocallyProvider';
+  String? get name => r'saveFavoritesLocallyProvider';
 }
 
+/// See also [saveFavoritesLocally].
+class SaveFavoritesLocallyProvider
 /// See also [saveFavoritesLocally].
 class SaveFavoritesLocallyProvider
     extends AutoDisposeFutureProvider<Either<Failure, void>> {
   /// See also [saveFavoritesLocally].
   SaveFavoritesLocallyProvider(
     AddFavoriteParams params,
+  /// See also [saveFavoritesLocally].
+  SaveFavoritesLocallyProvider(
+    AddFavoriteParams params,
   ) : this._internal(
+          (ref) => saveFavoritesLocally(
+            ref as SaveFavoritesLocallyRef,
           (ref) => saveFavoritesLocally(
             ref as SaveFavoritesLocallyRef,
             params,
           ),
+          from: saveFavoritesLocallyProvider,
+          name: r'saveFavoritesLocallyProvider',
           from: saveFavoritesLocallyProvider,
           name: r'saveFavoritesLocallyProvider',
           debugGetCreateSourceHash:
@@ -355,11 +382,15 @@ class SaveFavoritesLocallyProvider
                   ? null
                   : _$saveFavoritesLocallyHash,
           dependencies: SaveFavoritesLocallyFamily._dependencies,
+                  : _$saveFavoritesLocallyHash,
+          dependencies: SaveFavoritesLocallyFamily._dependencies,
           allTransitiveDependencies:
+              SaveFavoritesLocallyFamily._allTransitiveDependencies,
               SaveFavoritesLocallyFamily._allTransitiveDependencies,
           params: params,
         );
 
+  SaveFavoritesLocallyProvider._internal(
   SaveFavoritesLocallyProvider._internal(
     super._createNotifier, {
     required super.name,
@@ -371,14 +402,19 @@ class SaveFavoritesLocallyProvider
   }) : super.internal();
 
   final AddFavoriteParams params;
+  final AddFavoriteParams params;
 
   @override
   Override overrideWith(
     FutureOr<Either<Failure, void>> Function(SaveFavoritesLocallyRef provider)
         create,
+    FutureOr<Either<Failure, void>> Function(SaveFavoritesLocallyRef provider)
+        create,
   ) {
     return ProviderOverride(
       origin: this,
+      override: SaveFavoritesLocallyProvider._internal(
+        (ref) => create(ref as SaveFavoritesLocallyRef),
       override: SaveFavoritesLocallyProvider._internal(
         (ref) => create(ref as SaveFavoritesLocallyRef),
         from: from,
@@ -394,10 +430,12 @@ class SaveFavoritesLocallyProvider
   @override
   AutoDisposeFutureProviderElement<Either<Failure, void>> createElement() {
     return _SaveFavoritesLocallyProviderElement(this);
+    return _SaveFavoritesLocallyProviderElement(this);
   }
 
   @override
   bool operator ==(Object other) {
+    return other is SaveFavoritesLocallyProvider && other.params == params;
     return other is SaveFavoritesLocallyProvider && other.params == params;
   }
 
@@ -412,22 +450,34 @@ class SaveFavoritesLocallyProvider
 
 mixin SaveFavoritesLocallyRef
     on AutoDisposeFutureProviderRef<Either<Failure, void>> {
+mixin SaveFavoritesLocallyRef
+    on AutoDisposeFutureProviderRef<Either<Failure, void>> {
   /// The parameter `params` of this provider.
+  AddFavoriteParams get params;
   AddFavoriteParams get params;
 }
 
 class _SaveFavoritesLocallyProviderElement
+class _SaveFavoritesLocallyProviderElement
     extends AutoDisposeFutureProviderElement<Either<Failure, void>>
+    with SaveFavoritesLocallyRef {
+  _SaveFavoritesLocallyProviderElement(super.provider);
     with SaveFavoritesLocallyRef {
   _SaveFavoritesLocallyProviderElement(super.provider);
 
   @override
   AddFavoriteParams get params =>
       (origin as SaveFavoritesLocallyProvider).params;
+  AddFavoriteParams get params =>
+      (origin as SaveFavoritesLocallyProvider).params;
 }
 
 String _$removeFavoriteHash() => r'e727b4d52b58d8cb2214787f5180fb2544052748';
+String _$removeFavoriteHash() => r'e727b4d52b58d8cb2214787f5180fb2544052748';
 
+/// See also [removeFavorite].
+@ProviderFor(removeFavorite)
+const removeFavoriteProvider = RemoveFavoriteFamily();
 /// See also [removeFavorite].
 @ProviderFor(removeFavorite)
 const removeFavoriteProvider = RemoveFavoriteFamily();
@@ -436,17 +486,27 @@ const removeFavoriteProvider = RemoveFavoriteFamily();
 class RemoveFavoriteFamily extends Family<AsyncValue<Either<Failure, void>>> {
   /// See also [removeFavorite].
   const RemoveFavoriteFamily();
+/// See also [removeFavorite].
+class RemoveFavoriteFamily extends Family<AsyncValue<Either<Failure, void>>> {
+  /// See also [removeFavorite].
+  const RemoveFavoriteFamily();
 
   /// See also [removeFavorite].
   RemoveFavoriteProvider call(
     RemoveFavoriteParams params,
+  /// See also [removeFavorite].
+  RemoveFavoriteProvider call(
+    RemoveFavoriteParams params,
   ) {
+    return RemoveFavoriteProvider(
     return RemoveFavoriteProvider(
       params,
     );
   }
 
   @override
+  RemoveFavoriteProvider getProviderOverride(
+    covariant RemoveFavoriteProvider provider,
   RemoveFavoriteProvider getProviderOverride(
     covariant RemoveFavoriteProvider provider,
   ) {
@@ -468,19 +528,29 @@ class RemoveFavoriteFamily extends Family<AsyncValue<Either<Failure, void>>> {
 
   @override
   String? get name => r'removeFavoriteProvider';
+  String? get name => r'removeFavoriteProvider';
 }
 
+/// See also [removeFavorite].
+class RemoveFavoriteProvider
 /// See also [removeFavorite].
 class RemoveFavoriteProvider
     extends AutoDisposeFutureProvider<Either<Failure, void>> {
   /// See also [removeFavorite].
   RemoveFavoriteProvider(
     RemoveFavoriteParams params,
+  /// See also [removeFavorite].
+  RemoveFavoriteProvider(
+    RemoveFavoriteParams params,
   ) : this._internal(
+          (ref) => removeFavorite(
+            ref as RemoveFavoriteRef,
           (ref) => removeFavorite(
             ref as RemoveFavoriteRef,
             params,
           ),
+          from: removeFavoriteProvider,
+          name: r'removeFavoriteProvider',
           from: removeFavoriteProvider,
           name: r'removeFavoriteProvider',
           debugGetCreateSourceHash:
@@ -488,11 +558,15 @@ class RemoveFavoriteProvider
                   ? null
                   : _$removeFavoriteHash,
           dependencies: RemoveFavoriteFamily._dependencies,
+                  : _$removeFavoriteHash,
+          dependencies: RemoveFavoriteFamily._dependencies,
           allTransitiveDependencies:
+              RemoveFavoriteFamily._allTransitiveDependencies,
               RemoveFavoriteFamily._allTransitiveDependencies,
           params: params,
         );
 
+  RemoveFavoriteProvider._internal(
   RemoveFavoriteProvider._internal(
     super._createNotifier, {
     required super.name,
@@ -504,13 +578,17 @@ class RemoveFavoriteProvider
   }) : super.internal();
 
   final RemoveFavoriteParams params;
+  final RemoveFavoriteParams params;
 
   @override
   Override overrideWith(
     FutureOr<Either<Failure, void>> Function(RemoveFavoriteRef provider) create,
+    FutureOr<Either<Failure, void>> Function(RemoveFavoriteRef provider) create,
   ) {
     return ProviderOverride(
       origin: this,
+      override: RemoveFavoriteProvider._internal(
+        (ref) => create(ref as RemoveFavoriteRef),
       override: RemoveFavoriteProvider._internal(
         (ref) => create(ref as RemoveFavoriteRef),
         from: from,
@@ -526,10 +604,12 @@ class RemoveFavoriteProvider
   @override
   AutoDisposeFutureProviderElement<Either<Failure, void>> createElement() {
     return _RemoveFavoriteProviderElement(this);
+    return _RemoveFavoriteProviderElement(this);
   }
 
   @override
   bool operator ==(Object other) {
+    return other is RemoveFavoriteProvider && other.params == params;
     return other is RemoveFavoriteProvider && other.params == params;
   }
 
@@ -543,16 +623,22 @@ class RemoveFavoriteProvider
 }
 
 mixin RemoveFavoriteRef on AutoDisposeFutureProviderRef<Either<Failure, void>> {
+mixin RemoveFavoriteRef on AutoDisposeFutureProviderRef<Either<Failure, void>> {
   /// The parameter `params` of this provider.
+  RemoveFavoriteParams get params;
   RemoveFavoriteParams get params;
 }
 
 class _RemoveFavoriteProviderElement
+class _RemoveFavoriteProviderElement
     extends AutoDisposeFutureProviderElement<Either<Failure, void>>
+    with RemoveFavoriteRef {
+  _RemoveFavoriteProviderElement(super.provider);
     with RemoveFavoriteRef {
   _RemoveFavoriteProviderElement(super.provider);
 
   @override
+  RemoveFavoriteParams get params => (origin as RemoveFavoriteProvider).params;
   RemoveFavoriteParams get params => (origin as RemoveFavoriteProvider).params;
 }
 
@@ -829,7 +915,7 @@ const getLocalFavoritesProvider = GetLocalFavoritesFamily();
 
 /// See also [getLocalFavorites].
 class GetLocalFavoritesFamily
-    extends Family<AsyncValue<Either<Failure, List<Exoplanet>>>> {
+    extends Family<AsyncValue<Either<Failure, dynamic>>> {
   /// See also [getLocalFavorites].
   const GetLocalFavoritesFamily();
 
@@ -868,7 +954,7 @@ class GetLocalFavoritesFamily
 
 /// See also [getLocalFavorites].
 class GetLocalFavoritesProvider
-    extends AutoDisposeFutureProvider<Either<Failure, List<Exoplanet>>> {
+    extends AutoDisposeFutureProvider<Either<Failure, dynamic>> {
   /// See also [getLocalFavorites].
   GetLocalFavoritesProvider(
     NoParams params,
@@ -903,8 +989,7 @@ class GetLocalFavoritesProvider
 
   @override
   Override overrideWith(
-    FutureOr<Either<Failure, List<Exoplanet>>> Function(
-            GetLocalFavoritesRef provider)
+    FutureOr<Either<Failure, dynamic>> Function(GetLocalFavoritesRef provider)
         create,
   ) {
     return ProviderOverride(
@@ -922,8 +1007,7 @@ class GetLocalFavoritesProvider
   }
 
   @override
-  AutoDisposeFutureProviderElement<Either<Failure, List<Exoplanet>>>
-      createElement() {
+  AutoDisposeFutureProviderElement<Either<Failure, dynamic>> createElement() {
     return _GetLocalFavoritesProviderElement(this);
   }
 
@@ -942,13 +1026,13 @@ class GetLocalFavoritesProvider
 }
 
 mixin GetLocalFavoritesRef
-    on AutoDisposeFutureProviderRef<Either<Failure, List<Exoplanet>>> {
+    on AutoDisposeFutureProviderRef<Either<Failure, dynamic>> {
   /// The parameter `params` of this provider.
   NoParams get params;
 }
 
 class _GetLocalFavoritesProviderElement
-    extends AutoDisposeFutureProviderElement<Either<Failure, List<Exoplanet>>>
+    extends AutoDisposeFutureProviderElement<Either<Failure, dynamic>>
     with GetLocalFavoritesRef {
   _GetLocalFavoritesProviderElement(super.provider);
 

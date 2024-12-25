@@ -16,11 +16,15 @@ class FavoritesView extends ConsumerWidget {
         ref.watch(getLocalFavoritesProvider(NoParams()));
 
     return Scaffold(
+      backgroundColor: Colors.transparent,
       appBar: AppBar(
+        leading: Container(),
+        centerTitle: true,
         backgroundColor: Colors.transparent,
         title: Text(
           'My Favorites',
-          style: AppFonts.spaceGrotesk16,
+          style: AppFonts.spaceGrotesk18,
+
         ),
       ),
       body: favoritesAsyncValue.when(

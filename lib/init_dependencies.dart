@@ -54,6 +54,8 @@ Future<void> initDependencies() async {
   serviceLocator.registerFactory(() => FavoritesRemoteDataSource(
         serviceLocator(),
         serviceLocator(),
+        
+        serviceLocator(),
       ));
 
   // Registrar FavoritesRepository
