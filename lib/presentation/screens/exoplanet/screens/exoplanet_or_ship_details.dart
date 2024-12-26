@@ -75,7 +75,8 @@ class _ExoplanetOrShipDetailsState
           AddFavoriteParams(exoplanet: widget.exoplanet!)));
       result.fold(
         (failure) => ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed to add favorite: $failure')),
+          SnackBar(
+              content: Text('Failed to add favorite: $failure, try again.')),
         ),
         (_) => setState(() => isFavorite = true),
       );

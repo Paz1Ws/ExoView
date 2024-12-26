@@ -39,8 +39,6 @@ IsFavorite isFavoriteUseCase(IsFavoriteUseCaseRef ref) {
   return IsFavorite(repository);
 }
 
-
-
 @riverpod
 GetLocalFavorites getLocalFavoritesUseCase(GetLocalFavoritesUseCaseRef ref) {
   final repository = ref.watch(favoritesRepositoryProvider);
@@ -83,8 +81,12 @@ Future<Either<Failure, bool>> isFavorite(
 }
 
 @riverpod
-Future<Either<Failure, dynamic>> getLocalFavorites(
+Future<Either<Failure, List<Exoplanet>>> getLocalFavorites(
     GetLocalFavoritesRef ref, NoParams params) async {
   final useCase = ref.watch(getLocalFavoritesUseCaseProvider);
-  return await useCase(params);
+  final result = await useCase(params);
+  return result.fold(
+    (failure) => Future.value(Left(failure)),
+    (exoplanets) => Future.value(Right(exoplanets)),
+  );
 }

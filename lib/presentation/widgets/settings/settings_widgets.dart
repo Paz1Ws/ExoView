@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myapp/config/theme/theme.dart';
+import 'package:myapp/presentation/screens/onboarding/welcome_screen.dart';
 
 class SettingsContent extends ConsumerWidget {
   final Map<IconData, String> settingsOptions;
@@ -116,7 +117,8 @@ class SettingsOptionSelector extends StatelessWidget {
         onTap: () {
           switch (text) {
             case 'Log Out':
-              // context.read(authProvider).signOut();
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => const WelcomeScreen()));
               break;
             case 'Theme':
               // context.read(themeProvider).toggleTheme();

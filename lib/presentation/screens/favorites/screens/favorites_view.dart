@@ -1,19 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fpdart/fpdart.dart';
+import 'package:myapp/config/failures/failures.dart';
 import 'package:myapp/config/theme/fonts.dart';
 import 'package:myapp/config/usecase/usecase.dart';
-import 'package:myapp/presentation/screens/favorites/providers/favorites_providers.dart';
 import 'package:myapp/presentation/widgets/widgets.dart';
 
 import 'package:myapp/config/theme/colors.dart';
+
+import '../providers/favorites_providers.dart';
 
 class FavoritesView extends ConsumerWidget {
   const FavoritesView({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final favoritesAsyncValue =
-        ref.watch(getLocalFavoritesProvider(NoParams()));
+    final future = ref.watch(getLocalFavoritesProvider(NoParams()).future);
 
     return Scaffold(
       backgroundColor: Colors.transparent,
@@ -24,42 +26,51 @@ class FavoritesView extends ConsumerWidget {
         title: Text(
           'My Favorites',
           style: AppFonts.spaceGrotesk18,
-
         ),
       ),
-      body: favoritesAsyncValue.when(
-        data: (either) {
-          return either.fold(
-            (failure) => Center(
-                child: Text('Failed to load favorites',
-                    style: AppFonts.spaceGrotesk16)),
-            (favorites) {
-              if (favorites.isEmpty) {
-                return Center(
-                    child: Text('No favorites found',
-                        style: AppFonts.spaceGrotesk16));
-              }
-              return GridView.builder(
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 10,
-                  mainAxisSpacing: 10,
-                ),
-                itemCount: favorites.length,
-                itemBuilder: (context, index) {
-                  final exoplanet = favorites[index];
-                  return TouchableExoplanetCard(exoplanet: exoplanet);
+      body: Padding(
+        padding: const EdgeInsets.all(18.0),
+        child: FutureBuilder<Either<Failure, dynamic>>(
+          future: future,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(
+                  child: CircularProgressIndicator(
+                backgroundColor: Colors.transparent,
+                color: AppColors.brightTealGreen,
+              ));
+            } else if (snapshot.hasError) {
+              return Center(child: Text('Error: ${snapshot.error}'));
+            } else if (snapshot.hasData) {
+              return snapshot.data!.fold(
+                (failure) => Center(
+                    child: Text('Failed to load favorites',
+                        style: AppFonts.spaceGrotesk16)),
+                (favorites) {
+                  if (favorites.isEmpty) {
+                    return Center(
+                        child: Text('No favorites found',
+                            style: AppFonts.spaceGrotesk16));
+                  }
+                  return GridView.builder(
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      crossAxisSpacing: 10,
+                      mainAxisSpacing: 10,
+                    ),
+                    itemCount: favorites.length,
+                    itemBuilder: (context, index) {
+                      final exoplanet = favorites[index];
+                      return TouchableExoplanetCard(exoplanet: exoplanet);
+                    },
+                  );
                 },
               );
-            },
-          );
-        },
-        loading: () => Center(
-            child: CircularProgressIndicator(
-          backgroundColor: Colors.transparent,
-          color: AppColors.brightTealGreen,
-        )),
-        error: (error, stack) => Center(child: Text('Error: $error')),
+            } else {
+              return Center(child: Text('Unexpected error'));
+            }
+          },
+        ),
       ),
     );
   }

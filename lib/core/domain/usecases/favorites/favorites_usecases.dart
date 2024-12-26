@@ -15,8 +15,8 @@ class AddFavorite implements UseCase<void, AddFavoriteParams> {
     return result.fold(
       (failure) => Left(failure),
       (success) async {
-        final localResult = await repository.addFavoriteExoplanetstoLocal(
-            params.exoplanet.id.toString(), params.exoplanet.planetName);
+        final localResult =
+            await repository.addFavoriteExoplanetstoLocal(params.exoplanet);
         return localResult.fold(
           (localFailure) => Left(localFailure),
           (localSuccess) => Right(localSuccess),
@@ -39,8 +39,7 @@ class AddFavoritesToLocal implements UseCase<void, AddFavoriteParams> {
 
   @override
   Future<Either<Failure, void>> call(AddFavoriteParams params) async {
-    return await repository.addFavoriteExoplanetstoLocal(
-        params.exoplanet.id.toString(), params.exoplanet.planetName);
+    return await repository.addFavoriteExoplanetstoLocal(params.exoplanet);
   }
 }
 
@@ -78,8 +77,6 @@ class IsFavoriteParams {
   IsFavoriteParams({required this.id});
 }
 
-
-
 class GetLocalFavorites implements UseCase<List<Exoplanet>, NoParams> {
   final FavoritesRepositoryImpl repository;
 
@@ -87,7 +84,7 @@ class GetLocalFavorites implements UseCase<List<Exoplanet>, NoParams> {
 
   @override
   Future<Either<Failure, List<Exoplanet>>> call(NoParams params) async {
-    return  await repository.getLocalFavoriteExoplanets();
+    return await repository.getLocalFavoriteExoplanets();
   }
 }
 

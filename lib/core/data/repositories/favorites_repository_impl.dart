@@ -41,10 +41,10 @@ class FavoritesRepositoryImpl implements FavoritesRepository {
 
   @override
   Future<Either<Failure, void>> addFavoriteExoplanetstoLocal(
-      String id, String name) async {
+      Exoplanet exoplanet) async {
     try {
       final result =
-          await remoteDataSource.addExoplanetFavoritestoLocal(id, name);
+          await remoteDataSource.addExoplanetFavoritestoLocal(exoplanet);
       return result;
     } catch (e) {
       return Left(Failure('Failed to put favorite exoplanets: $e'));
@@ -62,13 +62,12 @@ class FavoritesRepositoryImpl implements FavoritesRepository {
   }
 
   @override
-  Future<PostgrestMap> getFavorites() async {
+  Future<Either<Failure, List<Exoplanet>>> getFavorites() async {
     try {
       final favorites = await remoteDataSource.getFavorites();
-      return favorites;
+      return Right(favorites);
     } catch (e) {
-      throw Exception('Failed to fetch favorites: $e');
-    
+      return Left(Failure('Failed to fetch favorites: $e'));
     }
   }
 }
