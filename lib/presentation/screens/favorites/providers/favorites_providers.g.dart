@@ -107,7 +107,7 @@ final getLocalFavoritesUseCaseProvider =
 
 typedef GetLocalFavoritesUseCaseRef = AutoDisposeProviderRef<GetLocalFavorites>;
 String _$getFavoritesWithFallbackUseCaseHash() =>
-    r'ab0108f94149d0507601a61997a539e8abb4ba88';
+    r'19b1b5af1493eba78817183b138c1ac13de44dea';
 
 /// See also [getFavoritesWithFallbackUseCase].
 @ProviderFor(getFavoritesWithFallbackUseCase)
@@ -670,7 +670,7 @@ class _IsFavoriteProviderElement
   IsFavoriteParams get params => (origin as IsFavoriteProvider).params;
 }
 
-String _$getLocalFavoritesHash() => r'c93f099486b1e571968b8f3c2e772bac164503aa';
+String _$getLocalFavoritesHash() => r'2d1c785c949f8d28ddfe80e0e4467eb59d6d82c6';
 
 /// See also [getLocalFavorites].
 @ProviderFor(getLocalFavorites)
@@ -678,7 +678,7 @@ const getLocalFavoritesProvider = GetLocalFavoritesFamily();
 
 /// See also [getLocalFavorites].
 class GetLocalFavoritesFamily
-    extends Family<AsyncValue<Either<Failure, dynamic>>> {
+    extends Family<AsyncValue<Either<Failure, List<Exoplanet>>>> {
   /// See also [getLocalFavorites].
   const GetLocalFavoritesFamily();
 
@@ -717,7 +717,7 @@ class GetLocalFavoritesFamily
 
 /// See also [getLocalFavorites].
 class GetLocalFavoritesProvider
-    extends AutoDisposeFutureProvider<Either<Failure, dynamic>> {
+    extends AutoDisposeFutureProvider<Either<Failure, List<Exoplanet>>> {
   /// See also [getLocalFavorites].
   GetLocalFavoritesProvider(
     NoParams params,
@@ -752,7 +752,8 @@ class GetLocalFavoritesProvider
 
   @override
   Override overrideWith(
-    FutureOr<Either<Failure, dynamic>> Function(GetLocalFavoritesRef provider)
+    FutureOr<Either<Failure, List<Exoplanet>>> Function(
+            GetLocalFavoritesRef provider)
         create,
   ) {
     return ProviderOverride(
@@ -770,7 +771,8 @@ class GetLocalFavoritesProvider
   }
 
   @override
-  AutoDisposeFutureProviderElement<Either<Failure, dynamic>> createElement() {
+  AutoDisposeFutureProviderElement<Either<Failure, List<Exoplanet>>>
+      createElement() {
     return _GetLocalFavoritesProviderElement(this);
   }
 
@@ -789,18 +791,154 @@ class GetLocalFavoritesProvider
 }
 
 mixin GetLocalFavoritesRef
-    on AutoDisposeFutureProviderRef<Either<Failure, dynamic>> {
+    on AutoDisposeFutureProviderRef<Either<Failure, List<Exoplanet>>> {
   /// The parameter `params` of this provider.
   NoParams get params;
 }
 
 class _GetLocalFavoritesProviderElement
-    extends AutoDisposeFutureProviderElement<Either<Failure, dynamic>>
+    extends AutoDisposeFutureProviderElement<Either<Failure, List<Exoplanet>>>
     with GetLocalFavoritesRef {
   _GetLocalFavoritesProviderElement(super.provider);
 
   @override
   NoParams get params => (origin as GetLocalFavoritesProvider).params;
+}
+
+String _$getFavoritesWithFallbackHash() =>
+    r'8cc2d51745f538d9d782e2e380bfea22d61646ca';
+
+/// See also [getFavoritesWithFallback].
+@ProviderFor(getFavoritesWithFallback)
+const getFavoritesWithFallbackProvider = GetFavoritesWithFallbackFamily();
+
+/// See also [getFavoritesWithFallback].
+class GetFavoritesWithFallbackFamily
+    extends Family<AsyncValue<Either<Failure, List<Exoplanet>>>> {
+  /// See also [getFavoritesWithFallback].
+  const GetFavoritesWithFallbackFamily();
+
+  /// See also [getFavoritesWithFallback].
+  GetFavoritesWithFallbackProvider call(
+    NoParams params,
+  ) {
+    return GetFavoritesWithFallbackProvider(
+      params,
+    );
+  }
+
+  @override
+  GetFavoritesWithFallbackProvider getProviderOverride(
+    covariant GetFavoritesWithFallbackProvider provider,
+  ) {
+    return call(
+      provider.params,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'getFavoritesWithFallbackProvider';
+}
+
+/// See also [getFavoritesWithFallback].
+class GetFavoritesWithFallbackProvider
+    extends AutoDisposeFutureProvider<Either<Failure, List<Exoplanet>>> {
+  /// See also [getFavoritesWithFallback].
+  GetFavoritesWithFallbackProvider(
+    NoParams params,
+  ) : this._internal(
+          (ref) => getFavoritesWithFallback(
+            ref as GetFavoritesWithFallbackRef,
+            params,
+          ),
+          from: getFavoritesWithFallbackProvider,
+          name: r'getFavoritesWithFallbackProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$getFavoritesWithFallbackHash,
+          dependencies: GetFavoritesWithFallbackFamily._dependencies,
+          allTransitiveDependencies:
+              GetFavoritesWithFallbackFamily._allTransitiveDependencies,
+          params: params,
+        );
+
+  GetFavoritesWithFallbackProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.params,
+  }) : super.internal();
+
+  final NoParams params;
+
+  @override
+  Override overrideWith(
+    FutureOr<Either<Failure, List<Exoplanet>>> Function(
+            GetFavoritesWithFallbackRef provider)
+        create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: GetFavoritesWithFallbackProvider._internal(
+        (ref) => create(ref as GetFavoritesWithFallbackRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        params: params,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeFutureProviderElement<Either<Failure, List<Exoplanet>>>
+      createElement() {
+    return _GetFavoritesWithFallbackProviderElement(this);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is GetFavoritesWithFallbackProvider && other.params == params;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, params.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+mixin GetFavoritesWithFallbackRef
+    on AutoDisposeFutureProviderRef<Either<Failure, List<Exoplanet>>> {
+  /// The parameter `params` of this provider.
+  NoParams get params;
+}
+
+class _GetFavoritesWithFallbackProviderElement
+    extends AutoDisposeFutureProviderElement<Either<Failure, List<Exoplanet>>>
+    with GetFavoritesWithFallbackRef {
+  _GetFavoritesWithFallbackProviderElement(super.provider);
+
+  @override
+  NoParams get params => (origin as GetFavoritesWithFallbackProvider).params;
 }
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

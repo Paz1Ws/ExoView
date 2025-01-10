@@ -25,18 +25,18 @@ class FavoritesRemoteDataSource implements FavoritesDataSource {
   @override
   Future<void> addFavorite(Exoplanet exoplanet) async {
     try {
-      final response = await supabaseClient
-          .from('users')
-          .select('favorites')
-          .eq('id', currentUser!.user.id)
-          .single();
+      // Retrieve the latest favorites from the remote source
+      final remoteFavorites = await getFavorites();
 
-      List<Map<String, dynamic>> favorites = response['favorites'] != null
-          ? List<Map<String, dynamic>>.from(response['favorites'] as List)
-          : [];
+      List<Map<String, dynamic>> favorites =
+          remoteFavorites.map((e) => e.toJson()).toList();
 
       if (favorites.any((favorite) => favorite['id'] == exoplanet.id)) {
-        return; // Exoplanet is already a favorite, no need to add
+        return;
+      }
+
+      if (favorites.length >= 15) {
+        throw Exception('Cannot have more than 15 favorite exoplanets.');
       }
 
       favorites.add(exoplanet.toJson());
@@ -66,65 +66,38 @@ class FavoritesRemoteDataSource implements FavoritesDataSource {
 
   @override
   Future<void> removeFavorite(String id) async {
-    final response = await supabaseClient
-        .from('users')
-        .select('favorites')
-        .eq('id', currentUser!.user.id)
-        .single();
-
-    List<Map<String, dynamic>> favorites =
-        List<Map<String, dynamic>>.from(response['favorites'] ?? []);
-
-    favorites.removeWhere((favorite) => favorite['id'] == int.parse(id));
-
     try {
+      // Retrieve the latest favorites from the remote source
+      final remoteFavorites = await getFavorites();
+
+      List<Map<String, dynamic>> favorites =
+          remoteFavorites.map((e) => e.toJson()).toList();
+
+      favorites.removeWhere((favorite) => favorite['id'] == int.parse(id));
+
       await supabaseClient
           .from('users')
           .update({'favorites': favorites})
           .eq('id', currentUser!.user.id)
           .single();
-    } catch (e) {
-      print(e);
-    }
 
-    final localFavoritesResult = await getLocalFavoriteExoplanets();
-    localFavoritesResult.fold(
-      (failure) => print(failure.message),
-      (localFavorites) async {
-        localFavorites
-            .removeWhere((exoplanet) => exoplanet.id == int.parse(id));
-        await box.put('favoriteExoplanets',
-            localFavorites.map((e) => e.toJson()).toList());
-      },
-    );
+      final localFavoritesResult = await getLocalFavoriteExoplanets();
+      localFavoritesResult.fold(
+        (failure) => print(failure.message),
+        (localFavorites) async {
+          localFavorites
+              .removeWhere((exoplanet) => exoplanet.id == int.parse(id));
+          await box.put('favoriteExoplanets',
+              localFavorites.map((e) => e.toJson()).toList());
+        },
+      );
+    } catch (e) {
+      print('Failed to remove favorite: $e');
+    }
   }
 
   @override
   Future<List<Exoplanet>> getFavorites() async {
-    final response = await supabaseClient
-        .from('users')
-        .select('favorites')
-        .eq('id', currentUser!.user.id)
-        .single();
-
-    List<Map<String, dynamic>> favoriteIds =
-        List<Map<String, dynamic>>.from(response['favorites'] ?? []);
-
-    if (favoriteIds.isEmpty) {
-      return [];
-    }
-
-    final exoplanetsResponse = await supabaseClient
-        .from('exoplanets')
-        .select()
-        .eq('id', favoriteIds.map((favorite) => favorite['id']).toList());
-
-    final List<dynamic> exoplanetsData = exoplanetsResponse;
-    return exoplanetsData.map((e) => Exoplanet.fromJson(e, e['id'])).toList();
-  }
-
-  @override
-  Future<bool> isFavorite(String id) async {
     try {
       final response = await supabaseClient
           .from('users')
@@ -132,12 +105,36 @@ class FavoritesRemoteDataSource implements FavoritesDataSource {
           .eq('id', currentUser!.user.id)
           .single();
 
-      List<Map<String, dynamic>> favorites =
+      List<Map<String, dynamic>> favoriteIds =
           List<Map<String, dynamic>>.from(response['favorites'] ?? []);
 
-      return favorites.any((favorite) => favorite['id'] == int.parse(id))
-          ? true
-          : false;
+      if (favoriteIds.isEmpty) {
+        return [];
+      }
+
+      return (response['favorites'] as List)
+          .map((e) => Exoplanet.fromJson(e, e['id']))
+          .toList();
+    } catch (e) {
+      print('Failed to retrieve from remote: $e');
+      final localFavoritesResult = await getLocalFavoriteExoplanets();
+      return localFavoritesResult.fold(
+        (failure) {
+          print(failure.message);
+          return [];
+        },
+        (localFavorites) => localFavorites,
+      );
+    }
+  }
+
+  @override
+  Future<bool> isFavorite(String id) async {
+    try {
+      // Retrieve the latest favorites from the remote source
+      final remoteFavorites = await getFavorites();
+
+      return remoteFavorites.any((favorite) => favorite.id == int.parse(id));
     } catch (e) {
       print('Failed to retrieve from remote: $e');
       final localFavoritesResult = await getLocalFavoriteExoplanets();

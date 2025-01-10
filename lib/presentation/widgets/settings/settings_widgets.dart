@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myapp/config/theme/theme.dart';
+import 'package:myapp/presentation/screens/explore/providers/explore_view_providers.dart';
+import 'package:myapp/presentation/screens/home/providers/exoplanet_providers.dart';
 import 'package:myapp/presentation/screens/onboarding/welcome_screen.dart';
 
 class SettingsContent extends ConsumerWidget {
@@ -61,8 +63,7 @@ class SettingsContent extends ConsumerWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          '0',
-                          // ref.watch(visitedExoplanetsProvider).toString(),
+                          ref.watch(visitedExoplanetsProvider).toString(),
                           textAlign: TextAlign.center,
                           style: AppFonts.spaceGrotesk30.copyWith(
                             fontWeight: FontWeight.bold,
@@ -84,7 +85,7 @@ class SettingsContent extends ConsumerWidget {
             ),
             SizedBox(height: size.height * 0.05),
             Column(
-                children: List.generate(6, (index) {
+                children: List.generate(5, (index) {
               return Column(
                 children: [
                   SettingsOptionSelector(
@@ -102,7 +103,7 @@ class SettingsContent extends ConsumerWidget {
   }
 }
 
-class SettingsOptionSelector extends StatelessWidget {
+class SettingsOptionSelector extends ConsumerWidget {
   final IconData icon;
   final String text;
   const SettingsOptionSelector({
@@ -112,7 +113,7 @@ class SettingsOptionSelector extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, ref) {
     return GestureDetector(
         onTap: () {
           switch (text) {
@@ -121,35 +122,41 @@ class SettingsOptionSelector extends StatelessWidget {
                   builder: (context) => const WelcomeScreen()));
               break;
             case 'Theme':
-              // context.read(themeProvider).toggleTheme();
+              ref.read(themeProvider.notifier).toggleTheme();
               break;
             case 'Altern User Icon':
               // Handle Altern User Icon action
               break;
-            case 'Enable Notifications':
-              // Handle Enable Notifications action
-              break;
+
             case 'Language':
               // Handle Language action
               break;
             case 'Help & Support':
-              // Handle Help & Support action
-              break;
-            default:
               showDialog(
                 context: context,
                 builder: (BuildContext context) {
                   return AlertDialog(
                     backgroundColor: AppColors.veryDarkPurple,
-                    title: Text('Help & Support'),
+                    title: Text(
+                      'Help & Support',
+                      style: AppFonts.spaceGrotesk16.copyWith(
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.lightGray),
+                    ),
                     content: Column(
                       mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
                           'Developed By: Christopher Paz León',
-                          style: AppFonts.spaceGrotesk16
-                              .copyWith(fontWeight: FontWeight.bold),
+                          style: AppFonts.spaceGrotesk16.copyWith(
+                            fontWeight: FontWeight.bold,
+                          ),
                           textAlign: TextAlign.center,
+                        ),
+                        SizedBox(
+                          height: 10,
                         ),
                         SelectableText(
                           'Linkedin: linkedin.com/in/christopher-paz-leon-745760202/',
@@ -158,12 +165,15 @@ class SettingsOptionSelector extends StatelessWidget {
                               color: AppColors.brightTealGreen),
                           textAlign: TextAlign.start,
                         ),
-                        Text(
+                        SelectableText(
                           'Email: rewardmnx@gmail.com',
                           style: AppFonts.spaceGrotesk16.copyWith(
                               fontWeight: FontWeight.bold,
                               color: AppColors.brightTealGreen),
                           textAlign: TextAlign.start,
+                        ),
+                        SizedBox(
+                          height: 10,
                         ),
                         Text(
                           'Hello, if you have any questions or need help, you can send me feedback by email or LinkedIn, also I\'m pending to comments on Play Store I hope you enjoy Exoview!',
@@ -188,6 +198,8 @@ class SettingsOptionSelector extends StatelessWidget {
                   );
                 },
               );
+              break;
+            default:
               break;
           }
         },

@@ -7,7 +7,7 @@ import 'package:myapp/config/failures/failures.dart';
 abstract interface class ExoplanetLocalDataSource {
   Future<Either<Failure, List<Exoplanet>>> getLocalExoplanets();
   void storeExoplanets(List<Exoplanet> exoplanets);
-  Future<void> getRemoteExoplanets();
+  Future<Either<Failure, List<Exoplanet>>> getRemoteExoplanets();
 }
 
 class ExoplanetLocalDataSourceImpl implements ExoplanetLocalDataSource {
@@ -17,9 +17,10 @@ class ExoplanetLocalDataSourceImpl implements ExoplanetLocalDataSource {
   ExoplanetLocalDataSourceImpl(this.box, this.remoteDataSource);
 
   @override
-  Future<void> getRemoteExoplanets() async {
+  Future<Either<Failure, List<Exoplanet>>> getRemoteExoplanets() async {
     int startYear = box.get('lastFetchedYear', defaultValue: 1995);
     int currentYear = DateTime.now().year;
+    List<Exoplanet> allExoplanets = [];
 
     while (startYear <= currentYear) {
       final exoplanets =
@@ -27,11 +28,18 @@ class ExoplanetLocalDataSourceImpl implements ExoplanetLocalDataSource {
       exoplanets.fold(
         (failure) => print('Error fetching exoplanets: $failure'),
         (exoplanets) async {
-          storeExoplanets(exoplanets);
+          await storeExoplanets(exoplanets);
+          allExoplanets.addAll(exoplanets);
           startYear++;
           await box.put('lastFetchedYear', startYear);
         },
       );
+    }
+
+    if (allExoplanets.isNotEmpty) {
+      return Right(allExoplanets);
+    } else {
+      return Left(Failure('Failed to fetch remote exoplanets'));
     }
   }
 

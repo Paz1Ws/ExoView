@@ -34,6 +34,9 @@ class _ExploreViewState extends ConsumerState<ExploreView> {
       setState(() {});
     });
     _scrollController.addListener(_onScroll);
+
+    // Load cached exoplanets data
+    ref.read(loadCachedExoplanetsProvider);
   }
 
   @override
@@ -47,7 +50,7 @@ class _ExploreViewState extends ConsumerState<ExploreView> {
     if (_scrollController.position.pixels ==
         _scrollController.position.maxScrollExtent) {
       setState(() {
-        if (_loadedItems < ref.read(filteredExoplanets).length) {
+        if (_loadedItems < ref.read(filteredExoplanetsProvider).length) {
           _loadedItems += 10;
         }
       });
@@ -56,64 +59,83 @@ class _ExploreViewState extends ConsumerState<ExploreView> {
 
   @override
   Widget build(BuildContext context) {
-    final exoplanets = ref.watch(filteredExoplanets);
-    return Padding(
-      padding: const EdgeInsets.all(20.0),
-      child: Column(
-        children: [
-          const SizedBox(
-            height: 20,
-          ),
-          SearchTab(),
-          const SizedBox(
-            height: 20,
-          ),
-          exoplanets.isNotEmpty
-              ? Expanded(
-                  child: GridView.builder(
-                    controller: _scrollController,
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      crossAxisSpacing: 10,
-                      mainAxisSpacing: 10,
-                    ),
-                    itemCount: _loadedItems < exoplanets.length
-                        ? _loadedItems
-                        : exoplanets.length,
-                    itemBuilder: (context, index) {
-                      return Padding(
-                        padding: const EdgeInsets.only(bottom: 10),
-                        child: TouchableExoplanetCard(
-                          exoplanet: exoplanets[index],
-                        ),
-                      );
-                    },
-                  ),
-                )
-              : Expanded(
-                  child: Column(
+    final cachedExoplanets = ref.watch(cachedExoplanetsProvider);
+    final isLoading = cachedExoplanets.isEmpty;
+
+    return WillPopScope(
+      onWillPop: () async => ref.watch(canExitProvider),
+      child: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Column(
+          children: [
+            const SizedBox(
+              height: 20,
+            ),
+            SearchTab(),
+            const SizedBox(
+              height: 20,
+            ),
+            isLoading
+                ? Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Spacer(),
-                      Center(
-                        child: AnimatedTextKit(
-                          totalRepeatCount: 1,
-                          animatedTexts: [
-                            TypewriterAnimatedText(
-                              'Looking for a new home?',
-                              speed: const Duration(milliseconds: 200),
-                              textAlign: TextAlign.center,
-                              textStyle: AppFonts.spaceGrotesk40
-                                  .copyWith(fontWeight: FontWeight.normal),
+                      CircularProgressIndicator(),
+                      SizedBox(height: 20),
+                      Text(
+                        'Cargando data...',
+                        style: AppFonts.spaceGrotesk16,
+                      ),
+                    ],
+                  )
+                : ref.watch(filteredExoplanetsProvider).isNotEmpty
+                    ? Expanded(
+                        child: GridView.builder(
+                          controller: _scrollController,
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            crossAxisSpacing: 10,
+                            mainAxisSpacing: 10,
+                          ),
+                          itemCount: _loadedItems <
+                                  ref.watch(filteredExoplanetsProvider).length
+                              ? _loadedItems
+                              : ref.watch(filteredExoplanetsProvider).length,
+                          itemBuilder: (context, index) {
+                            return Padding(
+                              padding: const EdgeInsets.only(bottom: 10),
+                              child: TouchableExoplanetCard(
+                                exoplanet: ref
+                                    .watch(filteredExoplanetsProvider)[index],
+                              ),
+                            );
+                          },
+                        ),
+                      )
+                    : Expanded(
+                        child: Column(
+                          children: [
+                            Spacer(),
+                            Center(
+                              child: AnimatedTextKit(
+                                totalRepeatCount: 1,
+                                animatedTexts: [
+                                  TypewriterAnimatedText(
+                                    'Looking for a new home?',
+                                    speed: const Duration(milliseconds: 200),
+                                    textAlign: TextAlign.center,
+                                    textStyle: AppFonts.spaceGrotesk40.copyWith(
+                                        fontWeight: FontWeight.normal),
+                                  ),
+                                ],
+                              ),
                             ),
+                            Spacer(),
                           ],
                         ),
                       ),
-                      Spacer(),
-                    ],
-                  ),
-                ),
-        ],
+          ],
+        ),
       ),
     );
   }

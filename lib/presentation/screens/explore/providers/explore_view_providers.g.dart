@@ -6,7 +6,7 @@ part of 'explore_view_providers.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$getAllExoplanetsHash() => r'62e554efa078ece85b91dcaa8383dd986a99c06b';
+String _$getAllExoplanetsHash() => r'c0525191cdf3f6d9238994478112813483b140b7';
 
 /// See also [getAllExoplanets].
 @ProviderFor(getAllExoplanets)
@@ -23,21 +23,22 @@ final getAllExoplanetsProvider =
 
 typedef GetAllExoplanetsRef
     = AutoDisposeFutureProviderRef<Either<Failure, List<Exoplanet>>>;
-String _$visitedExoplanetsHash() => r'a6d1cb1d15d666a635b9c3f9924592df44093ecb';
+String _$loadCachedExoplanetsHash() =>
+    r'6476542d11aec5e6bf00dfd7b4dcbf2e134b7a5b';
 
-/// See also [visitedExoplanets].
-@ProviderFor(visitedExoplanets)
-final visitedExoplanetsProvider = AutoDisposeProvider<int>.internal(
-  visitedExoplanets,
-  name: r'visitedExoplanetsProvider',
+/// See also [loadCachedExoplanets].
+@ProviderFor(loadCachedExoplanets)
+final loadCachedExoplanetsProvider = AutoDisposeFutureProvider<void>.internal(
+  loadCachedExoplanets,
+  name: r'loadCachedExoplanetsProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$visitedExoplanetsHash,
+      : _$loadCachedExoplanetsHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef VisitedExoplanetsRef = AutoDisposeProviderRef<int>;
+typedef LoadCachedExoplanetsRef = AutoDisposeFutureProviderRef<void>;
 String _$discoveryYearRangeHash() =>
     r'e3eb3af8d880b270372c6c65a3a1c9b0147f0d7b';
 

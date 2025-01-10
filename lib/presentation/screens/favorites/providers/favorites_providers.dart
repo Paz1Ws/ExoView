@@ -46,7 +46,8 @@ GetLocalFavorites getLocalFavoritesUseCase(GetLocalFavoritesUseCaseRef ref) {
 }
 
 @riverpod
-GetFavoritesWithFallback getFavoritesWithFallbackUseCase(ref) {
+GetFavoritesWithFallback getFavoritesWithFallbackUseCase(
+    GetFavoritesWithFallbackUseCaseRef ref) {
   final repository = ref.watch(favoritesRepositoryProvider);
   return GetFavoritesWithFallback(repository);
 }
@@ -89,4 +90,11 @@ Future<Either<Failure, List<Exoplanet>>> getLocalFavorites(
     (failure) => Future.value(Left(failure)),
     (exoplanets) => Future.value(Right(exoplanets)),
   );
+}
+
+@riverpod
+Future<Either<Failure, List<Exoplanet>>> getFavoritesWithFallback(
+    GetFavoritesWithFallbackRef ref, NoParams params) async {
+  final useCase = ref.watch(getFavoritesWithFallbackUseCaseProvider);
+  return await useCase(params);
 }

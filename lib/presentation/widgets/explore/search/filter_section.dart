@@ -34,7 +34,6 @@ class _FilterSectionState extends ConsumerState<FilterSection> {
     'Density': getPlanetDensityRange,
     'Transit Duration': getTransitDurationRange,
     'Insolation Flux': getInsolationFluxRange,
-
   };
 
   final Map<String, AutoDisposeProvider<RangeValues>> providers = {
@@ -102,7 +101,7 @@ class _FilterSectionState extends ConsumerState<FilterSection> {
       }).toList();
     });
 
-    ref.read(filteredExoplanets.notifier).state = newFilteredExoplanets;
+    ref.read(filteredExoplanetsProvider.notifier).state = newFilteredExoplanets;
   }
 
   @override

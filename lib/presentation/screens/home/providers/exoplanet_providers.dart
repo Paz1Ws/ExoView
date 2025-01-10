@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:myapp/config/failures/failures.dart';
@@ -39,3 +40,19 @@ final getRemoteExoplanetsToSaveProviderCaller =
       ref.watch(getRemoteExoplanetsToSaveProvider);
   return await getRemoteExoplanetsToSave.call(NoParams());
 });
+
+final themeProvider = StateNotifierProvider<ThemeNotifier, ThemeMode>((ref) {
+  return ThemeNotifier();
+});
+
+class ThemeNotifier extends StateNotifier<ThemeMode> {
+  ThemeNotifier() : super(ThemeMode.light);
+
+  void toggleTheme() {
+    if (state == ThemeMode.light) {
+      state = ThemeMode.dark;
+    } else {
+      state = ThemeMode.light;
+    }
+  }
+}

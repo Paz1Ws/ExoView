@@ -95,13 +95,18 @@ class GetFavoritesWithFallback implements UseCase<List<Exoplanet>, NoParams> {
 
   @override
   Future<Either<Failure, List<Exoplanet>>> call(NoParams params) async {
-    final localResult = await repository.getLocalFavoriteExoplanets();
-    return localResult.fold(
-      (failure) async {
-        final remoteResult = await repository.getFavorites();
-        return remoteResult;
-      },
-      (localFavorites) => Right(localFavorites),
-    );
+    try {
+      final remoteFavoritesResult = await repository.getFavorites();
+      return remoteFavoritesResult.fold(
+        (failure) => Left(failure),
+        (favorites) => Right(favorites),
+      );
+    } catch (e) {
+      final localFavorites = await repository.getLocalFavoriteExoplanets();
+      return localFavorites.fold(
+        (failure) => Left(failure),
+        (favorites) => Right(favorites),
+      );
+    }
   }
 }

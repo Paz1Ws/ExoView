@@ -32,7 +32,7 @@ class _HomeViewControllerState extends ConsumerState<HomeViewController> {
       curve: Curves.easeInOut,
     );
 
-    ref.read(filteredExoplanets.notifier).state = [];
+    // ref.read(filteredExoplanetsP) = [];
   }
 
   @override

@@ -47,7 +47,7 @@ class _TouchableExoplanetCardState
               isShip: false,
             );
           }));
-          // ref.read(visitedExoplanetsProvider).state++;
+          ref.read(visitedExoplanetsProvider.notifier).increment();
         },
         child: Container(
           height: size.height,

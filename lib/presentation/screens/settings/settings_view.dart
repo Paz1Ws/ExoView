@@ -11,7 +11,6 @@ class SettingsView extends StatelessWidget {
   Widget build(BuildContext context) {
     final Map<IconData, String> settingsOptions = {
       FontAwesomeIcons.userAstronaut: 'Altern User Icon',
-      FontAwesomeIcons.bell: 'Enable Notifications',
       FontAwesomeIcons.moon: 'Theme',
       FontAwesomeIcons.language: 'Language',
       FontAwesomeIcons.bullhorn: 'Help & Support',

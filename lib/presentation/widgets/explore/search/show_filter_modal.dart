@@ -95,8 +95,9 @@ void showFilterModal(BuildContext context, WidgetRef ref) {
                                           exoplanetCategory: category,
                                           onTap: () {
                                             ref
-                                                    .read(filteredExoplanets
-                                                        .notifier)
+                                                    .read(
+                                                        filteredExoplanetsProvider
+                                                            .notifier)
                                                     .state =
                                                 filterExoplanetsByCategory(
                                                     exoplanets, category);

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myapp/config/theme/theme.dart';
+import 'package:myapp/config/usecase/usecase.dart';
 import 'package:myapp/core/data/data.dart';
 import 'package:myapp/core/domain/usecases/favorites/favorites_usecases.dart';
 import 'package:myapp/presentation/screens/favorites/providers/favorites_providers.dart';
@@ -68,6 +69,25 @@ class _ExoplanetOrShipDetailsState
         (_) => setState(() => isFavorite = false),
       );
     } else {
+      final favorites =
+          await ref.read(getLocalFavoritesProvider(NoParams()).future);
+      favorites.fold(
+        (failure) => false,
+        (favoriteList) {
+          if (favoriteList.length >= 15) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(
+                    'Not more than 15 favorite exoplanets\nDatabase have a price 💷💷💷'),
+              ),
+            );
+            return true;
+          }
+          return false;
+        },
+      );
+      if (favorites.fold((l) => false, (r) => r.length >= 15)) return;
+
       final result = await ref.read(
           addFavoriteProvider(AddFavoriteParams(exoplanet: widget.exoplanet!))
               .future);

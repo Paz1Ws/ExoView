@@ -15,7 +15,7 @@ class FavoritesView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final future = ref.watch(getLocalFavoritesProvider(NoParams()).future);
+    final future = ref.watch(getFavoritesWithFallbackUseCaseProvider);
 
     return Scaffold(
       backgroundColor: Colors.transparent,
@@ -31,7 +31,7 @@ class FavoritesView extends ConsumerWidget {
       body: Padding(
         padding: const EdgeInsets.all(18.0),
         child: FutureBuilder<Either<Failure, dynamic>>(
-          future: future,
+          future: future.call(NoParams()),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return Center(
@@ -61,7 +61,9 @@ class FavoritesView extends ConsumerWidget {
                     itemCount: favorites.length,
                     itemBuilder: (context, index) {
                       final exoplanet = favorites[index];
-                      return TouchableExoplanetCard(exoplanet: exoplanet);
+                      return TouchableExoplanetCard(
+                        exoplanet: exoplanet,
+                      );
                     },
                   );
                 },
