@@ -25,7 +25,10 @@ class FavoritesView extends ConsumerWidget {
         backgroundColor: Colors.transparent,
         title: Text(
           'My Favorites',
-          style: AppFonts.spaceGrotesk18,
+          style: AppFonts.spaceGrotesk18.copyWith(
+            color: AppColors.white,
+            fontWeight: FontWeight.bold,
+          ),
         ),
       ),
       body: Padding(

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:myapp/config/failures/failures.dart';
+import 'package:myapp/config/theme/colors.dart';
 import 'package:myapp/config/usecase/usecase.dart';
 import 'package:myapp/core/data/data.dart';
 import 'package:myapp/core/domain/domain.dart';
@@ -46,7 +47,8 @@ final themeProvider = StateNotifierProvider<ThemeNotifier, ThemeMode>((ref) {
 });
 
 class ThemeNotifier extends StateNotifier<ThemeMode> {
-  ThemeNotifier() : super(ThemeMode.light);
+  ThemeNotifier()
+      : super(AppColors.isDarkMode ? ThemeMode.dark : ThemeMode.light);
 
   void toggleTheme() {
     if (state == ThemeMode.light) {
@@ -54,5 +56,11 @@ class ThemeNotifier extends StateNotifier<ThemeMode> {
     } else {
       state = ThemeMode.light;
     }
+    AppColors.toggleTheme();
+    state = state; // Notify listeners
+  }
+
+  void setDarkMode() {
+    AppColors.setDarkMode();
   }
 }

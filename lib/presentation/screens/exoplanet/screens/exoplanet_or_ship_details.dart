@@ -70,7 +70,7 @@ class _ExoplanetOrShipDetailsState
       );
     } else {
       final favorites =
-          await ref.read(getLocalFavoritesProvider(NoParams()).future);
+          await ref.read(getFavoritesWithFallbackProvider(NoParams()).future);
       favorites.fold(
         (failure) => false,
         (favoriteList) {
@@ -221,23 +221,23 @@ class _ExoplanetOrShipDetailsState
                           const SizedBox(
                             width: 10,
                           ),
-                          widget.isShip
-                              ? const SizedBox.shrink()
-                              : Expanded(
-                                  child: WhiteBorderContainer(
-                                      border: 2,
-                                      withAnimation: false,
-                                      width: 50,
-                                      height: 50,
-                                      widget: IconButton(
-                                        icon: const Icon(
-                                          Icons.arrow_right,
-                                          size: 25,
-                                          color: AppColors.lightGray,
-                                        ),
-                                        onPressed: () {},
-                                      )),
-                                )
+                          // widget.isShip
+                          //     ? const SizedBox.shrink()
+                          //     : Expanded(
+                          //         child: WhiteBorderContainer(
+                          //             border: 2,
+                          //             withAnimation: false,
+                          //             width: 50,
+                          //             height: 50,
+                          //             widget: IconButton(
+                          //               icon: Icon(
+                          //                 Icons.arrow_right,
+                          //                 size: 25,
+                          //                 color: AppColors.lightGray,
+                          //               ),
+                          //               onPressed: () {},
+                          //             )),
+                          //       )
                         ],
                       ),
                     ],

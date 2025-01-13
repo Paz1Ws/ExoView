@@ -3,9 +3,6 @@ import 'package:myapp/config/entities/user.dart';
 import 'package:myapp/config/failures/failures.dart';
 
 abstract interface class AuthRepository {
-  // Future<void> signInWithGoogle();
-  // Future<void> signInWithFacebook();
-  // Future<void> signInWithApple();
   Future<Either<Failure, UserEntity>> signUpWithEmailAndPassword({
     required String name,
     required String email,
@@ -17,8 +14,6 @@ abstract interface class AuthRepository {
   });
 
   Future<Either<Failure, UserEntity>> currentUser();
-  // Future<Either<Failure, AuthResponse>> verifyEmail(String code, String email);
-  // Future<void> signOut();
-  // Future<bool> isSignedIn();
-  // Future<User> getUser();
+  Future<Either<Failure, UserEntity>> signInWithGoogle();
+  Future<void> signOut();
 }

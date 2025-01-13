@@ -13,19 +13,53 @@ class ExoplanetFeaturesWrap extends StatelessWidget {
     super.key,
   });
 
+  String formatFeature(String feature, String value) {
+    switch (feature) {
+      case 'Controversial Existence':
+        return value == 'true' ? 'Yes' : 'No';
+      case 'Discovery Year':
+        return value;
+      case 'Discovery Method':
+        return value;
+      case 'Orbital Period (days)':
+        return double.parse(value).toStringAsFixed(2);
+      case 'Planet Radius (Earth radius)':
+        return double.parse(value).toStringAsFixed(2);
+      case 'Planet Mass (Earth masses)':
+        return double.parse(value).toStringAsFixed(2);
+      case 'Equilibrium Temperature (K)':
+        return double.parse(value).toStringAsFixed(2);
+      case 'Density (g/cm³)':
+        return double.parse(value).toStringAsFixed(2);
+      case 'Transit Duration (hours)':
+        return double.parse(value).toStringAsFixed(2);
+      case 'Insolation Flux (Earth fluxes)':
+        return double.parse(value).toStringAsFixed(2);
+      default:
+        return value;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final List<String> exoplanetFeaturesData = [
-      exoplanet!.isControversial.toString(),
-      exoplanet!.discoveryYear.toString(),
-      exoplanet!.discoveryMethod,
-      exoplanet!.orbitalPeriodDays.toString(),
-      exoplanet!.radiusEarthRadius.toString(),
-      exoplanet!.massEarthMass.toString(),
-      exoplanet!.equilibriumTemperature.toString(),
-      exoplanet!.density.toString(),
-      exoplanet!.transitDurationHours.toString(),
-      exoplanet!.insolationFlux.toString(),
+      formatFeature(
+          'Controversial Existence', exoplanet!.isControversial.toString()),
+      formatFeature('Discovery Year', exoplanet!.discoveryYear.toString()),
+      formatFeature('Discovery Method', exoplanet!.discoveryMethod),
+      formatFeature(
+          'Orbital Period (days)', exoplanet!.orbitalPeriodDays.toString()),
+      formatFeature('Planet Radius (Earth radius)',
+          exoplanet!.radiusEarthRadius.toString()),
+      formatFeature(
+          'Planet Mass (Earth masses)', exoplanet!.massEarthMass.toString()),
+      formatFeature('Equilibrium Temperature (K)',
+          exoplanet!.equilibriumTemperature.toString()),
+      formatFeature('Density (g/cm³)', exoplanet!.density.toString()),
+      formatFeature('Transit Duration (hours)',
+          exoplanet!.transitDurationHours.toString()),
+      formatFeature('Insolation Flux (Earth fluxes)',
+          exoplanet!.insolationFlux.toString()),
     ];
     return GridView.builder(
       shrinkWrap: true,
@@ -38,7 +72,8 @@ class ExoplanetFeaturesWrap extends StatelessWidget {
           : exoplanetFeatureData.features!.length,
       itemBuilder: (context, index) {
         return ExoplanetFeaturesCard(
-          exoplanetFeaturesData: isShip ==true?null: exoplanetFeaturesData[index],
+          exoplanetFeaturesData:
+              isShip == true ? null : exoplanetFeaturesData[index],
           features: isShip == true
               ? shipFeatureData.features![index]
               : exoplanetFeatureData.features![index],

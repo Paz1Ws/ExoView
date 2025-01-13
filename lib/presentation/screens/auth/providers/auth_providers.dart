@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:fpdart/fpdart.dart';
+import 'package:myapp/config/config.dart';
 import 'package:myapp/config/secrets/app_secrets.dart';
+import 'package:myapp/config/usecase/usecase.dart';
 import 'package:myapp/core/data/data.dart';
 import 'package:myapp/core/domain/domain.dart';
+import 'package:myapp/core/domain/usecases/auth/current_user.dart';
 import 'package:myapp/init_dependencies.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -34,6 +38,18 @@ SignUp signUpUseCase(SignUpUseCaseRef ref) {
 SignIn signInUseCase(SignInUseCaseRef ref) {
   final authRepository = ref.watch(authRepositoryProvider);
   return SignIn(authRepository);
+}
+
+@riverpod
+SignInWithGoogle signInWithGoogle(ref) {
+  final authRepository = ref.watch(authRepositoryProvider);
+  return SignInWithGoogle(authRepository);
+}
+
+@riverpod
+Future<Either<Failure, UserEntity>> getCurrentUser(GetCurrentUserRef ref) {
+  final authRepository = ref.watch(authRepositoryProvider);
+  return CurrentUser(authRepository).call(NoParams());
 }
 
 // TEXT CONTROLLERS

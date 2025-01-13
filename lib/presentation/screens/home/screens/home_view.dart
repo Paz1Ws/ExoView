@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:myapp/config/theme/theme.dart';
+import 'package:myapp/core/data/data.dart';
 import 'package:myapp/presentation/widgets/widgets.dart';
 
 class HomeView extends StatelessWidget {
-  const HomeView({super.key});
+  final Widget curveOfExoplanets;
+
+  const HomeView({super.key, required this.curveOfExoplanets});
 
   @override
   Widget build(BuildContext context) {
@@ -20,17 +23,19 @@ class HomeView extends StatelessWidget {
                 children: [
                   Text(
                     'GSD.2163.08.15.01.40',
-                    style: AppFonts.spaceGrotesk16,
+                    style: AppFonts.spaceGrotesk16
+                        .copyWith(color: AppColors.white),
                   ),
                   const SizedBox(
                     height: 5,
                   ),
                   Text(
                     'List of the 7 most famous exoplanets',
-                    style: AppFonts.spaceGrotesk12,
+                    style: AppFonts.spaceGrotesk12
+                        .copyWith(color: AppColors.white),
                   ),
                   Text(
-                    'Details in Explore Section',
+                    'Click one to see details',
                     style: AppFonts.spaceGrotesk12.copyWith(
                       color: AppColors.lightGray,
                       fontSize: 10,
@@ -46,8 +51,21 @@ class HomeView extends StatelessWidget {
               alignment: Alignment.center,
               children: [
                 CurveOfExoplanets(),
-                const Exoplanet3DContainer(
+                Exoplanet3DContainer(
                   model: 'assets/animations/exoplanets/sun.glb',
+                  exoplanet: Exoplanet(
+                    planetName: 'Sun',
+                    isControversial: false,
+                    discoveryYear: 2023,
+                    discoveryMethod: 'Transit',
+                    orbitalPeriodDays: 365.25,
+                    radiusEarthRadius: 1.0,
+                    massEarthMass: 1.0,
+                    equilibriumTemperature: 288,
+                    density: 5.51,
+                    transitDurationHours: 13.0,
+                    insolationFlux: 1.0,
+                  ),
                 ),
               ],
             ),
@@ -61,7 +79,8 @@ class HomeView extends StatelessWidget {
                 children: [
                   Text(
                     'Where do you want to go?',
-                    style: AppFonts.spaceGrotesk18,
+                    style: AppFonts.spaceGrotesk18
+                        .copyWith(color: AppColors.white),
                   ),
                   const SizedBox(
                     height: 5,
@@ -69,7 +88,7 @@ class HomeView extends StatelessWidget {
                   Text(
                     'Choose your cosmic journey',
                     style: AppFonts.spaceGrotesk12.copyWith(
-                      color: AppColors.grey,
+                      color: AppColors.veryLightGray,
                     ),
                   ),
                 ],

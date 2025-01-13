@@ -1,12 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myapp/config/theme/theme.dart';
-import 'package:myapp/presentation/screens/explore/providers/explore_view_providers.dart';
+import 'package:myapp/config/usecase/usecase.dart';
+import 'package:myapp/core/data/repositories/auth_repository_impl.dart';
+import 'package:myapp/core/domain/usecases/auth/current_user.dart';
+import 'package:myapp/presentation/screens/auth/providers/auth_providers.dart';
 import 'package:myapp/presentation/screens/home/providers/exoplanet_providers.dart';
 import 'package:myapp/presentation/screens/onboarding/welcome_screen.dart';
+import 'package:myapp/presentation/screens/settings/providers/settings_providers.dart';
+
+import 'package:url_launcher/url_launcher.dart';
 
 class SettingsContent extends ConsumerWidget {
   final Map<IconData, String> settingsOptions;
+
   const SettingsContent({
     super.key,
     required this.settingsOptions,
@@ -17,6 +24,9 @@ class SettingsContent extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, ref) {
+    final userIcon = ref.watch(userIconProvider);
+    final userAsyncValue = ref.watch(getCurrentUserProvider);
+
     return Center(
       child: SingleChildScrollView(
         child: Column(
@@ -24,26 +34,33 @@ class SettingsContent extends ConsumerWidget {
             Container(
               height: 120,
               width: 120,
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                 color: AppColors.white,
                 borderRadius: BorderRadius.all(Radius.circular(18)),
+                image: DecorationImage(
+                  image: AssetImage(userIcon),
+                ),
               ),
             ),
             const SizedBox(height: 20),
-            Text(
-              'John Doe',
-              style: AppFonts.spaceGrotesk40.copyWith(
-                color: AppColors.softPurple,
-                fontWeight: FontWeight.bold,
+            userAsyncValue.when(
+              data: (user) => Text(
+                user.fold((failure) => 'Guest', (user) => user.name),
+                textAlign: TextAlign.center,
+                style: AppFonts.spaceGrotesk30.copyWith(
+                  color: AppColors.softPurple,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
+              loading: () => Container(),
+              error: (error, stack) => Text('Error: $error'),
             ),
-            SizedBox(height: size.height * 0.05),
             Container(
               alignment: Alignment.center,
               height: size.height * 0.15,
               width: size.width * 0.8,
               decoration: const BoxDecoration(
-                color: AppColors.white,
+                color: Colors.white,
                 borderRadius: BorderRadius.all(Radius.circular(18)),
               ),
               child: Row(
@@ -60,7 +77,6 @@ class SettingsContent extends ConsumerWidget {
                   Expanded(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
                           ref.watch(visitedExoplanetsProvider).toString(),
@@ -114,10 +130,14 @@ class SettingsOptionSelector extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, ref) {
+    final themeMode = ref.watch(themeProvider);
     return GestureDetector(
         onTap: () {
           switch (text) {
             case 'Log Out':
+              ref.read(themeProvider.notifier).setDarkMode();
+              ref.read(authRepositoryProvider).signOut();
+
               Navigator.of(context).push(MaterialPageRoute(
                   builder: (context) => const WelcomeScreen()));
               break;
@@ -125,11 +145,15 @@ class SettingsOptionSelector extends ConsumerWidget {
               ref.read(themeProvider.notifier).toggleTheme();
               break;
             case 'Altern User Icon':
-              // Handle Altern User Icon action
+              ref.read(userIconProvider.notifier).alternateIcon();
               break;
 
             case 'Language':
-              // Handle Language action
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                    content: Text(
+                        '🌐 For now only English, this is a 1.0 Version 🌐\n🇺🇸 Por ahora solo ingles, se lanzarán siguientes versiones. 🇺🇸')),
+              );
               break;
             case 'Help & Support':
               showDialog(
@@ -137,48 +161,48 @@ class SettingsOptionSelector extends ConsumerWidget {
                 builder: (BuildContext context) {
                   return AlertDialog(
                     backgroundColor: AppColors.veryDarkPurple,
-                    title: Text(
-                      'Help & Support',
-                      style: AppFonts.spaceGrotesk16.copyWith(
-                          fontWeight: FontWeight.bold,
-                          color: AppColors.lightGray),
-                    ),
                     content: Column(
                       mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          'Developed By: Christopher Paz León',
-                          style: AppFonts.spaceGrotesk16.copyWith(
-                            fontWeight: FontWeight.bold,
+                        Align(
+                          alignment: Alignment.center,
+                          child: Text(
+                            '❓ Do you want to know the developer? ❓\n',
+                            style: AppFonts.spaceGrotesk16.copyWith(
+                              fontWeight: FontWeight.bold,
+                              color: AppColors.lightGray,
+                            ),
+                            textAlign: TextAlign.center,
                           ),
-                          textAlign: TextAlign.center,
                         ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        SelectableText(
-                          'Linkedin: linkedin.com/in/christopher-paz-leon-745760202/',
-                          style: AppFonts.spaceGrotesk16.copyWith(
-                              fontWeight: FontWeight.bold,
-                              color: AppColors.brightTealGreen),
-                          textAlign: TextAlign.start,
-                        ),
-                        SelectableText(
-                          'Email: rewardmnx@gmail.com',
-                          style: AppFonts.spaceGrotesk16.copyWith(
-                              fontWeight: FontWeight.bold,
-                              color: AppColors.brightTealGreen),
-                          textAlign: TextAlign.start,
+                        Center(
+                          child: SelectableText(
+                            '👉 Click here 👈',
+                            style: AppFonts.spaceGrotesk16.copyWith(
+                                fontWeight: FontWeight.bold,
+                                color: AppColors.brightTealGreen),
+                            textAlign: TextAlign.center,
+                            onTap: () async {
+                              const url =
+                                  'https://linkedin.com/in/christopher-paz-leon-745760202/';
+                              if (await canLaunchUrl(Uri.parse(url))) {
+                                await launchUrl(Uri.parse(url));
+                              } else {
+                                throw 'Could not launch $url';
+                              }
+                            },
+                          ),
                         ),
                         SizedBox(
                           height: 10,
                         ),
                         Text(
-                          'Hello, if you have any questions or need help, you can send me feedback by email or LinkedIn, also I\'m pending to comments on Play Store I hope you enjoy Exoview!',
-                          style: AppFonts.spaceGrotesk16
-                              .copyWith(fontWeight: FontWeight.bold),
+                          'Hello, if you have any questions or need help,send me feedback in private or on the comments of the Store.\nI hope you enjoy Exoview!',
+                          style: AppFonts.spaceGrotesk16.copyWith(
+                              fontWeight: FontWeight.bold,
+                              color: AppColors.lightGray),
                           textAlign: TextAlign.start,
                         ),
                       ],
@@ -205,7 +229,16 @@ class SettingsOptionSelector extends ConsumerWidget {
         },
         child: Row(
           children: [
-            Expanded(child: Icon(icon, color: AppColors.brightTealGreen)),
+            Expanded(
+              child: Icon(
+                icon == Icons.brightness_6
+                    ? (themeMode == ThemeMode.light
+                        ? Icons.wb_sunny
+                        : Icons.nights_stay)
+                    : icon,
+                color: AppColors.brightTealGreen,
+              ),
+            ),
             Expanded(
               child: Text(
                 text,

@@ -26,7 +26,7 @@ class WhiteBorderContainer extends StatelessWidget {
             glowSize: 0,
             animationTime: 5,
             borderRadius: BorderRadius.circular(border),
-            gradientColors: const [AppColors.dark, AppColors.lightGray],
+            gradientColors: [AppColors.dark, AppColors.lightGray],
             child: widget,
           )
         : Container(

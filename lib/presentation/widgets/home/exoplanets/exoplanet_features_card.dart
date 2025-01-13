@@ -24,7 +24,7 @@ class ExoplanetFeaturesCard extends StatelessWidget {
       animationTime: 3,
       animationProgress: 5,
       borderRadius: BorderRadius.circular(18),
-      gradientColors: const [
+      gradientColors: [
         AppColors.dark,
         AppColors.veryLightGray,
       ],

@@ -31,6 +31,7 @@ class PlanetAndChart extends StatelessWidget {
       children: [
         model3D != null
             ? Exoplanet3DContainer(
+                exoplanet: exoplanet,
                 model: model3D!,
               )
             : Positioned(
@@ -67,10 +68,8 @@ class PlanetAndChart extends StatelessWidget {
                     ),
                   ),
                   SizedBox(
-                    width: size.width / 3
-                    ,
-                    height: size.width / 3
-                    ,
+                    width: size.width / 3,
+                    height: size.width / 3,
                     child: SfCircularChart(
                       margin: EdgeInsets.zero,
                       series: <CircularSeries>[

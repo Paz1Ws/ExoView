@@ -6,6 +6,7 @@ import 'dart:math';
 import 'package:myapp/core/data/data.dart';
 import 'package:myapp/presentation/screens/exoplanet/screens/exoplanet_or_ship_details.dart';
 import 'package:myapp/presentation/screens/explore/providers/explore_view_providers.dart';
+import 'package:myapp/presentation/screens/settings/providers/settings_providers.dart';
 
 class TouchableExoplanetCard extends ConsumerStatefulWidget {
   final Exoplanet exoplanet;
@@ -40,30 +41,32 @@ class _TouchableExoplanetCardState
   Widget build(BuildContext context) {
     final size = MediaQuery.sizeOf(context);
     return GestureDetector(
-        onTap: () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) {
-            return ExoplanetOrShipDetails(
-              exoplanet: widget.exoplanet,
-              isShip: false,
-            );
-          }));
-          ref.read(visitedExoplanetsProvider.notifier).increment();
-        },
-        child: Container(
-          height: size.height,
-          width: double.infinity,
-          decoration: const BoxDecoration(
-              color: AppColors.brightPurple,
-              borderRadius: BorderRadius.all(
-                Radius.circular(18),
-              )),
-          child: Column(children: [
+      onTap: () {
+        Navigator.push(context, MaterialPageRoute(builder: (context) {
+          return ExoplanetOrShipDetails(
+            exoplanet: widget.exoplanet,
+            isShip: false,
+          );
+        }));
+        ref.read(visitedExoplanetsProvider.notifier).increment();
+      },
+      child: Container(
+        padding: EdgeInsets.all(12),
+        height: size.height,
+        width: double.infinity,
+        decoration: BoxDecoration(
+            color: AppColors.brightPurple,
+            borderRadius: BorderRadius.all(
+              Radius.circular(18),
+            )),
+        child: Column(
+          children: [
             Expanded(
               flex: 2,
               child: Image.asset(
                 (defaultPlanets..shuffle()).first,
                 fit: BoxFit.cover,
-                color: AppColors.veryDarkPurple,
+                color: AppColors.white,
               ),
             ),
             FittedBox(
@@ -91,38 +94,50 @@ class _TouchableExoplanetCardState
                     maxLines: 2,
                   ),
                   Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(18),
-                      border: Border.all(
-                        color: AppColors.lightGray,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(16),
+                        border: Border.all(
+                          color: AppColors.lightGray,
+                        ),
                       ),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        IconButton(
-                          onPressed: () {},
-                          icon: const Icon(FontAwesomeIcons.bookmark),
-                          iconSize: 16,
-                          color: AppColors.brightTealGreen,
-                        ),
-                        IconButton(
-                          onPressed: () {},
-                          iconSize: 16,
-                          icon: const Icon(FontAwesomeIcons.shareNodes),
-                          color: AppColors.brightTealGreen,
-                        ),
-                      ],
-                    ),
-                  )
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            IconButton(
+                              onPressed: () {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text(
+                                        'Working to display Sun 🌞 and Galaxy information 🌌'),
+                                  ),
+                                );
+                              },
+                              icon:
+                                  const Icon(FontAwesomeIcons.galacticRepublic),
+                              iconSize: 16,
+                              color: AppColors.brightTealGreen,
+                            ),
+                            IconButton(
+                              onPressed: () {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text(
+                                        'Enjoy seeing exoplanets, soon sharing will be implemented 🌍'),
+                                  ),
+                                );
+                              },
+                              icon: const Icon(FontAwesomeIcons.shareNodes),
+                              iconSize: 16,
+                              color: AppColors.brightTealGreen,
+                            ),
+                          ]))
                 ],
               ),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-          ]),
-        ));
+            )
+          ],
+        ),
+      ),
+    );
   }
 }

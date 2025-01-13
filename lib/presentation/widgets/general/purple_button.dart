@@ -19,16 +19,22 @@ class PurpleButton extends StatelessWidget {
         borderSize: 1,
         glowSize: 0,
         borderRadius: BorderRadius.circular(6),
-        gradientColors: const [
+        gradientColors: [
           AppColors.purple,
           AppColors.softPurple,
         ],
         child: Container(
+          padding: EdgeInsets.symmetric(horizontal: 4.0),
           color: AppColors.brightPurple,
           width: double.infinity,
           height: size ?? MediaQuery.of(context).size.height * 0.08,
           child: Center(
-            child: Text(text, style: AppFonts.spaceGrotesk20),
+            child: Text(
+              text,
+              style: AppFonts.spaceGrotesk20,
+              maxLines: 2,
+              textAlign: TextAlign.center,
+            ),
           ),
         ),
       ),

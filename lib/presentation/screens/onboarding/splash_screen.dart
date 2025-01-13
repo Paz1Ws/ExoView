@@ -43,8 +43,10 @@ class SplashPageState extends ConsumerState<SplashPage> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.sizeOf(context);
+
     ref.read(getRemoteExoplanetsToSaveProviderCaller);
 
+    ref.read(themeProvider.notifier).setDarkMode();
     return Scaffold(
       backgroundColor: AppColors.dark,
       body: Center(

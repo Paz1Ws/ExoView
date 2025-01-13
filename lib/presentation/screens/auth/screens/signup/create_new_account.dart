@@ -50,13 +50,6 @@ class _CreateNewAccountState extends State<CreateNewAccount> {
                   const AuthMethodLarge(
                     image: 'assets/images/auth_icons/facebook.webp',
                   ),
-                  const Spacer(),
-                  Text(
-                      'By using ExoView, you agree to our Terms of Service and Privacy Policy',
-                      textAlign: TextAlign.center,
-                      style: AppFonts.spaceGrotesk16
-                          .copyWith(color: AppColors.lightGray)),
-                  const SizedBox(height: 20),
                 ],
               ),
             ),

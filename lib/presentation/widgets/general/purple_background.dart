@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:myapp/config/theme/theme.dart';
+import 'package:myapp/presentation/screens/home/providers/exoplanet_providers.dart';
 import 'package:myapp/presentation/widgets/home/my_bottom_navigator_bar.dart';
 
 class PurpleBackground extends StatelessWidget {
@@ -25,16 +27,27 @@ class PurpleBackground extends StatelessWidget {
       child: Scaffold(
         backgroundColor: null,
         body: Container(
-          decoration: const BoxDecoration(
+          decoration: BoxDecoration(
             gradient: LinearGradient(
-              colors: [
-                Color.fromARGB(255, 25, 15, 34),
-                AppColors.veryDarkPurple,
-                Color.fromARGB(255, 44, 32, 56),
-              ],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ),
+                colors: Theme.of(context).brightness == Brightness.dark
+                    ? [
+                        AppColors.purple,
+                        AppColors.veryDarkPurple,
+                        AppColors.veryDarkPurple,
+                        AppColors.veryDarkPurple,
+                        AppColors.purple,
+                      ]
+                    : [
+                        AppColors.veryDarkPurple,
+                        AppColors.veryDarkPurple,
+                        AppColors.veryDarkPurple,
+                        AppColors.purple,
+                      ],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                stops: Theme.of(context).brightness == Brightness.dark
+                    ? [0.1, 0.12, 0.5, 0.9, 0.95]
+                    : [0.1, 0.5, 0.8, 0.95]),
           ),
           child: body,
         ),
@@ -45,7 +58,7 @@ class PurpleBackground extends StatelessWidget {
                 backgroundColor: Colors.transparent,
                 elevation: 0,
                 leading: IconButton(
-                  icon: const Icon(
+                  icon: Icon(
                     FontAwesomeIcons.arrowLeft,
                     color: AppColors.white,
                   ),

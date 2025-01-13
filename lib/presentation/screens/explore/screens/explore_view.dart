@@ -125,7 +125,8 @@ class _ExploreViewState extends ConsumerState<ExploreView> {
                                     speed: const Duration(milliseconds: 200),
                                     textAlign: TextAlign.center,
                                     textStyle: AppFonts.spaceGrotesk40.copyWith(
-                                        fontWeight: FontWeight.normal),
+                                        fontWeight: FontWeight.normal,
+                                        color: AppColors.lightGray),
                                   ),
                                 ],
                               ),

@@ -54,7 +54,6 @@ Future<void> initDependencies() async {
   serviceLocator.registerFactory(() => FavoritesRemoteDataSource(
         serviceLocator(),
         serviceLocator(),
-        
         serviceLocator(),
       ));
 
@@ -107,6 +106,11 @@ void _initAuth() {
     )
     ..registerFactory(
       () => SignIn(
+        serviceLocator(),
+      ),
+    )
+    ..registerFactory(
+      () => SignInWithGoogle(
         serviceLocator(),
       ),
     );

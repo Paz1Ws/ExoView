@@ -16,8 +16,9 @@ class LoginScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text('Hallo!',
-                style: AppFonts.spaceGrotesk40
-                    .copyWith(fontWeight: FontWeight.bold)),
+                style: AppFonts.spaceGrotesk40.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.brightTealGreen)),
             const SizedBox(height: 10),
             Text('Please login to start',
                 style: AppFonts.spaceGrotesk18

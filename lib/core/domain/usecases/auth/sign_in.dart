@@ -16,6 +16,16 @@ class SignIn implements UseCase<UserEntity, SignInParams> {
   }
 }
 
+class SignInWithGoogle implements UseCase<UserEntity, NoParams> {
+  final AuthRepositoryImpl authRepository;
+  const SignInWithGoogle(this.authRepository);
+
+  @override
+  Future<Either<Failure, UserEntity>> call(NoParams params) async {
+    return await authRepository.signInWithGoogle();
+  }
+}
+
 class SignInParams {
   final String email;
   final String password;

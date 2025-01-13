@@ -18,11 +18,11 @@ class MyBottomNavigationBar extends StatelessWidget {
       elevation: 0,
       type: BottomNavigationBarType.fixed,
       selectedItemColor: AppColors.brightTealGreen,
-      selectedIconTheme: const IconThemeData(color: AppColors.brightTealGreen),
+      selectedIconTheme: IconThemeData(color: AppColors.brightTealGreen),
       unselectedItemColor: AppColors.veryLightGray,
       currentIndex: currentIndex,
       onTap: onTap,
-      unselectedIconTheme: const IconThemeData(color: AppColors.veryLightGray),
+      unselectedIconTheme: IconThemeData(color: AppColors.veryLightGray),
       items: const [
         BottomNavigationBarItem(
           icon: Icon(FontAwesomeIcons.rocket),

@@ -11,28 +11,6 @@ import '../../home/providers/exoplanet_providers.dart';
 import 'package:flutter/material.dart';
 part 'explore_view_providers.g.dart';
 
-void initializeHive() async {
-  await Hive.initFlutter();
-  await Hive.openBox<int>('visitedExoplanetsBox');
-}
-
-class VisitedExoplanetsNotifier extends StateNotifier<int> {
-  VisitedExoplanetsNotifier() : super(0) {
-    _loadVisitedExoplanetsCount();
-  }
-
-  void _loadVisitedExoplanetsCount() {
-    final box = Hive.box<int>('visitedExoplanetsBox');
-    state = box.get('count', defaultValue: 0) ?? 0;
-  }
-
-  void increment() {
-    state++;
-    final box = Hive.box<int>('visitedExoplanetsBox');
-    box.put('count', state);
-  }
-}
-
 @riverpod
 Future<Either<Failure, List<Exoplanet>>> getAllExoplanets(Ref ref) async {
   final localDataSource = ref.read(exoplanetLocalDataSourceProvider);
@@ -99,11 +77,6 @@ class BoolNotifier extends StateNotifier<bool> {
     state = value;
   }
 }
-
-final visitedExoplanetsProvider =
-    StateNotifierProvider<VisitedExoplanetsNotifier, int>((ref) {
-  return VisitedExoplanetsNotifier();
-});
 
 @riverpod
 RangeValues discoveryYearRange(Ref ref) {

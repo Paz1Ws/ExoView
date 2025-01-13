@@ -28,15 +28,21 @@ class WelcomeScreen extends ConsumerWidget {
                 TypewriterAnimatedText('Welcome to ExoView',
                     speed: const Duration(milliseconds: 200),
                     textStyle: AppFonts.spaceGrotesk40
-                        .copyWith(fontWeight: FontWeight.normal)),
+                        .copyWith(fontWeight: FontWeight.bold)),
               ],
             ),
             const SizedBox(height: 20),
             Text(
                 'Revolutionize the way you see the stars, go beyond the limits',
                 style: AppFonts.spaceGrotesk20
-                    .copyWith(color: AppColors.lightGray)),
-            SizedBox(height: size.height * 0.1),
+                    .copyWith(color: AppColors.lightGray, shadows: [
+                  Shadow(
+                    offset: Offset(3.0, 2.0),
+                    blurRadius: 2.0,
+                    color: Color.fromARGB(255, 0, 0, 0),
+                  ),
+                ])),
+            SizedBox(height: size.height * 0.05),
             PurpleButton(
               text: 'Tap to Launch',
               onTap: () {

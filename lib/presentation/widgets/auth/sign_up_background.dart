@@ -19,7 +19,7 @@ class SignUpBackground extends StatelessWidget {
           Container(
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height,
-            decoration: const BoxDecoration(
+            decoration: BoxDecoration(
               gradient: RadialGradient(
                 focalRadius: 0.2,
                 radius: 1.5,
@@ -38,12 +38,6 @@ class SignUpBackground extends StatelessWidget {
                   child: body,
                 ),
               ),
-              const Spacer(),
-              Text(
-                  'By using ExoView, you agree to our Terms of Service and Privacy Policy',
-                  textAlign: TextAlign.center,
-                  style: AppFonts.spaceGrotesk16
-                      .copyWith(color: AppColors.lightGray)),
               const SizedBox(height: 10),
             ],
           ),

@@ -54,7 +54,7 @@ class _BackgroundWithImageState extends State<BackgroundWithImage> {
                 title:
                     Text('Create new account', style: AppFonts.spaceGrotesk18),
                 leading: IconButton(
-                  icon: const Icon(
+                  icon: Icon(
                     Icons.arrow_back_ios,
                     color: AppColors.veryLightGray,
                   ),

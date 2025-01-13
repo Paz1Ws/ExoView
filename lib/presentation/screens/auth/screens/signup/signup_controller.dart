@@ -83,7 +83,7 @@ class _SignUpControllerState extends State<SignUpController> {
           ],
         ),
         leading: IconButton(
-          icon: const Icon(
+          icon: Icon(
             Icons.arrow_back_ios,
             color: AppColors.veryLightGray,
           ),

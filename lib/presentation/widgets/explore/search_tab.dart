@@ -76,6 +76,7 @@ class _SearchTabState extends ConsumerState<SearchTab> {
             height: 50,
             width: double.infinity,
             child: Row(
+              mainAxisSize: MainAxisSize.max,
               children: [
                 Expanded(
                   flex: 3,
@@ -106,7 +107,7 @@ class _SearchTabState extends ConsumerState<SearchTab> {
                 ),
                 Expanded(
                   child: Container(
-                    decoration: const BoxDecoration(
+                    decoration: BoxDecoration(
                       color: AppColors.brightTealGreen,
                       borderRadius: BorderRadius.only(
                         bottomLeft: Radius.circular(20),

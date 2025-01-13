@@ -2,16 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:myapp/config/theme/theme.dart';
+import 'package:myapp/presentation/screens/home/providers/exoplanet_providers.dart';
 import 'package:myapp/presentation/widgets/widgets.dart';
 
-class SettingsView extends StatelessWidget {
-  // final User user;
+class SettingsView extends ConsumerWidget {
   const SettingsView({super.key});
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, ref) {
     final Map<IconData, String> settingsOptions = {
       FontAwesomeIcons.userAstronaut: 'Altern User Icon',
-      FontAwesomeIcons.moon: 'Theme',
+      ref.watch(themeProvider) == ThemeMode.light
+          ? FontAwesomeIcons.moon
+          : FontAwesomeIcons.sun: 'Theme',
       FontAwesomeIcons.language: 'Language',
       FontAwesomeIcons.bullhorn: 'Help & Support',
       FontAwesomeIcons.rightFromBracket: 'Log Out',

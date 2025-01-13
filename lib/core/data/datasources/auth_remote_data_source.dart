@@ -1,6 +1,9 @@
 import 'package:myapp/config/failures/exceptions.dart';
 import 'package:myapp/core/data/models/user_model.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+
+import 'package:myapp/config/secrets/app_secrets.dart';
 
 abstract interface class AuthRemoteDataSource {
   Session? get currentUserSession;
@@ -14,6 +17,8 @@ abstract interface class AuthRemoteDataSource {
     required String password,
   });
   Future<UserModel?> getCurrentUserData();
+  Future<UserModel> signInWithGoogle();
+  Future<void> signOut();
 }
 
 class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
@@ -86,5 +91,41 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     } catch (e) {
       throw ServerException(e.toString());
     }
+  }
+
+  @override
+  Future<UserModel> signInWithGoogle() async {
+    try {
+      final GoogleSignIn googleSignIn = await GoogleSignIn(
+          clientId:
+              '562764885619-1l3lipveo7i7s4qemljiavri1b2esjne.apps.googleusercontent.com',
+          serverClientId:
+              '562764885619-d53885qttb8ltlc6t5cvbn84om5p58uo.apps.googleusercontent.com');
+
+      final googleUser = await googleSignIn.signIn();
+      final GoogleSignInAuthentication googleAuth =
+          await googleUser!.authentication;
+      final idToken = googleAuth.idToken!;
+      final accessToken = googleAuth.accessToken;
+      final response = await supabaseClient.auth.signInWithIdToken(
+        provider: OAuthProvider.google,
+        idToken: idToken,
+        accessToken: accessToken,
+      );
+      if (response.user == null) {
+        throw ServerException('User is null!');
+      }
+      return UserModel.fromJson(response.user!.toJson());
+    } on AuthException catch (e) {
+      throw ServerException(e.message);
+    } catch (e) {
+      throw ServerException(e.toString());
+    }
+  }
+
+  @override
+  Future<void> signOut() async {
+    await GoogleSignIn().signOut();
+    await supabaseClient.auth.signOut();
   }
 }

@@ -14,12 +14,22 @@ class HomeViewController extends ConsumerStatefulWidget {
 class _HomeViewControllerState extends ConsumerState<HomeViewController> {
   final PageController _pageController = PageController();
   int _selectedIndex = 0;
-  final List<Widget> pages = [
-    const HomeView(),
-    ExploreView(),
-    const FavoritesView(),
-    const SettingsView(),
-  ];
+  final Widget curveOfExoplanets = CurveOfExoplanets();
+
+  late List<Widget> pages;
+
+  @override
+  void initState() {
+    super.initState();
+    pages = [
+      HomeView(
+        curveOfExoplanets: curveOfExoplanets,
+      ),
+      ExploreView(),
+      const FavoritesView(),
+      const SettingsView(),
+    ];
+  }
 
   void _onItemTapped(int index) {
     setState(() {
@@ -31,8 +41,6 @@ class _HomeViewControllerState extends ConsumerState<HomeViewController> {
       duration: const Duration(milliseconds: 300),
       curve: Curves.easeInOut,
     );
-
-    // ref.read(filteredExoplanetsP) = [];
   }
 
   @override
@@ -44,7 +52,10 @@ class _HomeViewControllerState extends ConsumerState<HomeViewController> {
       body: PageView(
         physics: const NeverScrollableScrollPhysics(),
         controller: _pageController,
-        children: pages,
+        children: [
+          HomeView(curveOfExoplanets: curveOfExoplanets),
+          ...pages.sublist(1),
+        ],
       ),
     );
   }
