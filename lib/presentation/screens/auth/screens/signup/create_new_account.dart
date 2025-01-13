@@ -39,17 +39,17 @@ class _CreateNewAccountState extends State<CreateNewAccount> {
                   ),
                   const Spacer(),
                   const SizedBox(height: 15),
-                  const AuthMethodLarge(
-                    image: 'assets/images/auth_icons/google.webp',
-                  ),
-                  const SizedBox(height: 15),
-                  const AuthMethodLarge(
-                    image: 'assets/images/auth_icons/apple.webp',
-                  ),
-                  const SizedBox(height: 15),
-                  const AuthMethodLarge(
-                    image: 'assets/images/auth_icons/facebook.webp',
-                  ),
+                  // const AuthMethodLarge(
+                  //   image: 'assets/images/auth_icons/google.webp',
+                  // ),
+                  // const SizedBox(height: 15),
+                  // const AuthMethodLarge(
+                  //   image: 'assets/images/auth_icons/apple.webp',
+                  // ),
+                  // const SizedBox(height: 15),
+                  // const AuthMethodLarge(
+                  //   image: 'assets/images/auth_icons/facebook.webp',
+                  // ),
                 ],
               ),
             ),

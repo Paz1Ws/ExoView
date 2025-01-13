@@ -30,7 +30,7 @@ class HomeView extends StatelessWidget {
                     height: 5,
                   ),
                   Text(
-                    'List of the 7 most famous exoplanets',
+                    'List of 7 famous exoplanets, click them a lot of times!',
                     style: AppFonts.spaceGrotesk12
                         .copyWith(color: AppColors.white),
                   ),
@@ -50,23 +50,27 @@ class HomeView extends StatelessWidget {
               fit: StackFit.expand,
               alignment: Alignment.center,
               children: [
-                CurveOfExoplanets(),
-                Exoplanet3DContainer(
-                  model: 'assets/animations/exoplanets/sun.glb',
-                  exoplanet: Exoplanet(
-                    planetName: 'Sun',
-                    isControversial: false,
-                    discoveryYear: 2023,
-                    discoveryMethod: 'Transit',
-                    orbitalPeriodDays: 365.25,
-                    radiusEarthRadius: 1.0,
-                    massEarthMass: 1.0,
-                    equilibriumTemperature: 288,
-                    density: 5.51,
-                    transitDurationHours: 13.0,
-                    insolationFlux: 1.0,
+                FittedBox(
+                  fit: BoxFit.cover,
+                  child: Exoplanet3DContainer(
+                    translation: Matrix4.translationValues(0, 10, 0),
+                    model: 'assets/animations/exoplanets/sun.glb',
+                    exoplanet: Exoplanet(
+                      planetName: 'Sun',
+                      isControversial: false,
+                      discoveryYear: 2023,
+                      discoveryMethod: 'Transit',
+                      orbitalPeriodDays: 365.25,
+                      radiusEarthRadius: 1.0,
+                      massEarthMass: 1.0,
+                      equilibriumTemperature: 288,
+                      density: 5.51,
+                      transitDurationHours: 13.0,
+                      insolationFlux: 1.0,
+                    ),
                   ),
                 ),
+                CurveOfExoplanets(),
               ],
             ),
           ),

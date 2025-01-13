@@ -21,23 +21,25 @@ class Exoplanet3DContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onDoubleTap: () => Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => ExoplanetOrShipDetails(
-            exoplanet: exoplanet,
-          ),
-        ),
-      ),
-      child: Transform(
-        transform: translation ?? Matrix4.identity()
-          ..translate(-MediaQuery.sizeOf(context).width / 3, 0.0, 0.0),
-        child: Center(
+    return Transform(
+      transform: translation ?? Matrix4.identity()
+        ..translate(-MediaQuery.sizeOf(context).width / 3, 0.0, 0.0),
+      child: InkWell(
+          onTap: () {
+            if (model != "assets/animations/exoplanets/sun.glb")
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => ExoplanetOrShipDetails(
+                    exoplanet: exoplanet,
+                    model3D: model,
+                  ),
+                ),
+              );
+          },
           child: Container(
-            height: height ?? MediaQuery.sizeOf(context).height / 2,
+            height: height ?? MediaQuery.sizeOf(context).height,
             width: width ?? MediaQuery.sizeOf(context).width / 1.5,
-            color: Colors.transparent,
             child: ClipOval(
               child: ModelViewer(
                 backgroundColor: Colors.transparent,
@@ -54,9 +56,7 @@ class Exoplanet3DContainer extends StatelessWidget {
                 debugLogging: true, // Habilitar logging para depuración
               ),
             ),
-          ),
-        ),
-      ),
+          )),
     );
   }
 }

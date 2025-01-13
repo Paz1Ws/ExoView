@@ -124,7 +124,7 @@ class CurveOfExoplanets extends StatelessWidget {
     final curveRadius = size.height / 3; // Adjust curve radius as needed
 
     return Stack(
-      children: List.generate(images.length, (index) {
+      children: List.generate(7, (index) {
         // Calculate the angle for the current index
         double angle = (index / (images.length - 1)) * 1.52 * pi;
 

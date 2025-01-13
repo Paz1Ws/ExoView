@@ -44,23 +44,23 @@ class InsertCredencialsContainer extends ConsumerWidget {
                     withVisibility: true,
                   ),
                   const SizedBox(height: 10),
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: GestureDetector(
-                      onTap: () async {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) =>
-                                const PasswordResetController()));
-                      },
-                      child: Text(
-                        'Recover password?',
-                        style: AppFonts.spaceGrotesk16.copyWith(
-                          color: AppColors.lightGray,
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 10),
+                  // Align(
+                  //   alignment: Alignment.centerRight,
+                  //   child: GestureDetector(
+                  //     onTap: () async {
+                  //       Navigator.of(context).push(MaterialPageRoute(
+                  //           builder: (context) =>
+                  //               const PasswordResetController()));
+                  //     },
+                  //     child: Text(
+                  //       'Recover password?',
+                  //       style: AppFonts.spaceGrotesk16.copyWith(
+                  //         color: AppColors.lightGray,
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
+                  // const SizedBox(height: 10),
                   PurpleButton(
                     text: 'Login',
                     onTap: () async {

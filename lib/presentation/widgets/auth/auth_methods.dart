@@ -24,11 +24,10 @@ class AuthMethods extends ConsumerWidget {
                     SnackBar(
                         content:
                             Text('Failed to sign in with Google: $failure'))),
-                (user) =>
-                    Navigator.of(context).pushReplacement(MaterialPageRoute(
-                        builder: (context) => HomeView(
-                              curveOfExoplanets: CurveOfExoplanets(),
-                            ))),
+                (user) => Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            HomeView(curveOfExoplanets: CurveOfExoplanets()))),
               );
             },
           ),
