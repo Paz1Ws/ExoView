@@ -1,3 +1,5 @@
+import 'dart:async';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -8,9 +10,11 @@ import 'presentation/screens/onboarding/splash_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  unawaited(MobileAds.instance.initialize());
   await Hive.initFlutter();
   await Hive.openBox<int>('visitedExoplanetsBox');
   await Hive.openBox<String>('userIconBox');
+  await Hive.openBox<List>('favoriteExoplanetsBox'); // New box for favorites
   await AppColors.loadTheme();
 
   await initDependencies();

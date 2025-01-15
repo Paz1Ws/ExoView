@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myapp/config/usecase/usecase.dart';
 import 'package:myapp/presentation/screens/auth/providers/auth_providers.dart';
 import 'package:myapp/presentation/screens/home/screens/home_view.dart';
+import 'package:myapp/presentation/screens/home/screens/home_view_controller.dart';
 import 'package:myapp/presentation/widgets/home/curve_of_exoplanets.dart';
 
 class AuthMethods extends ConsumerWidget {
@@ -26,8 +27,7 @@ class AuthMethods extends ConsumerWidget {
                             Text('Failed to sign in with Google: $failure'))),
                 (user) => Navigator.of(context).pushReplacement(
                     MaterialPageRoute(
-                        builder: (context) =>
-                            HomeView(curveOfExoplanets: CurveOfExoplanets()))),
+                        builder: (context) => HomeViewController())),
               );
             },
           ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hive/hive.dart';
 import 'package:myapp/config/theme/theme.dart';
 import 'package:myapp/config/usecase/usecase.dart';
 import 'package:myapp/core/data/repositories/auth_repository_impl.dart';
@@ -8,6 +9,7 @@ import 'package:myapp/presentation/screens/auth/providers/auth_providers.dart';
 import 'package:myapp/presentation/screens/home/providers/exoplanet_providers.dart';
 import 'package:myapp/presentation/screens/onboarding/welcome_screen.dart';
 import 'package:myapp/presentation/screens/settings/providers/settings_providers.dart';
+import 'package:myapp/core/data/datasources/auth_remote_data_source.dart';
 
 import 'package:url_launcher/url_launcher.dart';
 
@@ -24,8 +26,29 @@ class SettingsContent extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, ref) {
+    return FutureBuilder(
+      future: _getUserName(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(child: CircularProgressIndicator());
+        } else if (snapshot.hasError) {
+          return Center(child: Text('Error: ${snapshot.error}'));
+        } else {
+          final name = snapshot.data;
+          return _buildContent(context, ref, name);
+        }
+      },
+    );
+  }
+
+  Future<dynamic> _getUserName() async {
+    final box = await Hive.openBox('credentialsBox');
+    return box.get('name');
+  }
+
+  Widget _buildContent(BuildContext context, WidgetRef ref, String? name) {
     final userIcon = ref.watch(userIconProvider);
-    final userAsyncValue = ref.watch(getCurrentUserProvider);
+    final size = MediaQuery.of(context).size;
 
     return Center(
       child: SingleChildScrollView(
@@ -43,17 +66,13 @@ class SettingsContent extends ConsumerWidget {
               ),
             ),
             const SizedBox(height: 20),
-            userAsyncValue.when(
-              data: (user) => Text(
-                user.fold((failure) => 'Guest', (user) => user.name),
-                textAlign: TextAlign.center,
-                style: AppFonts.spaceGrotesk30.copyWith(
-                  color: AppColors.softPurple,
-                  fontWeight: FontWeight.bold,
-                ),
+            Text(
+              name ?? 'Guest',
+              textAlign: TextAlign.center,
+              style: AppFonts.spaceGrotesk30.copyWith(
+                color: AppColors.softPurple,
+                fontWeight: FontWeight.bold,
               ),
-              loading: () => Container(),
-              error: (error, stack) => Text('Error: $error'),
             ),
             Container(
               alignment: Alignment.center,

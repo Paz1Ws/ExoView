@@ -83,7 +83,7 @@ final signInUseCaseProvider = AutoDisposeProvider<SignIn>.internal(
 );
 
 typedef SignInUseCaseRef = AutoDisposeProviderRef<SignIn>;
-String _$signInWithGoogleHash() => r'efd8ba737353464adb2c6bb10492f3f182f113c4';
+String _$signInWithGoogleHash() => r'dfb10bbd77f8cb8f5bf53b6c80a1e8bf00b21686';
 
 /// See also [signInWithGoogle].
 @ProviderFor(signInWithGoogle)
@@ -103,7 +103,7 @@ String _$getCurrentUserHash() => r'52ab1ff1580719603f7120a55a52c641047d4fcf';
 /// See also [getCurrentUser].
 @ProviderFor(getCurrentUser)
 final getCurrentUserProvider =
-    AutoDisposeFutureProvider<Either<Failure, UserEntity>>.internal(
+    AutoDisposeFutureProvider<Either<Failure, UserModel>>.internal(
   getCurrentUser,
   name: r'getCurrentUserProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -114,7 +114,7 @@ final getCurrentUserProvider =
 );
 
 typedef GetCurrentUserRef
-    = AutoDisposeFutureProviderRef<Either<Failure, UserEntity>>;
+    = AutoDisposeFutureProviderRef<Either<Failure, UserModel>>;
 String _$nameControllerHash() => r'239267bb64e385c6451f45ae34b3eca42a216a1a';
 
 /// See also [nameController].

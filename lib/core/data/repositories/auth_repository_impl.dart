@@ -7,7 +7,7 @@ import 'package:myapp/core/domain/repositories/auth_repository.dart';
 import 'package:fpdart/fpdart.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
-  final AuthRemoteDataSource remoteDataSource;
+  final AuthRemoteDataSourceImpl remoteDataSource;
   final ConnectionChecker connectionChecker;
   const AuthRepositoryImpl(
     this.remoteDataSource,
@@ -15,9 +15,9 @@ class AuthRepositoryImpl implements AuthRepository {
   );
 
   @override
-  Future<Either<Failure, UserEntity>> currentUser() async {
+  Future<Either<Failure, UserModel>> currentUser() async {
     try {
-      if (!await (connectionChecker.isConnected)) {
+      if (remoteDataSource.currentUserSession != null) {
         final session = remoteDataSource.currentUserSession;
 
         if (session == null) {
@@ -44,7 +44,7 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<Either<Failure, UserEntity>> signInWithEmailAndPassword({
+  Future<Either<Failure, UserModel>> signInWithEmailAndPassword({
     required String email,
     required String password,
   }) async {
@@ -57,7 +57,7 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<Either<Failure, UserEntity>> signUpWithEmailAndPassword({
+  Future<Either<Failure, UserModel>> signUpWithEmailAndPassword({
     required String name,
     required String email,
     required String password,
@@ -72,7 +72,7 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<Either<Failure, UserEntity>> signInWithGoogle() async {
+  Future<Either<Failure, UserModel>> signInWithGoogle() async {
     return _getUser(() async => await remoteDataSource.signInWithGoogle());
   }
 
@@ -81,8 +81,8 @@ class AuthRepositoryImpl implements AuthRepository {
     await remoteDataSource.signOut();
   }
 
-  Future<Either<Failure, UserEntity>> _getUser(
-    Future<UserEntity> Function() fn,
+  Future<Either<Failure, UserModel>> _getUser(
+    Future<UserModel> Function() fn,
   ) async {
     try {
       if (!await (connectionChecker.isConnected)) {

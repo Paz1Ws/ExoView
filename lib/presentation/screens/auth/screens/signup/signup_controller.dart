@@ -18,8 +18,8 @@ class _SignUpControllerState extends State<SignUpController> {
   void _onItemTapped(int index) {
     setState(() {
       title = titles[index];
+      dotIndex = index;
     });
-    dotIndex = index;
     _pageController.animateToPage(
       index,
       duration: const Duration(milliseconds: 300),
@@ -94,6 +94,12 @@ class _SignUpControllerState extends State<SignUpController> {
       ),
       body: PageView(
         controller: _pageController,
+        onPageChanged: (index) {
+          setState(() {
+            title = titles[index];
+            dotIndex = index;
+          });
+        },
         children: pages,
       ),
     );

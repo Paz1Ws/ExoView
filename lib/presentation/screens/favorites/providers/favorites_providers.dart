@@ -52,6 +52,12 @@ GetFavoritesWithFallback getFavoritesWithFallbackUseCase(
   return GetFavoritesWithFallback(repository);
 }
 
+@riverpod
+SyncFavorites syncFavoritesUseCase(SyncFavoritesUseCaseRef ref) {
+  final repository = ref.watch(favoritesRepositoryProvider);
+  return SyncFavorites(repository);
+}
+
 // Providers para interactuar con los Use Cases
 @riverpod
 Future<Either<Failure, void>> addFavorite(
@@ -97,4 +103,10 @@ Future<Either<Failure, List<Exoplanet>>> getFavoritesWithFallback(
     GetFavoritesWithFallbackRef ref, NoParams params) async {
   final useCase = ref.watch(getFavoritesWithFallbackUseCaseProvider);
   return await useCase(params);
+}
+
+@riverpod
+Future<Either<Failure, void>> syncFavorites(SyncFavoritesRef ref) async {
+  final useCase = ref.watch(syncFavoritesUseCaseProvider);
+  return await useCase(NoParams());
 }

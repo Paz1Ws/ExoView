@@ -47,7 +47,7 @@ SignInWithGoogle signInWithGoogle(ref) {
 }
 
 @riverpod
-Future<Either<Failure, UserEntity>> getCurrentUser(GetCurrentUserRef ref) {
+Future<Either<Failure, UserModel>> getCurrentUser(GetCurrentUserRef ref) {
   final authRepository = ref.watch(authRepositoryProvider);
   return CurrentUser(authRepository).call(NoParams());
 }

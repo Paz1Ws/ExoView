@@ -110,3 +110,14 @@ class GetFavoritesWithFallback implements UseCase<List<Exoplanet>, NoParams> {
     }
   }
 }
+
+class SyncFavorites implements UseCase<void, NoParams> {
+  final FavoritesRepositoryImpl repository;
+
+  SyncFavorites(this.repository);
+
+  @override
+  Future<Either<Failure, void>> call(NoParams params) async {
+    return await repository.syncFavorites();
+  }
+}

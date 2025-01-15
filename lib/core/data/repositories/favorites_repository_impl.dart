@@ -70,4 +70,24 @@ class FavoritesRepositoryImpl implements FavoritesRepository {
       return Left(Failure('Failed to fetch favorites: $e'));
     }
   }
+
+  Future<Either<Failure, void>> syncFavorites() async {
+    try {
+      final remoteFavorites = await remoteDataSource.getFavorites();
+      final localFavoritesResult =
+          await remoteDataSource.getLocalFavoriteExoplanets();
+
+      return localFavoritesResult.fold(
+        (failure) => Left(failure),
+        (localFavorites) async {
+          // Replace local favorites with remote favorites
+          await remoteDataSource.box.put('favoriteExoplanets',
+              remoteFavorites.map((e) => e.toJson()).toList());
+          return const Right(null);
+        },
+      );
+    } catch (e) {
+      return Left(Failure('Failed to sync favorites: $e'));
+    }
+  }
 }

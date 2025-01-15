@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:myapp/config/theme/theme.dart';
 import 'package:myapp/core/domain/usecases/auth/sign_up.dart';
 import 'package:myapp/presentation/screens/auth/providers/auth_providers.dart';
 import 'package:myapp/presentation/widgets/widgets.dart';
+import 'package:myapp/utils/validation_utils.dart';
 
 class CreateYourPassword extends ConsumerWidget {
   final bool? recoverPassword;
@@ -23,44 +25,40 @@ class CreateYourPassword extends ConsumerWidget {
     final name = ref.watch(nameControllerProvider).text;
     final verifyPasswordController =
         ref.watch(verifyPasswordControllerProvider);
-
-    void showPasswordMismatchAlert(BuildContext context) {
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20),
-            ),
-            backgroundColor: AppColors.white,
-            content: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const SizedBox(height: 10),
-                Text(
-                  'Passwords do not match!',
-                  style: AppFonts.spaceGrotesk20.copyWith(
-                      color: AppColors.veryDarkPurple,
-                      fontWeight: FontWeight.bold),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Text(
-                  'Please make sure both passwords are the same.',
-                  textAlign: TextAlign.center,
-                  style: AppFonts.spaceGrotesk16
-                      .copyWith(color: AppColors.darkGray),
-                ),
-              ],
-            ),
-          );
-        },
-      );
+    bool arePasswordsMatching() {
+      return ValidationUtils.arePasswordsMatching(
+          passwordController.text, verifyPasswordController.text);
     }
 
-    bool arePasswordsMatching() {
-      return passwordController.text == verifyPasswordController.text;
+    void validateAndProceed() async {
+      final box = await Hive.openBox('credentialsBox');
+
+      if (!arePasswordsMatching()) {
+        ValidationUtils.showPasswordMismatchAlert(context);
+        return;
+      }
+
+      if (passwordController.text.isNotEmpty &&
+          verifyPasswordController.text.isNotEmpty) {
+        if (passwordController.text.length < 6) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+                content: Text('Password must be at least 6 characters long')),
+          );
+          return;
+        }
+        await signUpUseCase(SignUpParams(
+          email: email,
+          password: passwordController.text,
+          name: name,
+        ));
+        await box.put('name', name);
+        _onItemTapped();
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Please fill in both password fields')),
+        );
+      }
     }
 
     return SignUpBackground(
@@ -85,55 +83,7 @@ class CreateYourPassword extends ConsumerWidget {
         ),
         PurpleButton(
           text: 'Create Account',
-          onTap: () async {
-            if (recoverPassword!) {
-              showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  return AlertDialog(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    backgroundColor: AppColors.white,
-                    content: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Image.asset('assets/images/password_recovered.webp'),
-                        const SizedBox(height: 10),
-                        Text(
-                          'Congratulations!',
-                          style: AppFonts.spaceGrotesk20.copyWith(
-                              color: AppColors.veryDarkPurple,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Text(
-                          'OK, password successfully reset, you\'ll be redirected to login screen now.',
-                          textAlign: TextAlign.center,
-                          style: AppFonts.spaceGrotesk16
-                              .copyWith(color: AppColors.darkGray),
-                        ),
-                      ],
-                    ),
-                  );
-                },
-              );
-            } else {
-              if (!arePasswordsMatching()) {
-                showPasswordMismatchAlert(context);
-                return;
-              }
-
-              await signUpUseCase(SignUpParams(
-                email: email,
-                password: passwordController.text,
-                name: name,
-              ));
-              _onItemTapped();
-            }
-          },
+          onTap: validateAndProceed,
         )
       ],
     ));

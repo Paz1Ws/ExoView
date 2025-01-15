@@ -124,6 +124,23 @@ final getFavoritesWithFallbackUseCaseProvider =
 
 typedef GetFavoritesWithFallbackUseCaseRef
     = AutoDisposeProviderRef<GetFavoritesWithFallback>;
+String _$syncFavoritesUseCaseHash() =>
+    r'70a9c0f33c4052a5356b838a8f75b9b591e9b793';
+
+/// See also [syncFavoritesUseCase].
+@ProviderFor(syncFavoritesUseCase)
+final syncFavoritesUseCaseProvider =
+    AutoDisposeProvider<SyncFavorites>.internal(
+  syncFavoritesUseCase,
+  name: r'syncFavoritesUseCaseProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$syncFavoritesUseCaseHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef SyncFavoritesUseCaseRef = AutoDisposeProviderRef<SyncFavorites>;
 String _$addFavoriteHash() => r'094a2ad93949b067856cddacf899e6996eb3852d';
 
 /// Copied from Dart SDK
@@ -940,5 +957,22 @@ class _GetFavoritesWithFallbackProviderElement
   @override
   NoParams get params => (origin as GetFavoritesWithFallbackProvider).params;
 }
+
+String _$syncFavoritesHash() => r'49486b7df1c4f4cbd39983d5ed1ec3554191d7f2';
+
+/// See also [syncFavorites].
+@ProviderFor(syncFavorites)
+final syncFavoritesProvider =
+    AutoDisposeFutureProvider<Either<Failure, void>>.internal(
+  syncFavorites,
+  name: r'syncFavoritesProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$syncFavoritesHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef SyncFavoritesRef = AutoDisposeFutureProviderRef<Either<Failure, void>>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

@@ -83,7 +83,11 @@ void _initAuth() {
     ..registerFactory<ExoplanetRemoteDataSource>(
       () => ExoplanetRemoteDataSourceImpl(),
     )
-
+    ..registerFactory<AuthRemoteDataSourceImpl>(
+      () => AuthRemoteDataSourceImpl(
+        serviceLocator(),
+      ),
+    )
     // Repositories
     ..registerFactory<AuthRepository>(
       () => AuthRepositoryImpl(
