@@ -2,7 +2,6 @@ import 'dart:async';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myapp/config/theme/fonts.dart';
 import 'package:myapp/config/theme/theme.dart';
 import 'package:myapp/presentation/screens/explore/providers/explore_view_providers.dart';
 import 'package:myapp/presentation/widgets/widgets.dart';

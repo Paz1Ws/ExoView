@@ -3,7 +3,6 @@ import 'package:myapp/core/data/data.dart';
 import 'package:myapp/core/data/datasources/favorites_data_source.dart';
 import 'package:myapp/core/domain/repositories/favorites_repository.dart';
 import 'package:myapp/config/failures/failures.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 class FavoritesRepositoryImpl implements FavoritesRepository {
   final FavoritesRemoteDataSource remoteDataSource;

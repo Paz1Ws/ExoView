@@ -41,6 +41,7 @@ dependencies:
   build_runner: ^2.4.13
   url_launcher: ^6.3.1
   google_mobile_ads: ^5.2.0
+  shared_preferences: any
 dev_dependencies:
   riverpod_generator: ^2.4.3
   custom_lint: ^0.6.7

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:myapp/config/config.dart';
-import 'package:myapp/config/secrets/app_secrets.dart';
 import 'package:myapp/config/usecase/usecase.dart';
 import 'package:myapp/core/data/data.dart';
 import 'package:myapp/core/domain/domain.dart';

@@ -1,6 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fpdart/fpdart.dart';
-import 'package:hive_flutter/adapters.dart';
 import 'package:myapp/config/failures/failures.dart';
 import 'package:myapp/config/util/filter_cases.dart';
 import 'package:myapp/core/data/data.dart';

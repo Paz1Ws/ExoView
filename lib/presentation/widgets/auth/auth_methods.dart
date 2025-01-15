@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myapp/config/usecase/usecase.dart';
 import 'package:myapp/presentation/screens/auth/providers/auth_providers.dart';
-import 'package:myapp/presentation/screens/home/screens/home_view.dart';
 import 'package:myapp/presentation/screens/home/screens/home_view_controller.dart';
-import 'package:myapp/presentation/widgets/home/curve_of_exoplanets.dart';
 
 class AuthMethods extends ConsumerWidget {
   const AuthMethods({super.key});

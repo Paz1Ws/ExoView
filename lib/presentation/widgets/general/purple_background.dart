@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:myapp/config/theme/theme.dart';
-import 'package:myapp/presentation/screens/home/providers/exoplanet_providers.dart';
 import 'package:myapp/presentation/widgets/home/my_bottom_navigator_bar.dart';
 
 class PurpleBackground extends StatelessWidget {

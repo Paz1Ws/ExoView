@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myapp/config/theme/theme.dart';
-import 'package:myapp/core/data/data.dart';
 import 'package:myapp/core/domain/domain.dart';
 import 'package:myapp/presentation/screens/home/screens/home_view_controller.dart';
-import 'package:myapp/presentation/screens/screens.dart';
 import 'package:myapp/presentation/widgets/widgets.dart';
 import 'package:hive/hive.dart'; // Import Hive package
 

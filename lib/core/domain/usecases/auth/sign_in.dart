@@ -1,5 +1,4 @@
 import 'package:fpdart/fpdart.dart';
-import 'package:myapp/config/entities/user.dart';
 import 'package:myapp/config/failures/failures.dart';
 import 'package:myapp/config/usecase/usecase.dart';
 import 'package:myapp/core/data/data.dart';

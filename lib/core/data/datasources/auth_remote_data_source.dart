@@ -1,11 +1,9 @@
 import 'package:myapp/config/failures/exceptions.dart';
 import 'package:myapp/core/data/models/user_model.dart';
-import 'package:myapp/presentation/screens/auth/providers/auth_providers.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:myapp/config/secrets/app_secrets.dart';
 
 abstract interface class AuthRemoteDataSource {
   Session? get currentUserSession;

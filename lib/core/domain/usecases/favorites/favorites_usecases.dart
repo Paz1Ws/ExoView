@@ -2,7 +2,6 @@ import 'package:fpdart/fpdart.dart';
 import 'package:myapp/config/failures/failures.dart';
 import 'package:myapp/config/usecase/usecase.dart';
 import 'package:myapp/core/data/data.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 class AddFavorite implements UseCase<void, AddFavoriteParams> {
   final FavoritesRepositoryImpl repository;

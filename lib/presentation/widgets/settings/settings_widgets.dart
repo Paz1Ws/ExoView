@@ -2,14 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive/hive.dart';
 import 'package:myapp/config/theme/theme.dart';
-import 'package:myapp/config/usecase/usecase.dart';
-import 'package:myapp/core/data/repositories/auth_repository_impl.dart';
-import 'package:myapp/core/domain/usecases/auth/current_user.dart';
 import 'package:myapp/presentation/screens/auth/providers/auth_providers.dart';
 import 'package:myapp/presentation/screens/home/providers/exoplanet_providers.dart';
 import 'package:myapp/presentation/screens/onboarding/welcome_screen.dart';
 import 'package:myapp/presentation/screens/settings/providers/settings_providers.dart';
-import 'package:myapp/core/data/datasources/auth_remote_data_source.dart';
 
 import 'package:url_launcher/url_launcher.dart';
 

@@ -2,7 +2,6 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:myapp/core/data/models/exoplanet_model.dart';
 import 'package:myapp/presentation/widgets/widgets.dart';
-import 'package:myapp/presentation/screens/exoplanet/screens/exoplanet_or_ship_details.dart';
 
 class CurveOfExoplanets extends StatelessWidget {
   final List<String> images = [

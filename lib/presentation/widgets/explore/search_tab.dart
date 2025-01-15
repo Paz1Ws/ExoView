@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myapp/config/theme/colors.dart';
 import 'package:myapp/config/theme/fonts.dart';
-import 'package:myapp/core/data/models/exoplanet_model.dart';
 import 'package:myapp/presentation/screens/explore/providers/explore_view_providers.dart';
 import 'package:myapp/presentation/widgets/widgets.dart';
 
