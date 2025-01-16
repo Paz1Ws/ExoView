@@ -7,6 +7,7 @@ import 'package:myapp/core/data/data.dart';
 import 'package:myapp/presentation/screens/exoplanet/screens/exoplanet_or_ship_details.dart';
 import 'package:myapp/presentation/screens/settings/providers/settings_providers.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'dart:io';
 
 class TouchableExoplanetCard extends ConsumerStatefulWidget {
   final Exoplanet exoplanet;
@@ -31,38 +32,55 @@ class _TouchableExoplanetCardState
     'assets/images/planet_icons/planet_icon_5.png',
   ];
   BannerAd? _bannerAd;
+  InterstitialAd? _interstitialAd;
+
+  final interstitialAdUnitId = Platform.isAndroid
+      ? 'ca-app-pub-3940256099942544/1033173712'
+      : 'ca-app-pub-3940256099942544/4411468910';
 
   @override
   void initState() {
     super.initState();
     maxFilledStars = Random().nextInt(5) + 1;
-    _loadAd();
+    _loadInterstitialAd();
   }
 
-  void _loadAd() {
-    final bannerAd = BannerAd(
-      size: AdSize.banner,
-      adUnitId:
-          'ca-app-pub-1697383543112830/6012256496', // Replace with your actual ad unit ID
+
+
+  void _loadInterstitialAd() {
+    InterstitialAd.load(
+      adUnitId: interstitialAdUnitId,
       request: const AdRequest(),
-      listener: BannerAdListener(
+      adLoadCallback: InterstitialAdLoadCallback(
         onAdLoaded: (ad) {
-          if (!mounted) {
-            ad.dispose();
-            return;
-          }
-          setState(() {
-            _bannerAd = ad as BannerAd;
-          });
+          ad.fullScreenContentCallback = FullScreenContentCallback(
+            onAdShowedFullScreenContent: (ad) {},
+            onAdImpression: (ad) {},
+            onAdFailedToShowFullScreenContent: (ad, err) {
+              ad.dispose();
+            },
+            onAdDismissedFullScreenContent: (ad) {
+              ad.dispose();
+            },
+            onAdClicked: (ad) {},
+          );
+          debugPrint('$ad loaded.');
+          _interstitialAd = ad;
         },
-        onAdFailedToLoad: (ad, error) {
-          debugPrint('BannerAd failed to load: $error');
-          ad.dispose();
+        onAdFailedToLoad: (LoadAdError error) {
+          debugPrint('InterstitialAd failed to load: $error');
         },
       ),
     );
+  }
 
-    bannerAd.load();
+  void _showInterstitialAd() {
+    if (_interstitialAd != null) {
+      _interstitialAd!.show();
+     
+    } else {
+      debugPrint('Interstitial ad is not ready yet.');
+    }
   }
 
   @override
@@ -74,15 +92,10 @@ class _TouchableExoplanetCardState
         height: size.height,
         child: Column(
           children: [
-            if (_bannerAd != null)
-              SizedBox(
-                width: _bannerAd!.size.width.toDouble(),
-                height: _bannerAd!.size.height.toDouble(),
-                child: AdWidget(ad: _bannerAd!),
-              ),
             Expanded(
               child: GestureDetector(
                 onTap: () {
+                  _showInterstitialAd();
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
                     return ExoplanetOrShipDetails(
                       exoplanet: widget.exoplanet,
