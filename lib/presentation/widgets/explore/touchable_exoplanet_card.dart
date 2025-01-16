@@ -44,6 +44,11 @@ class _TouchableExoplanetCardState
     maxFilledStars = Random().nextInt(5) + 1;
     _loadInterstitialAd();
   }
+  @override
+  void dispose() {
+    _interstitialAd?.dispose();
+    super.dispose();
+  }
 
 
 

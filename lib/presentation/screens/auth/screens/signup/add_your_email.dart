@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myapp/presentation/screens/auth/providers/auth_providers.dart';
 import 'package:myapp/presentation/widgets/widgets.dart';
-import 'package:myapp/utils/validation_utils.dart';
+import 'package:myapp/config/util/validation_utils.dart';
 
 class AddYourEmail extends ConsumerWidget {
   final void Function() _onItemTapped;

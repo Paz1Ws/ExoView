@@ -4,7 +4,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:myapp/core/domain/usecases/auth/sign_up.dart';
 import 'package:myapp/presentation/screens/auth/providers/auth_providers.dart';
 import 'package:myapp/presentation/widgets/widgets.dart';
-import 'package:myapp/utils/validation_utils.dart';
+import 'package:myapp/config/util/validation_utils.dart';
 
 class CreateYourPassword extends ConsumerWidget {
   final bool? recoverPassword;
