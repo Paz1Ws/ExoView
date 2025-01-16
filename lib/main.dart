@@ -11,6 +11,11 @@ import 'presentation/screens/onboarding/splash_screen.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   unawaited(MobileAds.instance.initialize());
+  // final List<String> testDeviceIds = ['2879BF2D0AA1FCE2724E65A01D17EC65'];
+  // final RequestConfiguration configuration = RequestConfiguration(
+  //   testDeviceIds: testDeviceIds,
+  // );
+  // MobileAds.instance.updateRequestConfiguration(configuration);
   await Hive.initFlutter();
   await Hive.openBox<int>('visitedExoplanetsBox');
   await Hive.openBox<String>('userIconBox');

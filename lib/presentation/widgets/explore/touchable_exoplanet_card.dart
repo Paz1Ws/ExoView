@@ -31,11 +31,10 @@ class _TouchableExoplanetCardState
     'assets/images/planet_icons/planet_icon_4.png',
     'assets/images/planet_icons/planet_icon_5.png',
   ];
-  BannerAd? _bannerAd;
   InterstitialAd? _interstitialAd;
 
   final interstitialAdUnitId = Platform.isAndroid
-      ? 'ca-app-pub-3940256099942544/1033173712'
+      ? 'ca-app-pub-1697383543112830/1818662942'
       : 'ca-app-pub-3940256099942544/4411468910';
 
   @override
@@ -44,13 +43,12 @@ class _TouchableExoplanetCardState
     maxFilledStars = Random().nextInt(5) + 1;
     _loadInterstitialAd();
   }
+
   @override
   void dispose() {
     _interstitialAd?.dispose();
     super.dispose();
   }
-
-
 
   void _loadInterstitialAd() {
     InterstitialAd.load(
@@ -82,7 +80,6 @@ class _TouchableExoplanetCardState
   void _showInterstitialAd() {
     if (_interstitialAd != null) {
       _interstitialAd!.show();
-     
     } else {
       debugPrint('Interstitial ad is not ready yet.');
     }
